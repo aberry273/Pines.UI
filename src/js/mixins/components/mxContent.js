@@ -1,9 +1,11 @@
 export default function (data) {
     return {
         // PROPERTIES
+        mxContent_img: '',
         mxContent_title: '',
         mxContent_subtitle: '',
         mxContent_text: '',
+        mxContent_subtext: '',
         init() {
         },
         // GETTERS

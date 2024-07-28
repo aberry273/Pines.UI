@@ -10,8 +10,15 @@ export default function (data) {
         init() {
         },
         // GETTERS
-        get mxNavigation_getDummyHeaderItems() {
-        },
+        get mxNavigation_getSectionClass() { return 'w-full px-8 text-gray-700 bg-white' },
+        get mxNavigation_getContainerClass() { return 'container flex flex-col flex-wrap items-center justify-between py-5 mx-auto md:flex-row max-w-7xl' },
+        get mxNavigation_getContainerLeftClass() { return 'relative flex flex-col md:flex-row' },
+        get mxNavigation_getContainerRightClass() { return 'inline-flex items-center ml-5 space-x-6 lg:justify-end' },
+        
+        get mxNavigation_getLinkClass() { return 'flex items-center mb-5 font-medium text-gray-900 lg:w-auto lg:items-center lg:justify-center md:mb-0' },
+        get mxNavigation_getTitleClass() { return 'mx-auto text-xl font-black leading-none text-gray-900 select-none' },
+        get mxNavigation_getItemsClass() { return 'flex flex-wrap items-center mb-5 text-base md:mb-0 md:pl-8 md:ml-8 md:border-l md:border-gray-200' },
+
         // METHODS
         _mxNavigation_Example() {
         },

@@ -1,17 +1,18 @@
 export default function (data) {
     return {
         // PROPERTIES
+        mxEvent_event: '',
         init() {
         },
         // GETTERS
         // METHODS
-        _mxEvents_Emit(ev, payload) {
+        _mxEvent_Emit(ev, payload) {
             const event = new CustomEvent(ev, {
                 detail: payload
             });
             window.dispatchEvent(event);
         },
-        _mxEvents_On(ev, cb) {
+        _mxEvent_On(ev, cb) {
             // Listen for the event.
             window.addEventListener(
                 ev,

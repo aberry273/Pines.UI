@@ -7,22 +7,24 @@ export default function (params) {
         // PROPERTIES
         open: false,
         header: '',
-
         // INIT
         init() {
-            this.open = params.open;
-            this.mxContent_title = params.title;
-            this.mxContent_subtitle = params.subtitle;
-            this.mxContent_text = params.text;
-            this.mxForm_fields = params.fields;
-            this.mxForm_method = params.method;
-            this.mxForm_action = params.action;
-            this.mxForm_buttonLabel = params.buttonLabel || this.mxForm_buttonLabel;
-
+            this.setValues(params);
             this.render();
         },
         // GETTERS
         // METHODS
+        setValues(params) {
+            this.open = params.open;
+            this.mxContent_title = params.title;
+            this.mxContent_subtitle = params.subtitle;
+            this.mxContent_text = params.text;
+            this.mxForm_formClass = params.class || this.mxForm_formClass;
+            this.mxForm_fields = params.fields;
+            this.mxForm_method = params.method;
+            this.mxForm_action = params.action;
+            this.mxForm_buttonLabel = params.buttonLabel || this.mxForm_buttonLabel;
+        },
         updateField(ev) {
             const field = ev.detail;
             this._mxForm_SetFieldValue(this.mxForm_fields, field);
@@ -31,8 +33,6 @@ export default function (params) {
             this.loading = true;
             try {
                 const payload = this._mxForm_GetFormData( { fields: this.mxForm_fields } ); 
-                console.log(this.mxForm_action);
-                console.log(this.mxForm_method);
                 const result = await this._mxForm_SubmitAjaxRequest(this.mxForm_action, this.mxForm_method, payload);
             if(this.event) {
                 this.$dispatch(this.event, result)

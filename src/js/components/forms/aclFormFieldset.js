@@ -7,11 +7,14 @@ export default function (params) {
         // PROPERTIES 
         // INIT
         init() {
-            this.mxForm_fields = params.fields;
+            this.setValues(params);
             this.render();
         },
         // GETTERS
         // METHODS
+        setValues(params) {
+            this.mxForm_fields = params.fields;
+        },
         onFieldChange(ev) {
             this.$dispatch('onfieldchange', ev.detail)
         },

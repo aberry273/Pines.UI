@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pines UI</title>
     <style>[x-cloak]{display:none}</style>
+    
+    <!-- SignalR -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    
     <!-- Include the Alpine library on your page -->
     <script type="module" src="/src/js/init.js" defer></script> 
     <!--
@@ -21,9 +25,80 @@
 <body class="justify-center h-full bg-gray-50" x-data>
     <!-- Header Here -->
     <div x-data="aclNavigationBar(headerData)"></div>
-    
-    <div class="container mx-auto">
-        
+    <div x-data="aclNavigationBarDropdown(headerLoginData)"></div> 
+    <!--
+    <div
+        class="relative space-y-5">
+        <div class="relative">
+            <p class="mb-2 text-xs font-medium text-center text-gray-500 sm:text-left">Types</p>
+            <div class="relative flex flex-col px-10 space-y-2 sm:space-x-5 sm:space-y-0 sm:flex-row sm:px-0">
+                
+                <button @click="title='Toast Notification'; type='default'; description='This is an example toast notification'; popToast()" 
+                    :class="{ 'ring-2 ring-neutral-200/60' : type=='default' && description!='' }"
+                    class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">With Description</button>
+                <button @click="title='Success Notification'; type='success'; popToast()" 
+                    :class="{ 'ring-2 ring-neutral-200/60' : type=='success' }"
+                    class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">Success</button>
+                <button @click="title='Info Notification'; type='info'; popToast()" 
+                    :class="{ 'ring-2 ring-neutral-200/60' : type=='info' }"
+                    class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">Info</button>
+                <button @click="title='Warning Notification'; type='warning'; popToast()" 
+                    :class="{ 'ring-2 ring-neutral-200/60' : type=='warning' }"
+                    class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">Warning</button>
+                <button @click="title='Danger Notification'; type='danger'; popToast()" 
+                    :class="{ 'ring-2 ring-neutral-200/60' : type=='danger' }"
+                    class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">Danger</button>
+
+                <button @click="popToast(customToastHTML)" 
+                        :class="{ 'ring-2 ring-neutral-200/60' : type=='success' }"
+                        class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">Custom</button>
+            </div>
+        </div>
+        <div class="relative">
+            <p class="mb-2 text-xs font-medium text-center text-gray-500 sm:text-left">Position</p>
+            <div class="relative flex flex-col px-10 space-y-2 sm:space-x-5 sm:space-y-0 sm:flex-row sm:px-0">
+                
+                <button @click="position='top-left'; popToast()"
+                        :class="{ 'ring-2 ring-neutral-200/60' : position=='top-left' }"
+                        class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">Top Left</button>
+                <button @click="position='top-center'; popToast()"
+                        :class="{ 'ring-2 ring-neutral-200/60' : position=='top-center' }"
+                        class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">Top Center</button>
+                <button @click="position='top-right'; popToast()"
+                        :class="{ 'ring-2 ring-neutral-200/60' : position=='top-right' }"
+                        class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">Top Right</button>
+                <button @click="position='bottom-right'; popToast()"
+                        :class="{ 'ring-2 ring-neutral-200/60' : position=='bottom-right' }"
+                        class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">Bottom Right</button>
+                <button @click="position='bottom-center'; popToast()"
+                        :class="{ 'ring-2 ring-neutral-200/60' : position=='bottom-center' }"
+                        class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">Bottom Center</button>
+                <button @click="position='bottom-left'; popToast()"
+                        :class="{ 'ring-2 ring-neutral-200/60' : position=='bottom-left' }"
+                        class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">Bottom Left</button>
+            </div>
+        </div>
+        <div class="relative">
+            <p class="mb-2 text-xs font-medium text-center text-gray-500 sm:text-left">Layout</p>
+            <div class="relative flex flex-col px-10 space-y-2 sm:space-x-5 sm:space-y-0 sm:flex-row sm:px-0">
+                <button @click="expanded=false; window.dispatchEvent(new CustomEvent('set-toasts-layout', { detail: { layout: 'default' }}));"
+                        :class="{ 'ring-2 ring-neutral-200/60' : !expanded }"
+                        class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">Default</button>
+                <button @click="expanded=true; window.dispatchEvent(new CustomEvent('set-toasts-layout', { detail: { layout: 'expanded' }}));" 
+                        :class="{ 'ring-2 ring-neutral-200/60' : expanded }"
+                        class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">Expanded</button>
+            </div>
+        </div>
+    </div>
+-->
+    <div x-data="aclToastNotification()"></div>
+    <div class="container mx-auto"> 
+        <div x-data="aclListComments({
+            commentItems: commentItems,
+            menuItems: commentMenu,
+            actionItems: commentActions,
+        })"></div> 
+
         <div class="mx-auto max-w-7xl">
             <div class="flex flex-col lg:flex-row">
                 <div class="relative w-full bg-cover lg:w-6/12 xl:w-7/12 bg-gradient-to-r from-white via-white to-gray-100">
@@ -45,9 +120,15 @@
                 </div>
             </div>
         </div>
+        <div x-data="aclModalFormAjax({event: 'on:quote', form: quoteFormData })"></div>
+        
+        <div x-data="aclCardVertical({})"></div>
+        <div x-data="aclCardHorizontal({})"></div>
+
     </div>
     <!-- Footer Here -->
     <div x-data="aclNavigationFooter(footerData)"></div>
+
 </body>
 
 <script>
@@ -202,5 +283,281 @@
             },
         ],
     }
+    var quoteFormData = {
+        class: 'flex flex-col items-start justify-start w-full h-full p-4',
+        title: 'Contact us',
+        text: 'Submit a ',
+        action: 'POST',
+        method: 'https://localhost:7220/api/v1/test',
+        fields: [
+            {
+                name: 'Firstname',
+                id: 'Firstname',
+                required: true,
+                placeholder: 'Enter your Firstname',
+                type: 'text',
+                value: '',
+            },
+            {
+                name: 'Lastname',
+                id: 'Lastname',
+                required: true,
+                placeholder: 'Enter your username',
+                type: 'text',
+                value: '',
+            },
+            {
+                name: 'Email',
+                required: true,
+                id: 'Email',
+                label: 'Email',
+                placeholder: 'Enter your email',
+                type: 'email',
+                ariaInvalid: 'Invalid email',
+                pattern: '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$'
+            },
+            {
+                name: 'Enquiry',
+                required: false,
+                id: 'Enquiry',
+                label: 'Enquiry',
+                placeholder: 'Enter your enquiry',
+                type: 'textarea',
+                ariaInvalid: 'Invalid email',
+            },
+        ],
+    }
+    
+    var headerLoginData = {
+        title: 'pines.ui',
+        primaryItems: [
+            {
+                href: '#',
+                label: 'About'
+            },
+            {
+                href: '#',
+                label: 'Pricing'
+            },
+            {
+                href: '#',
+                label: 'Blog'
+            },
+        ],
+        dropdown: {
+            title: 'Tom Green',
+            subtitle: '@tomgreen',
+            groups: [
+                {
+                    title: 'My account',
+                    items: [
+                        {
+                            href: '#Profile',
+                            text: 'Profile',
+                            label: '⇧⌘P',
+                            icon: 'userCircle'
+                        },
+                        {
+                            href: '#Billing',
+                            text: 'Billing',
+                            label: '⇧⌘B',
+                            icon: 'creditCard'
+                        },
+                        {
+                            href: '#Settings',
+                            text: 'Settings',
+                            label: '⇧⌘S',
+                            icon: 'cog'
+                        },
+                        {
+                            href: '#Keyboard',
+                            text: 'Keyboard Shortcuts',
+                            label: '⇧⌘P',
+                            icon: 'keyboard'
+                        },
+                    ]
+                }
+            ]
+        }
+    };
 </script>
+
+<script>
+    var commentItems = [
+        {
+            id: 0,
+            profile: {
+                mxIcon_name: 'calendar',
+                mxContent_title: 'John westie',
+                mxContent_subtitle: '@johnwes',
+                mxContent_text: 'Blogger, thraser, skaterboi, etc',
+                mxContent_subtext: '10/07/2024',
+                mxLink_href: '#',
+                mxLink_text: 'John westie',
+                mxContent_img: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png',
+            },
+            content: {
+                date: '2024-07-20T00:38:52.0421225Z',
+                text: 'Display users\' comments beautifully. The component also has a form for commenting.',
+            },
+            metrics: {
+                rating: 17231
+            },
+            taxonomy: {
+                category: 'Marketing',
+            },
+            menu: [ 'CopyLink', 'Edit', 'Delete' ],
+            actions: [ 'reply', 'quote', 'upvote', 'downvote', 'tag' ],
+        },
+        { 
+            id: 1,
+            profile: {
+                mxIcon_name: 'calendar',
+                mxContent_title: 'John westie',
+                mxContent_subtitle: '@johnwes',
+                mxContent_text: 'Blogger, thraser, skaterboi, etc',
+                mxContent_subtext: '10/07/2024',
+                mxLink_href: '#',
+                mxLink_text: 'John westie',
+                mxContent_img: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png',
+            },
+            date: '2024-07-20T00:38:52.0421225Z',
+            condense: true,
+            settings: {
+                
+            },
+            content: {
+                date: '2024-07-20T00:38:52.0421225Z',
+                text: 'How can we detect paste event in alpine js? · alpinejs/alpine · Discussion #2880. How can we detect paste event in alpine js?',
+            },
+            metrics: {
+                rating: 2
+            },
+            taxonomy: {
+                category: 'AI',
+            },
+            menu: [ 'CopyLink' ],
+            actions: [ 'reply', 'quote', 'upvote', 'downvote', 'tag' ],
+        },
+        { 
+            id: 2,
+            profile: {
+                mxIcon_name: 'calendar',
+                mxContent_title: 'Same Johnston',
+                mxContent_subtitle: '@johnwes',
+                mxContent_text: 'Blogger, thraser, skaterboi, etc',
+                mxContent_subtext: '10/07/2024',
+                mxLink_href: '#',
+                mxLink_text: 'Same Johnston',
+                mxContent_img: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png',
+            },
+            content: {
+                date: '2024-07-20T00:38:52.0421225Z',
+                text: 'We\'ve created a simple formula to follow in order to gain more out of your business and your application.',
+            },
+            metrics: {
+                rating: 302
+            },
+            taxonomy: {
+                category: 'Entertainment',
+            },
+            menu: [ 'CopyLink' ],
+            actions: [ 'reply', 'quote', 'upvote', 'downvote', 'tag' ],
+        },
+        { 
+            id: 3,
+            profile: {
+                mxIcon_name: 'calendar',
+                mxContent_title: 'Deb peterson',
+                mxContent_subtitle: '@johnwes',
+                mxContent_text: 'Blogger, thraser, skaterboi, etc',
+                mxContent_subtext: '10/07/2024',
+                mxLink_href: '#',
+                mxLink_text: 'Deb peterson',
+                mxContent_img: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png',
+            },
+            content: {
+                date: '2024-07-20T00:38:52.0421225Z',
+                text: 'Features to help you work smarter',
+            },
+            metrics: {
+                rating: 4124
+            },
+            taxonomy: {
+                category: 'News',
+            },
+            menu: [ 'CopyLink' ],
+            actions: [ 'reply', 'quote', 'upvote', 'downvote', 'tag' ],
+        },
+    ]; 
+    var commentActions = [
+        {
+            name: 'reply',
+            tooltip: 'reply',
+            icon: 'chatBubble',
+            href: '#reply'
+        },
+        {
+            name: 'quote',
+            tooltip: 'quote',
+            icon: 'chatBubbles',
+            event: 'on:comment:quote',
+            value: null,
+        },
+        {
+            name: 'upvote',
+            tooltip: 'upvote',
+            icon: 'chevronUp',
+            event: 'on:upvote',
+            value: null,
+        },
+        {
+            name: 'downvote',
+            tooltip: 'downvote',
+            icon: 'chevronDown',
+            event: 'on:comment:downvote',
+            value: null,
+        },
+        {
+            name: 'tag',
+            tooltip: 'View tags',
+            icon: 'tag',
+            event: 'on:comment:taxonomy'
+        },
+    ];
+    var commentMenu = [
+        {
+            name: 'CopyLink',
+            text: 'Copy link',
+            tooltip: 'reply',
+            icon: 'link',
+            event: 'on:comment:copylink'
+        },
+        {
+            name: 'Flag',
+            text: 'Flag post',
+            tooltip: 'flag',
+            icon: 'chatBubbles',
+            override: true,
+            event: 'on:comment:flag',
+        },
+        {
+            name: 'Delete',
+            text: 'Delete post',
+            tooltip: 'upvote',
+            icon: 'trash',
+            override: true,
+            event: 'on:comment:delete',
+        },
+        {
+            name: 'Edit',
+            text: 'Edit post',
+            tooltip: 'downvote',
+            icon: 'edit',
+            override: true,
+            href: '#edit',
+        },
+    ];
+</script>
+
 </html>

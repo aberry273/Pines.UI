@@ -9,6 +9,12 @@ export default function (params) {
         form: {},
         // INIT
         init() {
+            this.setValues(params);
+            this.render();
+        },
+        // GETTERS
+        // METHODS
+        setValues(params) {
             this.mxContent_title = params.title;
             this.mxContent_subtitle = params.subtitle;
             this.mxContent_text = params.text;
@@ -16,11 +22,7 @@ export default function (params) {
             this.mxForm_fields = params.fields;
             this.mxForm_method = params.method;
             this.mxForm_action = params.action;
-            
-            this.render();
         },
-        // GETTERS
-        // METHODS
         onChange(field) {
             console.log('change')
             console.log(field);

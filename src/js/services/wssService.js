@@ -1,85 +1,83 @@
-export function emit(wssEvent, ev, data) {
-    const event = `${wssEvent}:${ev}`
-    window.dispatchEvent(new CustomEvent(event, { detail: data }));
-};
+import { emit, createClient, connectedEvent, messageEvent } from './utilities.js'
 
-const wssEvent = 'wss:contentPosts';
-const url = "wss://localhost:7220/ContentPosts";
+import { mxEvent, mxService } from '/src/js/mixins/index.js';
 
-export default function (settings, user) {
+export default function (settings) {
     return {
+        ...mxEvent(settings),
+        ...mxService(settings),
+        items: [],
         socket: null,
         settings: {},
-        user: {},
-        init() {
-            this.settings = settings;
-            this.user = user;
-            const self = this;
-            let socket = new WebSocket(settings.url);
-            //let socket = new WebSocket(wssPath);
-            
-            socket.onopen = function (e) {
-                console.log("[open] Connection established");
-                console.log(e);
-                const endChar = String.fromCharCode(30);
-                emit(wssEvent, 'onopen', e);
-                
-                self.sendMessage("SendMessage", self.user.id, "LOL");
-
-                // send the protocol & version
-                socket.send(`{"protocol":"json","version":1}${endChar}`);
-            };
-            const curlyBracesInclusiveRegex = /\{([^}]+)\}/
-            socket.onmessage = function (event) {
-                console.log(`[message] Data received from server: ${event.data}`);
-
-                // parse server data
-                const serverData = event.data.substring(0, event.data.length - 1);
-
-                // after sending the protocol & version subscribe to your method(s)
-                if (serverData === "{}") {
-                    const endChar = String.fromCharCode(30);
-                    socket.send(`{"arguments":[],"invocationId":"0","target":"Your-Method","type":1}${endChar}`);
-                    return;
-                }
-
-                // handle server messages
-                const data = event.data;
-                if (data == null) return;
-                const cleaned = data.replace('\u001e', '')
-                if (cleaned == null) return;
-
-                const message = JSON.parse(cleaned);
-
-                if (message.type == 1) {
-                    // Handle responses
-                    const payload = {
-                        user: message.arguments[0],
-                        // {code, type, data}
-                        data: message.arguments[1]
-                    }
-                    emit(wssEvent, 'onmessage', payload);
-                };
-            };
-
-            socket.onclose = function (event) {
-                if (event.wasClean) {
-                    console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
-                } else {
-                    console.log('[close] Connection died');
-                }
-                emit(wssEvent, 'onclose', event);
-            };
-
-            socket.onerror = function (error) {
-                console.log(`[error] ${error.message}`);
-                emit(wssEvent, 'onerror', error);
-            };
-
-            this.socket = socket;
+        client: null,
+        connectionId: null,
+        wssEvent: null,
+        async init() {
+            await this.initializeWssClient()
         },
-        sendMessage(command = "SendMessage", user, message) {
-            this.socket.send({command, user, message})
-        }
+        async initializeWssClient() {
+            this.settings = settings;
+            this.wssEvent = settings.wssEvent;
+            const self = this;
+            // Start the connection.
+            try {
+                this.client = await createClient(this.settings.url, this.wssEvent)
+                if (!this.client) return;
+                
+                await this.client.start();
+                this.connectionId = this.client.connection.connectionId;
+                emit(this.wssEvent, connectedEvent, this.client.connection.connectionId);
+            } catch (err) {
+                console.error(err);
+                //setTimeout(createClient, 5000);
+            }
+        },
+        setItems(items) {
+            this.items = items;
+        },
+        insertOrUpdateItems(originalItems, updateitems) { 
+            const originalItemIds = originalItems.map(x => x.id) || []
+            const updateItemIds = updateitems.map(x => x.id) || []
+            for (let i = 0; i < updateItemIds.length; i++) {
+                const index = updateItemIds[i];
+                if (originalItemIds.indexOf(index) == -1) {
+                    originalItems.push(updateitems[i])
+                } 
+            }
+            return originalItems
+        },
+        updateItems(items, wssMessage) {
+            var item = wssMessage.data;
+            let emptyItems = false;
+            if (items == null) {
+                items = [];
+                emptyItems = true;
+            }
+            if (wssMessage.update == 'Created') {
+                const index = items.map(x => x.id).indexOf(item.id);
+                if (index == -1) items.unshift(item);
+                else items[index] = item
+            }
+            if (wssMessage.update == 'Updated') {
+                const index = items.map(x => x.id).indexOf(item.id);
+                items[index] = item
+                this._mxEvents_Emit(item.id, item);
+            }
+            if (wssMessage.update == 'Deleted') {
+                const index = items.map(x => x.id).indexOf(item.id);
+                items.splice(index, 1);
+            }
+            return items;
+        },
+        getMessageEvent() {
+            return `${this.wssEvent}:${messageEvent}`;
+        },
+        getConnectedEvent() {
+            return `${this.wssEvent}:${connectedEvent}`;
+        },
+        async connectUser(userId) {
+            await this.client.invoke("UserRequest", this.connectionId, userId)
+        },
+        // Custom logic
     }
 }

@@ -5,13 +5,16 @@ export default function (params) {
         open: false,
         // INIT
         init() {
-            this.open = params.open;
+            setValues(params);
             this.render();
         },
         // GETTERS
         // METHODS
         close() {
             this.open = false;
+        },
+        setValues(params) {
+            this.open = params.open;
         },
         render() {
             const html = `

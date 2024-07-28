@@ -14,9 +14,8 @@ export default function (params) {
             this.open = false;
         },
         render() {
-            const html = `
-            
-            <div class="relative flex flex-col items-center justify-center w-full h-full px-10 my-20 lg:px-16 lg:my-0">
+            const html = ` 
+            <div class="relative flex flex-col items-center justify-center w-full h-full px-10 my-20 lg:px-16 lg:my-0  >
                 <div class="flex flex-col items-start space-y-8 tracking-tight lg:max-w-3xl">
                     <div class="relative">
                         <p class="mb-2 font-medium text-gray-700 uppercase">Work smarter</p>
