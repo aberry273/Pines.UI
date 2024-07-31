@@ -16,6 +16,9 @@ export default function (params) {
             this.render();
         },
         // GETTERS
+        get disabledStyle() {
+            return 'pointer-events: none; cursor: default;';
+        },
         // METHODS
         setHover() {
             if(!this.mxButton_tooltip) return;
@@ -25,6 +28,7 @@ export default function (params) {
             this.mxButton_showTooltip = false;
         },
         onClick() {
+            if(this.mxButton_disabled) return;
             // Override any events or href and run the dispatch
             if (this.mxButton_override) {
                 this.$dispatch('onclick', this.mxButton_name);
@@ -40,7 +44,12 @@ export default function (params) {
                 return;
             }
             // Fallback to dispatch
-            this.$dispatch('onclick', this.mxButton_name);
+            if(!!this.mxButton_name) {
+                const dispatchEv = `click.${this.mxButton_name}`;
+                this.$dispatch(dispatchEv);
+                return;
+            }
+            this.$dispatch('onclick');
         },
         setValues(params) {
             this.mxIcon_name = params.icon;
@@ -48,23 +57,26 @@ export default function (params) {
             this.mxButton_name = params.name;
             this.mxButton_text = params.text;
             this.mxButton_label = params.label;
+            this.mxButton_disabled = params.disabled;
             this.mxButton_href = params.href;
             this.mxButton_event = params.event;
             this.mxButton_value = params.value;
             this.mxButton_override = params.override;
             this.mxButton_tooltip = params.tooltip; 
+            this.mxButton_class = params.class || this.mxButton_class;
         },
         render() {
             const html = `
-            <a 
-                x-ref="btn" 
+            <a x-ref="btn" 
                 type="button" 
-                @mouseenter.debounce.350ms="setHover" 
+                @mouseenter.debounce.750ms="setHover" 
                 @mouseleave="setLeave" 
                 @mouseover.away="setLeave" 
                 @click="onClick"
+                :disabled="mxButton_disabled"
                 :href="mxButton_href"
-                :class="mxButton_class">
+                :class="mxButton_class"
+                :style="mxButton_disabled ? disabledStyle : '' ">
          
                 <svg :class="'w-5 h-5'" x-data="aclIconsSvg({mxIcon_name})"></svg>
                 <span class="ml-2" x-show="mxButton_text" x-text="mxButton_text"></span>

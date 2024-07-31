@@ -10,6 +10,7 @@ export default function (data) {
         mxButton_name: '',
         mxButton_showTooltip: false,
         mxButton_override: false,
+        mxButton_disabled: false,
         mxButton_items: [],
         init() {},
         // GETTERS  

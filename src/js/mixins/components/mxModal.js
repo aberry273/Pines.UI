@@ -3,6 +3,10 @@ export default function (params) {
         // PROPERTIES
         mxModal_open: false,
         mxModal_clickOutside: false,
+        mxModal_showNext: false,
+        mxModal_showPrev: false,
+        mxModal_eventNext: '',
+        mxModal_eventPrev: '',
         init() {},
         // GETTERS  
         get mxModal_buttonRightSvg() { return 'absolute right-0 w-5 h-5 mr-3' },
@@ -12,7 +16,6 @@ export default function (params) {
         },
         _mxModal_ClickOutside() {
             // If clickOutside is enabled, don't close the modal on outside click
-            console.log('_mxModal_ClickOutside')
             if(this.mxModal_clickOutside) return;
             this.mxModal_open = false;
         },

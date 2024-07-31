@@ -18,19 +18,19 @@ export default function (params) {
         init() {
             this.render();
             params = params || {}
-            this.mxIcon_name = params.mxIcon_name;
-            this.mxLink_text = params.mxLink_text;
-            this.mxLink_href = params.mxLink_href;
-            this.mxContent_img = params.mxContent_img;
-            this.mxContent_title = params.mxContent_title;
-            this.mxContent_subtitle = params.mxContent_subtitle;
-            this.mxContent_text = params.mxContent_text;
-            this.mxContent_subtext = params.mxContent_subtext;
+            this.setValues(params);
         },
         // GETTERS
         // METHODS
-        close() {
-            this.open = false;
+        setValues(params) {
+            this.mxIcon_name = params.icon;
+            this.mxLink_text = params.displayName;
+            this.mxLink_href = params.href;
+            this.mxContent_img = params.img;
+            this.mxContent_title = params.displayName;
+            this.mxContent_subtitle = params.username;
+            this.mxContent_text = params.description;
+            this.mxContent_subtext = params.date;
         },
         hoverCardEnter () {
             clearTimeout(this.hoverCardLeaveTimeout);

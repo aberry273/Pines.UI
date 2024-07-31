@@ -15,53 +15,69 @@ export default function (settings) {
         svcComments_eventDownvote: 'on:comment:downvote',
         svcComments_eventDelete: 'on:comment:delete',
         svcComments_eventFlag: 'on:comment:flag',
-        
+        self: null,
         async init() {
-            this._mxEvent_On(this.svcComments_eventCopyLink, this.copyLink)
-            this._mxEvent_On(this.svcComments_eventQuote, this.quote)
-            this._mxEvent_On(this.svcComments_eventUpvote, this.upvote)
-            this._mxEvent_On(this.svcComments_eventDownvote, this.downvote)
-            this._mxEvent_On(this.svcComments_eventFlag, this.delete)
-            this._mxEvent_On(this.svcComments_eventDelete, this.flag)
+            this.self = this;
+            this._mxEvent_On(this.svcComments_eventCopyLink, (item) => {
+                this.upvote(item, this);
+                this.sendAlert('copy', 'default', '')
+            })
+            this._mxEvent_On(this.svcComments_eventQuote, (item) => {
+                this.upvote(item, this);
+                this.sendAlert('quote', 'default', '')
+            })
+            this._mxEvent_On(this.svcComments_eventUpvote, (item) => {
+                this.upvote(item, this);
+                this.sendAlert('upvote', 'default', '')
+            })
+            this._mxEvent_On(this.svcComments_eventDownvote, (item) => {
+                this.upvote(item, this);
+                this.sendAlert('downvote', 'default', '')
+            })
+            this._mxEvent_On(this.svcComments_eventFlag, (item) => {
+                this.upvote(item, this);
+                this.sendAlert('flag', 'default', '')
+            })
+            this._mxEvent_On(this.svcComments_eventDelete, (item) => {
+                this.upvote(item, this);
+                this.sendAlert('delete', 'default', '')
+            })
         },
         // GETTERS  
         // METHODS
-        setEvents() {
+        setEvents(item, cb) {
             if (!this.mxEvent_event) return;
             const self = this;
-            this._mxEvent_On(this.mxEvent_event, (val) => {
-                self.mxModal_open = true;
-            })
+            this.upvote(item, this);
+            this.sendAlert('upvote', 'default', '')
+        },
+        sendAlert(title, type, description) {
+            this._mxEvent_Emit(
+                this.mxToast_event, 
+                {
+                    title: title,
+                    type: type,
+                    description: description
+                }
+            );
         },
         upvote(item) {
-            console.log('upvote');
-            console.log(item);
-            this.$toast.Add('upvote', 'default', '')
+            console.log(item); 
         },
         downvote(item) {
-            console.log('downvote');
             console.log(item);
-            _mxToast_Add('downvote', 'default', '')
         },
         quote(item) {
-            console.log('quote');
             console.log(item);
-            _mxToast_Add('quote', 'default', '')
         },
         copyLink(item) {
-            console.log('copyLink');
             console.log(item);
-            _mxToast_Add('copyLink', 'default', '')
         },
         flag(item) {
-            console.log('flag');
             console.log(item);
-            _mxToast_Add('flag', 'default', '')
         },
         delete(item) {
-            console.log('delete');
             console.log(item);
-            _mxToast_Add('delete', 'default', '')
         },
     }
 }

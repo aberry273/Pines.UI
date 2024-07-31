@@ -47,7 +47,6 @@ export default function (params) {
                             x-transition:leave-end="opacity-0"
                             @click="mxModal_open=false" class="absolute inset-0 w-full h-full bg-white backdrop-blur-sm bg-opacity-70"></div>
                         <div x-show="mxModal_open"
-                            x-trap.inert.noscroll="mxModal_open"
                             x-transition:enter="ease-out duration-300"
                             x-transition:enter-start="opacity-0 -translate-y-2 sm:scale-95"
                             x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"

@@ -5,7 +5,7 @@ export default function (params) {
         open: false,
         // INIT
         init() {
-            setValues(params);
+            this.setValues(params || {});
             this.render();
         },
         // GETTERS

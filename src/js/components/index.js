@@ -1,7 +1,9 @@
 // EXAMPLE
 import { aclExampleComponent } from './_example/index.js'
 // CONTENT
-import { aclContentSection, aclContentImage } from './content/index.js'
+import { aclContentSection } from './content/index.js'
+// MEDIA
+import { aclMediaImage } from './media/index.js'
 // DROPDOWNS
 import { aclDropdownMenuProfile, aclDropdownMenuButton } from './dropdowns/index.js'
 // NAVIGATIONS
@@ -10,6 +12,8 @@ import { aclNavigationBar, aclNavigationBarDropdown, aclNavigationFooter } from 
 import { aclTabs } from './tabs/index.js'
 // TOASTS
 import { aclToastNotification } from './toasts/index.js'
+// GRID
+import { aclGridMedia } from './grid/index.js'
 // FORMS
 import { aclFormPostback, aclFormAjax, aclFormFieldset } from './forms/index.js'
 // FIELDS
@@ -21,7 +25,7 @@ import { aclButton } from './buttons/index.js'
 // LINKS
 import { aclLinkAhref } from './links/index.js'
 // MODALS
-import { aclModal, aclModalFullscreen, aclModalFormAjax } from './modals/index.js'
+import { aclModal, aclModalFullscreen, aclModalFormAjax, aclModalMedia } from './modals/index.js'
 // LISTS
 import { aclListComments } from './lists/index.js'
 // CARDS
@@ -32,7 +36,8 @@ export {
     aclExampleComponent,
     // CONTEMT
     aclContentSection,
-    aclContentImage,
+    // MEDIA
+    aclMediaImage,
     // NAVIGATIONS
     aclNavigationBar,
     aclNavigationBarDropdown,
@@ -44,6 +49,8 @@ export {
     aclTabs,
     // TOASTS,
     aclToastNotification,
+    // GRID
+    aclGridMedia,
     // FORMS,
     aclFormPostback,
     aclFormAjax,
@@ -58,6 +65,7 @@ export {
     aclModal,
     aclModalFormAjax,
     aclModalFullscreen,
+    aclModalMedia,
     // LISTS
     aclListComments,
     // CARDS
