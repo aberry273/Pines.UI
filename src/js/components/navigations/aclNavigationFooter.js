@@ -21,7 +21,7 @@ export default function (params) {
         // RENDER
         render() {
             const html = `
-            <section class="bg-white">
+            <section class="bg-white dark:bg-gray-800">
                 <div class="max-w-screen-xl px-4 py-12 mx-auto space-y-8 overflow-hidden sm:px-6 lg:px-8">
                     <nav class="flex flex-wrap justify-center -mx-5 -my-2">
                         <template x-for="item in mxNavigation_primaryItems">

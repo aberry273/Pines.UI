@@ -1,0 +1,58 @@
+import { mxContent, mxNavigation, mxLink, mxIcon, mxDate, } from '/src/js/mixins/index.js';
+
+export default function (params) {
+	return {
+        ...mxNavigation(params),
+        ...mxContent(params),
+        ...mxLink(params),
+        ...mxIcon(params),
+        ...mxDate(params),
+        // PROPERTIES
+        date: null,
+        items: null,
+        id: '',
+        // INIT
+        init() {
+            this.setValues(params);
+            this.render();
+        },
+        // GETTERS
+        get dropdownParams() {
+        },
+        // METHODS
+        setValues(params) {
+            this.date = params.date;
+            this.items = params.profiles;
+            this.mxContent_text = params.text;
+        },
+        close() {
+            this.open = false;
+        },
+        render() {
+            const html = `
+                <div class="flex max-w cursor-pointer bg-grey rounded-lg hover:bg-gray-50">
+                    <div class="flex w-full h-9 items-center  rounded-lg  md:flex-row md:max-w-xl hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700">
+                       
+                        <!--Link-->
+                        <div class="w-full justify-between p-1 leading-normal">
+                            <p>
+                                <span x-text="mxContent_text" class="mb-2 underline pl-2 font-bold text-gray-900 text-blue dark:text-white" ></span>
+                                <time x-show="date" x-text="_mxDate_FormatString(date)" datetime="date" class="pl-2 text-sm text-gray-300 dark:text-gray-300"></time>
+                            </p>
+                        </div>
+                        <!--Profile Images-->
+                        <div class="flex-shrink-0 flex items-center justify-center">
+                            <template x-for="item in items">
+                                <div x-data="aclMediaImage( {
+                                    src: item.img,
+                                    class: 'rounded-md w-9 h-9 pr-1'
+                                })"></div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            `
+            this.$nextTick(() => { this.$root.innerHTML = html });
+      }
+    }
+}

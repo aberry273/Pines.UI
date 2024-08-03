@@ -19,5 +19,13 @@ export default function (params) {
             if(this.mxModal_clickOutside) return;
             this.mxModal_open = false;
         },
+        _mxModal_ToggleBackgroundOverflow(toggle) {
+            if(toggle === true){
+                document.body.classList.add('overflow-hidden');
+            } else {
+                this.media = null;
+                document.body.classList.remove('overflow-hidden');
+            }
+        }
     }
 }

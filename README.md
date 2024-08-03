@@ -11,8 +11,8 @@ A simple markdown page bootstrapper
 # CSS - Tailwing
 1. download the tailwind-cli: https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.4.6
 2. install it into the root folder
-3. from windows cmd run 
-```C:\Projects\Pines.UI>tailwindcss -i ./src/css/main.src.css -o ./src/css/main.css --watch```
+3. from terminal erun
+```npx tailwindcss -i ./src/css/input.css -o ./src/css/main.css --watch```
 
  
 # Self-signed cert for liveserver

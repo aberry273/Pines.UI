@@ -16,85 +16,23 @@
     <script src="https://unpkg.com/alpinejs" defer></script>
     -->
     <!-- Include the TailwindCSS library on your page -->
-    
-    <script src="https://cdn.tailwindcss.com"></script>
     <!--
-    <link href="/src/css/main.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     -->
+    <link href="/src/css/main.css" rel="stylesheet"> 
 </head>
-<body class="justify-center h-full bg-gray-50" x-data>
+<body class="justify-center h-full bg-gray-50 dark:bg-gray-800" x-data>
     <!-- Header Here -->
     <div x-data="aclNavigationBar(headerData)"></div>
     <div x-data="aclNavigationBarDropdown(headerLoginData)"></div> 
-    <!--
-    <div
-        class="relative space-y-5">
-        <div class="relative">
-            <p class="mb-2 text-xs font-medium text-center text-gray-500 sm:text-left">Types</p>
-            <div class="relative flex flex-col px-10 space-y-2 sm:space-x-5 sm:space-y-0 sm:flex-row sm:px-0">
-                
-                <button @click="title='Toast Notification'; type='default'; description='This is an example toast notification'; popToast()" 
-                    :class="{ 'ring-2 ring-neutral-200/60' : type=='default' && description!='' }"
-                    class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">With Description</button>
-                <button @click="title='Success Notification'; type='success'; popToast()" 
-                    :class="{ 'ring-2 ring-neutral-200/60' : type=='success' }"
-                    class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">Success</button>
-                <button @click="title='Info Notification'; type='info'; popToast()" 
-                    :class="{ 'ring-2 ring-neutral-200/60' : type=='info' }"
-                    class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">Info</button>
-                <button @click="title='Warning Notification'; type='warning'; popToast()" 
-                    :class="{ 'ring-2 ring-neutral-200/60' : type=='warning' }"
-                    class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">Warning</button>
-                <button @click="title='Danger Notification'; type='danger'; popToast()" 
-                    :class="{ 'ring-2 ring-neutral-200/60' : type=='danger' }"
-                    class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">Danger</button>
-
-                <button @click="popToast(customToastHTML)" 
-                        :class="{ 'ring-2 ring-neutral-200/60' : type=='success' }"
-                        class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">Custom</button>
-            </div>
-        </div>
-        <div class="relative">
-            <p class="mb-2 text-xs font-medium text-center text-gray-500 sm:text-left">Position</p>
-            <div class="relative flex flex-col px-10 space-y-2 sm:space-x-5 sm:space-y-0 sm:flex-row sm:px-0">
-                
-                <button @click="position='top-left'; popToast()"
-                        :class="{ 'ring-2 ring-neutral-200/60' : position=='top-left' }"
-                        class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">Top Left</button>
-                <button @click="position='top-center'; popToast()"
-                        :class="{ 'ring-2 ring-neutral-200/60' : position=='top-center' }"
-                        class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">Top Center</button>
-                <button @click="position='top-right'; popToast()"
-                        :class="{ 'ring-2 ring-neutral-200/60' : position=='top-right' }"
-                        class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">Top Right</button>
-                <button @click="position='bottom-right'; popToast()"
-                        :class="{ 'ring-2 ring-neutral-200/60' : position=='bottom-right' }"
-                        class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">Bottom Right</button>
-                <button @click="position='bottom-center'; popToast()"
-                        :class="{ 'ring-2 ring-neutral-200/60' : position=='bottom-center' }"
-                        class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">Bottom Center</button>
-                <button @click="position='bottom-left'; popToast()"
-                        :class="{ 'ring-2 ring-neutral-200/60' : position=='bottom-left' }"
-                        class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">Bottom Left</button>
-            </div>
-        </div>
-        <div class="relative">
-            <p class="mb-2 text-xs font-medium text-center text-gray-500 sm:text-left">Layout</p>
-            <div class="relative flex flex-col px-10 space-y-2 sm:space-x-5 sm:space-y-0 sm:flex-row sm:px-0">
-                <button @click="expanded=false; window.dispatchEvent(new CustomEvent('set-toasts-layout', { detail: { layout: 'default' }}));"
-                        :class="{ 'ring-2 ring-neutral-200/60' : !expanded }"
-                        class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">Default</button>
-                <button @click="expanded=true; window.dispatchEvent(new CustomEvent('set-toasts-layout', { detail: { layout: 'expanded' }}));" 
-                        :class="{ 'ring-2 ring-neutral-200/60' : expanded }"
-                        class="inline-flex items-center justify-center flex-shrink-0 px-3 py-1 text-xs font-medium transition-colors border rounded-md h-9 hover:bg-gray-50 active:bg-white focus:bg-white focus:outline-none">Expanded</button>
-            </div>
-        </div>
-    </div>
--->
+ 
     <div x-data="aclToastNotification({position: 'bottom-right'})"></div>
     
-    <div class="container mx-auto"> 
+    <div class="container mx-auto">  
         <div x-data="aclListComments({
+            url: 'https://localhost:7220/api/contentsearch/posts/replies',
+            params: fetchCommentParams,
+            mode: 'inline',
             commentItems: commentItems,
             menuItems: commentMenu,
             actionItems: commentActions,
@@ -105,7 +43,7 @@
                 <div class="relative w-full bg-cover lg:w-6/12 xl:w-7/12 bg-gradient-to-r from-white via-white to-gray-100">
                     <div x-data="aclContentSection(loginFormData)"></div>
                 </div>
-                <div class="w-full bg-white lg:w-6/12 xl:w-5/12">
+                <div class="w-full bg-white dark:bg-gray-800 lg:w-6/12 xl:w-5/12">
                     <div x-data="aclFormPostback(loginFormData)"></div>
                 </div>
             </div>
@@ -113,7 +51,7 @@
 
         <div class="mx-auto max-w-7xl">
             <div class="flex flex-col lg:flex-row">
-                <div class="w-full bg-white lg:w-6/12 xl:w-5/12">
+                <div class="w-full bg-white dark:bg-gray-800 lg:w-6/12 xl:w-5/12">
                     <div x-data="aclFormAjax(registerFormData)"></div>
                 </div>
                 <div class="relative w-full bg-cover lg:w-6/12 xl:w-7/12 bg-gradient-to-r from-white via-white to-gray-100">
@@ -126,6 +64,33 @@
         <div x-data="aclCardVertical({})"></div>
         <div x-data="aclCardHorizontal({})"></div>
 
+        <div x-data="{ switchOn: false }" class="flex items-center justify-center space-x-2">
+            <input id="thisId" type="checkbox" name="switch" class="hidden" :checked="switchOn">
+        
+            <button 
+                x-ref="switchButton"
+                type="button" 
+                @click="switchOn = ! switchOn; $store.theme.toggle();"
+                :class="switchOn ? 'bg-blue-600' : 'bg-neutral-200'" 
+                class="relative inline-flex h-6 py-0.5 ml-4 focus:outline-none rounded-full w-10"
+                x-cloak>
+                <span :class="switchOn ? 'translate-x-[18px]' : 'translate-x-0.5'" class="w-5 h-5 duration-200 ease-in-out bg-white rounded-full shadow-md"></span>
+            </button>
+        
+            <label @click="$refs.switchButton.click(); $refs.switchButton.focus()" :id="$id('switch')" 
+                :class="{ 'text-blue-600': switchOn, 'text-gray-400': ! switchOn }"
+                class="text-sm select-none"
+                x-cloak>
+                Dark mode
+            </label>
+        </div>
+
+
+        <div class="h-max-[360px] max-w-[640px]" x-data="aclMediaVideo({
+            mp4: 'https://cdn.devdojo.com/pines/videos/coast.mp4',
+            webm: 'https://cdn.devdojo.com/pines/videos/coast.webm',
+            ogg: 'https://cdn.devdojo.com/pines/videos/coast.ogg'
+        })"></div>
     </div>
     <!-- Footer Here -->
     <div x-data="aclNavigationFooter(footerData)"></div>
@@ -133,6 +98,18 @@
 </body>
 
 <script>
+    var fetchCommentParams = 
+        {
+        "query":null,
+        "userId":"4c2929bf-4577-4759-7f56-08dca2b4c13c",
+        "page":0,
+        "itemsPerPage":1,
+        "filters": 
+            [
+                {"name":"parentId","Operator":"Equals","Condition":"Filter","Value":"6575ba3a-5065-4943-9ea7-d44dc4ee85cf"}
+            ]
+        };
+
     var headerData = {
         title: 'pines.ui',
         primaryItems: [
@@ -400,7 +377,23 @@
                 date: '2024-07-20T00:38:52.0421225Z',
                 text: 'Display users\' comments beautifully. The component also has a form for commenting.',
             },
+            replies: {
+                profiles: [
+                    {
+                        img: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png',
+                    },
+                    {
+                        img: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png',
+                    },
+                    {
+                        img: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png',
+                    },
+                ],
+                text: 'View replies (3)',
+                date: '2024-07-20T00:38:52.0421225Z',
+            },
             metrics: {
+                replies: 4,
                 rating: 17231
             },
             taxonomy: {
@@ -421,6 +414,7 @@
                 img: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png',
             },
             condense: true,
+
             settings: {
                 
             },
@@ -435,10 +429,10 @@
                         type: "Image"
                     },
                     {
-                        src: "https://localhost:7220/media/files/855c493e-e09d-4a82-ba84-5781a2af8339",
-                        id: "855c493e-e09d-4a82-ba84-5781a2af831",
-                        name: "example-dqw.png",
-                        type: "Image"
+                        src: "https://localhost:7220/media/files/42674386-87dd-4dd2-8ad0-6b10a13b9481",
+                        id: "42674386-87dd-4dd2-8ad0-6b10a13b9481",
+                        name: "insects.mp4",
+                        type: "Video"
                     },
                     {
                         src: "https://localhost:7220/media/files/6059ed31-53e1-475f-b31d-07b70b54ba5e?w=400",
@@ -474,6 +468,21 @@
             },
             metrics: {
                 rating: 302
+            },
+            replies: {
+                profiles: [
+                    {
+                        img: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png',
+                    },
+                    {
+                        img: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png',
+                    },
+                    {
+                        img: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png',
+                    },
+                ],
+                text: 'View replies (3)',
+                date: '2024-07-20T00:38:52.0421225Z',
             },
             taxonomy: {
                 category: 'Entertainment',
@@ -588,6 +597,134 @@
             href: '#edit',
         },
     ];
+
+    var replyItems = [
+        { 
+            id: 221,
+            profile: {
+                icon: 'calendar',
+                displayName: 'Deb peterson',
+                username: '@johnwes',
+                description: 'Blogger, thraser, skaterboi, etc',
+                date: '10/07/2024',
+                href: '#',
+                img: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png',
+            },
+            settings: {
+                
+            },
+            content: {
+                date: '2024-07-20T00:38:52.0421225Z',
+                text: 'How can we detect paste event in alpine js? · alpinejs/alpine · Discussion #2880. How can we detect paste event in alpine js?',
+                media: [ 
+                    {
+                        src: "https://localhost:7220/media/files/855c493e-e09d-4a82-ba84-5781a2af8339",
+                        id: "855c493e-e09d-4a82-ba84-5781a2af8339",
+                        name: "example-qwdd.png",
+                        type: "Image"
+                    },
+                    {
+                        src: "https://localhost:7220/media/files/42674386-87dd-4dd2-8ad0-6b10a13b9481",
+                        id: "42674386-87dd-4dd2-8ad0-6b10a13b9481",
+                        name: "insects.mp4",
+                        type: "Video"
+                    },
+                    {
+                        src: "https://localhost:7220/media/files/6059ed31-53e1-475f-b31d-07b70b54ba5e?w=400",
+                        id: "855c493e-e09d-4a82-ba84-5781a2af8314",
+                        name: "example-dqw.png",
+                        type: "Image"
+                    }
+                ]
+            },
+            replies: {
+                profiles: [
+                    {
+                        img: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png',
+                    },
+                    {
+                        img: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png',
+                    },
+                    {
+                        img: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png',
+                    },
+                ],
+                text: 'View replies (3)',
+                date: '2024-07-20T00:38:52.0421225Z',
+            },
+            metrics: {
+                rating: 2
+            },
+            taxonomy: {
+                category: 'AI',
+            },
+            menu: [ 'CopyLink' ],
+            actions: [ 'reply', 'quote', 'upvote', 'downvote', 'tag' ],
+        },
+        { 
+            id: 2312,
+            profile: {
+                icon: 'calendar',
+                displayName: 'Deb peterson',
+                username: '@johnwes',
+                description: 'Blogger, thraser, skaterboi, etc',
+                date: '10/07/2024',
+                href: '#',
+                img: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png',
+            },
+            content: {
+                date: '2024-07-20T00:38:52.0421225Z',
+                text: 'We\'ve created a simple formula to follow in order to gain more out of your business and your application.',
+            },
+            metrics: {
+                rating: 302
+            },
+            taxonomy: {
+                category: 'Entertainment',
+            },
+            menu: [ 'CopyLink' ],
+            actions: [ 'reply', 'quote', 'upvote', 'downvote', 'tag' ],
+        },
+        { 
+            id: 3152,
+            profile: {
+                icon: 'calendar',
+                displayName: 'Deb peterson',
+                username: '@johnwes',
+                description: 'Blogger, thraser, skaterboi, etc',
+                date: '10/07/2024',
+                href: '#',
+                img: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png',
+            },
+            content: {
+                date: '2024-07-20T00:38:52.0421225Z',
+                text: 'Features to help you work smarter',
+                media: [ 
+                    {
+                        src: "https://cdn.devdojo.com/images/june2023/mountains-01.jpeg",
+                        id: "855c493e-e09d-4a82-ba84-5781a2af83a9",
+                        name: "example-aaa.png",
+                        type: "Image"
+                    },
+                    {
+                        src: "https://localhost:7220/media/files/855c493e-e09d-4a82-ba84-5781a2af8339",
+                        id: "855c493e-e09d-4a82-ba84-5781a2af8d33",
+                        name: "example-sss.png",
+                        type: "Image"
+                    }
+                ]
+            },
+            metrics: {
+                rating: 4124
+            },
+            taxonomy: {
+                category: 'News',
+            },
+            menu: [ 'CopyLink' ],
+            actions: [ 'reply', 'quote', 'upvote', 'downvote', 'tag' ],
+        },
+    ]; 
+    
 
     var media = [
             {

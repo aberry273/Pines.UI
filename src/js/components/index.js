@@ -3,7 +3,7 @@ import { aclExampleComponent } from './_example/index.js'
 // CONTENT
 import { aclContentSection } from './content/index.js'
 // MEDIA
-import { aclMediaImage } from './media/index.js'
+import { aclMediaImage, aclMediaVideo, aclMedia } from './media/index.js'
 // DROPDOWNS
 import { aclDropdownMenuProfile, aclDropdownMenuButton } from './dropdowns/index.js'
 // NAVIGATIONS
@@ -22,6 +22,8 @@ import { aclInputField } from './inputs/index.js'
 import { aclIconsSvg } from './icons/index.js'
 // BUTTONS
 import { aclButton } from './buttons/index.js'
+// COMMON
+import { aclCommonSpinner } from './common/index.js'
 // LINKS
 import { aclLinkAhref } from './links/index.js'
 // MODALS
@@ -29,7 +31,7 @@ import { aclModal, aclModalFullscreen, aclModalFormAjax, aclModalMedia } from '.
 // LISTS
 import { aclListComments } from './lists/index.js'
 // CARDS
-import { aclCardHorizontal, aclCardVertical, aclCardComment, aclCardProfileHover } from './cards/index.js'
+import { aclCardHorizontal, aclCardReplies, aclCardVertical, aclCardComment, aclCardProfileHover } from './cards/index.js'
 
 export {
     // DROPDOWNS
@@ -38,6 +40,8 @@ export {
     aclContentSection,
     // MEDIA
     aclMediaImage,
+    aclMediaVideo,
+    aclMedia,
     // NAVIGATIONS
     aclNavigationBar,
     aclNavigationBarDropdown,
@@ -69,10 +73,13 @@ export {
     // LISTS
     aclListComments,
     // CARDS
+    aclCardReplies,
     aclCardHorizontal,
     aclCardVertical,
     aclCardComment,
     aclCardProfileHover,
     // BUTTONS
     aclButton,
+    // COMMON
+    aclCommonSpinner,
 }

@@ -4,6 +4,7 @@ export default function (params) {
 	return {
         ...mxMedia(params),
         // PROPERTIES 
+        media: null,
         // INIT
         init() {
             this.setValues(params);

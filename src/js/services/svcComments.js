@@ -19,39 +19,45 @@ export default function (settings) {
         async init() {
             this.self = this;
             this._mxEvent_On(this.svcComments_eventCopyLink, (item) => {
-                this.upvote(item, this);
-                this.sendAlert('copy', 'default', '')
+                this._svcComments_copyLink(item, this);
+                this._svcComments_sendAlert('copy', 'default', '')
             })
             this._mxEvent_On(this.svcComments_eventQuote, (item) => {
-                this.upvote(item, this);
-                this.sendAlert('quote', 'default', '')
+                this._svcComments_quote(item, this);
+                this._svcComments_sendAlert('quote', 'default', '')
             })
             this._mxEvent_On(this.svcComments_eventUpvote, (item) => {
-                this.upvote(item, this);
-                this.sendAlert('upvote', 'default', '')
+                this._svcComments_upvote(item, this);
+                this._svcComments_sendAlert('upvote', 'default', '')
             })
             this._mxEvent_On(this.svcComments_eventDownvote, (item) => {
-                this.upvote(item, this);
-                this.sendAlert('downvote', 'default', '')
+                this._svcComments_downvote(item, this);
+                this._svcComments_sendAlert('downvote', 'default', '')
             })
             this._mxEvent_On(this.svcComments_eventFlag, (item) => {
-                this.upvote(item, this);
-                this.sendAlert('flag', 'default', '')
+                this._svcComments_flag(item, this);
+                this._svcComments_sendAlert('flag', 'default', '')
             })
             this._mxEvent_On(this.svcComments_eventDelete, (item) => {
-                this.upvote(item, this);
-                this.sendAlert('delete', 'default', '')
+                this._svcComments_delete(item, this);
+                this._svcComments_sendAlert('delete', 'default', '')
             })
         },
         // GETTERS  
         // METHODS
-        setEvents(item, cb) {
+        async _svcComments_fetch(postbackUrl, filters) {
+            await this._mxFetch_Post(
+                postbackUrl, 
+                filters
+            );
+        },
+        _svcComments_setEvents(item, cb) {
             if (!this.mxEvent_event) return;
             const self = this;
             this.upvote(item, this);
             this.sendAlert('upvote', 'default', '')
         },
-        sendAlert(title, type, description) {
+        _svcComments_sendAlert(title, type, description) {
             this._mxEvent_Emit(
                 this.mxToast_event, 
                 {
@@ -61,22 +67,22 @@ export default function (settings) {
                 }
             );
         },
-        upvote(item) {
+        _svcComments_upvote(item) {
             console.log(item); 
         },
-        downvote(item) {
+        _svcComments_downvote(item) {
             console.log(item);
         },
-        quote(item) {
+        _svcComments_quote(item) {
             console.log(item);
         },
-        copyLink(item) {
+        _svcComments_copyLink(item) {
             console.log(item);
         },
-        flag(item) {
+        _svcComments_flag(item) {
             console.log(item);
         },
-        delete(item) {
+        _svcComments_delete(item) {
             console.log(item);
         },
     }

@@ -8,8 +8,6 @@ export default function (params) {
         expanded: false,
         // INIT
         init() {
-            console.log('init')
-            console.log(params)
             this._mxToast_setValues(params);
             this.setEvents();
             this.initToasts();
@@ -60,7 +58,6 @@ export default function (params) {
             //this.title = "POP THAT TOAST";
             //this.type = 'default';
             //this.description = "This is an example toast notification";
-            console.log(this.mxToast_position)
             let html = '';
             if(typeof custom != 'undefined'){
                 html = custom;
@@ -352,7 +349,6 @@ export default function (params) {
             }
         },
         setToastLayout(event) {
-            console.log(event.detail)
             const layout = event.detail.layout;
             if(layout == 'expanded'){
                 expanded=true;

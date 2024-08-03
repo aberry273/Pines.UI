@@ -18,6 +18,7 @@ export default function (params) {
         taxonomy: {},
         content: {},
         profile: {},
+        ui: {},
         menu: [],
         actions: [],
         // INIT
@@ -31,6 +32,10 @@ export default function (params) {
                 items: this.menu
             }
         },
+        get uiMode() {
+            if(!this.ui || !this.ui.mode) return 'redirect';
+            return this.ui.mode
+        },
         // METHODS
         setValues(params) {
             this.id = params.id;
@@ -42,18 +47,28 @@ export default function (params) {
             this.metrics = params.metrics;
             this.label = params.label;
             this.menu = params.menu;
+            this.ui = params.ui || {
+                mode: 'inline'
+            };
             this.actions = params.actions;
             this.item = params;
         },
         close() {
             this.open = false;
         },
+        hasReplies(item) {
+            if(item == null || item.replies == null || item.metrics.replies == 0) return false;
+            return true;
+        },
+        onClickReplies() {
+            this.$dispatch('on:click:replies', this.id)
+        },
         executeAction(btn, item) {
             //this.$events.Emit(btn.event, item);
         },
         render() {
             const html = `
-                <div class="flex max-w bg-white rounded-lg hover:bg-gray-50">
+                <div class="flex max-w bg-white dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
                     <!--Profile image-->    
                     <div class="w-14 h-8 sm:w-10 flex-shrink-0 flex items-center justify-center">
                         <div x-show="!condense" x-data="aclMediaImage( {
@@ -87,9 +102,7 @@ export default function (params) {
                         </div> 
 
                         <!-- Content -->
-                        <div class="w-full">
-                            <!-- More Button -->
-                            <span class="absolute right-0" x-show="condense && showMenu" x-data="aclDropdownMenuButton(dropdownParams)"></span>
+                        <div class="w-full justify-items-end">
                             <!-- Text -->
                             <div @click="showMenu = !showMenu" x-text="content.text" class="w-full align-center cursor-pointer mb-3 font-normal text-gray-700 dark:text-gray-400"></div>
                             <!-- Media --> 
@@ -109,8 +122,32 @@ export default function (params) {
                                 <template x-for="btn in actions">
                                     <div x-data="aclButton(btn)"></div>
                                 </template>
+                                <!-- More Button -->
+                                <span class="" x-show="condense && showMenu" x-data="aclDropdownMenuButton(dropdownParams)"></span>
                             </div>
                         </div>
+
+                        <!-- Link card -->
+                        <!--
+                        <template x-if="hasReplies(item)">
+                            <div class="flex max-w bg-grey rounded-lg hover:bg-gray-50">
+                                <a href="#" class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                                    <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" src="/docs/images/blog/image-4.jpg" alt="">
+                                    <div class="flex flex-col justify-between p-4 leading-normal">
+                                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
+                                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </template>
+                        -->
+                        
+                        <!-- Reply card -->
+                        <!--
+                        <template x-if="hasReplies(item)">
+                            <div @click="onClickReplies" x-data="aclCardReplies(item.replies)"></div>
+                        </template>
+                        -->
                     </div>
                 </div>
             `
