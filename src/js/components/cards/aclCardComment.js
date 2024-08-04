@@ -32,9 +32,9 @@ export default function (params) {
                 items: this.menu
             }
         },
-        get uiMode() {
-            if(!this.ui || !this.ui.mode) return 'redirect';
-            return this.ui.mode
+        get modeThread() {
+            if(!this.ui || !this.ui.mode) return false;
+            return this.ui.mode == 'thread'
         },
         // METHODS
         setValues(params) {
@@ -56,10 +56,6 @@ export default function (params) {
         close() {
             this.open = false;
         },
-        hasReplies(item) {
-            if(item == null || item.replies == null || item.metrics.replies == 0) return false;
-            return true;
-        },
         onClickReplies() {
             this.$dispatch('on:click:replies', this.id)
         },
@@ -68,20 +64,28 @@ export default function (params) {
         },
         render() {
             const html = `
-                <div class="flex max-w bg-white dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                <div class="flex max-w h-full rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                                        
                     <!--Profile image-->    
-                    <div class="w-14 h-8 sm:w-10 flex-shrink-0 flex items-center justify-center">
-                        <div x-show="!condense" x-data="aclMediaImage( {
-                            src: profile.img,
-                            class: 'rounded-md w-9 h-9'
-                        })"></div>
+                    <div class="flex sm:w-10 w-9 flex items-center justify-center">
+                        <div class="flex flex-col h-full items-center">
+                            <div x-show="!condense" x-data="aclMediaImage( {
+                                src: profile.img,
+                                class: 'rounded-md w-9 h-9'
+                            })"></div>
+                            
+                            <!-- Comment line -->
+                            <div x-show="modeThread" class="w-1 top-0 bottom-0 h-full flex-grow bg-gray-200"></div>
+                        </div>
                         <!-- Updated -->
+                        <!--
                         <time x-show="condense && showMenu" x-text="_mxDate_FormatShortString(content.date)" :datetime="content.date" class="pl-2 text-xs text-gray-300 dark:text-gray-300"></time>
+                        -->
                     </div>
+                    
                     <!--Comment--> 
-                    <div class="ml-3 pt-0 w-full">
-                        
-                    <!-- Header -->
+                    <div class="ml-0 pt-0 w-full">
+                        <!-- Header -->
                         <div class="font-medium flex rtl:text-right justify-between" x-show="!condense">
                             <div @click="showMenu = !showMenu" class="cursor-pointer">
                                 <!-- User Link-->
@@ -139,13 +143,6 @@ export default function (params) {
                                     </div>
                                 </a>
                             </div>
-                        </template>
-                        -->
-                        
-                        <!-- Reply card -->
-                        <!--
-                        <template x-if="hasReplies(item)">
-                            <div @click="onClickReplies" x-data="aclCardReplies(item.replies)"></div>
                         </template>
                         -->
                     </div>

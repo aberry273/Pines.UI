@@ -18,12 +18,21 @@ export default function (params) {
         onFieldChange(ev) {
             this.$dispatch('onfieldchange', ev.detail)
         },
+        renderField(field) {
+            console.log(field);
+
+            return 'aclFieldInput(field, i)'
+        },
         render() {
             const html = `
                 <template x-for="(field, i) in mxForm_fields" :key="field.id || field.name+i || i">
                     <label :for="field.id || field.name" class="relative" x-show="!field.hidden">
                         <span class="font-medium text-gray-900" x-text="field.label || field.name"></span>
-                        <div x-data="aclInputField(field)" @oninputchange="onFieldChange"></div>
+                        <!--
+                        <div x-data="aclFieldInput(field)" @oninputchange="onFieldChange"></div>
+                        -->
+                        <label x-html="renderField(field, i)" :for="field.name" x-show="!field.hidden"></label>
+
                         <div x-show="field.helperText != null && field.helperText.length > 0">
                             <small x-text="field.helperText"></small>
                         </div>

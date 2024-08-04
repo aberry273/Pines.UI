@@ -8,6 +8,7 @@ export default function (params) {
         ...mxIcon(params),
         ...mxDate(params),
         // PROPERTIES
+        active: false,
         date: null,
         items: null,
         id: '',
@@ -21,6 +22,7 @@ export default function (params) {
         },
         // METHODS
         setValues(params) {
+            this.active = params.active;
             this.date = params.date;
             this.items = params.profiles;
             this.mxContent_text = params.text;
@@ -31,6 +33,11 @@ export default function (params) {
         render() {
             const html = `
                 <div class="flex max-w cursor-pointer bg-grey rounded-lg hover:bg-gray-50">
+                    <div class="flex sm:w-10 w-9 flex items-center justify-center">
+                        <!-- Comment line -->
+                        <div x-show="active" class="w-1 top-0 bottom-0 h-full flex-grow bg-gray-200"></div>
+                    </div>
+
                     <div class="flex w-full h-9 items-center  rounded-lg  md:flex-row md:max-w-xl hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700">
                        
                         <!--Link-->

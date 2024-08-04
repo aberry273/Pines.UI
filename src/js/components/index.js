@@ -7,7 +7,7 @@ import { aclMediaImage, aclMediaVideo, aclMedia } from './media/index.js'
 // DROPDOWNS
 import { aclDropdownMenuProfile, aclDropdownMenuButton } from './dropdowns/index.js'
 // NAVIGATIONS
-import { aclNavigationBar, aclNavigationBarDropdown, aclNavigationFooter } from './navigations/index.js'
+import { aclNavigationBar, aclNavigationBarDropdown, aclNavigationFooter, aclNavigationFilter } from './navigations/index.js'
 // TABS
 import { aclTabs } from './tabs/index.js'
 // TOASTS
@@ -17,7 +17,7 @@ import { aclGridMedia } from './grid/index.js'
 // FORMS
 import { aclFormPostback, aclFormAjax, aclFormFieldset } from './forms/index.js'
 // FIELDS
-import { aclInputField } from './inputs/index.js'
+import { aclFieldInput, aclFieldSelect } from './fields/index.js'
 // ICONS
 import { aclIconsSvg } from './icons/index.js'
 // BUTTONS
@@ -46,6 +46,7 @@ export {
     aclNavigationBar,
     aclNavigationBarDropdown,
     aclNavigationFooter,
+    aclNavigationFilter,
     // DROPDOWNS
     aclDropdownMenuProfile,
     aclDropdownMenuButton,
@@ -60,7 +61,8 @@ export {
     aclFormAjax,
     aclFormFieldset,
     // INPUTS
-    aclInputField,
+    aclFieldInput,
+    aclFieldSelect,
     // ICONS
     aclIconsSvg,
     // LINKS

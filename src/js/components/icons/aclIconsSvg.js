@@ -11,6 +11,7 @@ import { userCircle, user, userGroup, tag, cog, dots, adjustmentsHorizontal, adj
     trash,
     edit,
     close,
+    filter,
 } from './heroIconsLibrary.js';
 
 
@@ -50,6 +51,7 @@ export default function (params) {
             if(icon == 'link') return link(mxIcon_class)
             if(icon == 'edit') return edit(mxIcon_class)
             if(icon == 'close') return close(mxIcon_class)
+            if(icon == 'filter') return filter(mxIcon_class)
             return''
           },
         render() {

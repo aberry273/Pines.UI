@@ -28,7 +28,11 @@
  
     <div x-data="aclToastNotification({position: 'bottom-right'})"></div>
     
-    <div class="container mx-auto">  
+    <div class="container mx-auto">
+       <div x-data="aclNavigationFilter({
+        title: 'Filters'
+       })"></div>
+
         <div x-data="aclListComments({
             url: 'https://localhost:7220/api/contentsearch/posts/replies',
             params: fetchCommentParams,
@@ -378,6 +382,7 @@
                 text: 'Display users\' comments beautifully. The component also has a form for commenting.',
             },
             replies: {
+                hasReplies: true,
                 profiles: [
                     {
                         img: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png',
@@ -414,9 +419,7 @@
                 img: 'https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png',
             },
             condense: true,
-
             settings: {
-                
             },
             content: {
                 date: '2024-07-20T00:38:52.0421225Z',
