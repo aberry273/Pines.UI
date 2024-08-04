@@ -1,11 +1,67 @@
-# md.web
-A simple markdown page bootstrapper
+# Slows.UI
+A simple Alpine.JS x TailwindCSS framework. Inspired by the work by Devdojo at with Pines.UI (https://devdojo.com/pines/)
+
+- No build tools required
+- Componentised implementation of Alpine
+
+
+- Core framework structure
+-- Mixins
+Shared JS library for components
+-- Services
+Implemented as a AlpineJS store
+-- Components
+Implemented as AlpineJS data components
+Each component has a params objevt it receives as its defauult data
+/components/example/aclExampleComponent.js
+
+```
+export default function (params) {
+	return {
+        // PROPERTIES
+        open: false,
+        // INIT
+        init() {
+            this.setValues(params || {});
+            this.render();
+        },
+        // GETTERS
+        // METHODS
+        close() {
+            this.open = false;
+        },
+        setValues(params) {
+            this.open = params.open;
+        },
+        render() {
+            const html = `
+            <div class="dropdown" :open="open">
+                aclExampleComponent
+            </div>
+            `
+            this.$nextTick(() => { this.$root.innerHTML = html });
+      }
+    }
+}
+```
+
+index.html
+```
+<div x-data="aclDataComponent({open: true})>"></div>
+```
+
+- AlpineJS structure
+Alpine wiring installed above the core framework (magics can implement mixins)
+-- Stores
+-- Magics
+-- Directives
+-- Bindings
 
 
 # setup instructions
 1. Download VSCode extension LiveServer https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer
 2. Right click on index.html and 'open with live server'
-3. Enjoy local site
+3. Enjoy the site running locally
 
 
 # CSS - Tailwing
