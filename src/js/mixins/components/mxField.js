@@ -9,6 +9,7 @@ export default function (data) {
         mxField_name: null,
         mxField_min: null,
         mxField_max: null,
+        mxField_items: [],
         mxField_class: null,
         mxField_disabled: null,
         mxField_value: null,
@@ -19,7 +20,6 @@ export default function (data) {
         mxField_areaDescribedBy: null,
         mxField_pattern: null,
         init() {
-            console.log('mxField')
         },
         // GETTERS  
         get mxField_inputInvalidClass() { return 'invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 '},     

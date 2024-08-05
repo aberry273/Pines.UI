@@ -32,6 +32,27 @@
        <div x-data="aclNavigationFilter({
         title: 'Filters'
        })"></div>
+       <div class="mx-auto max-w-7xl">
+        <div class="flex flex-col lg:flex-row">
+            <div class="relative w-full bg-cover lg:w-6/12 xl:w-7/12 bg-gradient-to-r from-white via-white to-gray-100">
+                <div x-data="aclContentSection(loginFormData)"></div>
+            </div>
+            <div class="w-full bg-white dark:bg-gray-800 lg:w-6/12 xl:w-5/12">
+                <div x-data="aclFormPostback(loginFormData)"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mx-auto max-w-7xl">
+        <div class="flex flex-col lg:flex-row">
+            <div class="w-full bg-white dark:bg-gray-800 lg:w-6/12 xl:w-5/12">
+                <div x-data="aclFormAjax(registerFormData)"></div>
+            </div>
+            <div class="relative w-full bg-cover lg:w-6/12 xl:w-7/12 bg-gradient-to-r from-white via-white to-gray-100">
+                <div x-data="aclContentSection(loginFormData)"></div>
+            </div>
+        </div>
+    </div> 
 
         <div x-data="aclListComments({
             url: 'https://localhost:7220/api/contentsearch/posts/replies',
@@ -42,27 +63,7 @@
             actionItems: commentActions,
         })"></div> 
 
-        <div class="mx-auto max-w-7xl">
-            <div class="flex flex-col lg:flex-row">
-                <div class="relative w-full bg-cover lg:w-6/12 xl:w-7/12 bg-gradient-to-r from-white via-white to-gray-100">
-                    <div x-data="aclContentSection(loginFormData)"></div>
-                </div>
-                <div class="w-full bg-white dark:bg-gray-800 lg:w-6/12 xl:w-5/12">
-                    <div x-data="aclFormPostback(loginFormData)"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="mx-auto max-w-7xl">
-            <div class="flex flex-col lg:flex-row">
-                <div class="w-full bg-white dark:bg-gray-800 lg:w-6/12 xl:w-5/12">
-                    <div x-data="aclFormAjax(registerFormData)"></div>
-                </div>
-                <div class="relative w-full bg-cover lg:w-6/12 xl:w-7/12 bg-gradient-to-r from-white via-white to-gray-100">
-                    <div x-data="aclContentSection(loginFormData)"></div>
-                </div>
-            </div>
-        </div>
+      
         <div x-data="aclModalFormAjax({event: 'on:quote', form: quoteFormData })"></div>
         
         <div x-data="aclCardVertical({})"></div>
@@ -199,7 +200,29 @@
                 required: true,
                 placeholder: 'Select your username',
                 type: 'select',
-                value: 'default',
+                value: 'eggs',
+                items: [
+                    {
+                        title: 'Milk',
+                        value: 'milk',
+                        disabled: false
+                    },
+                    {
+                        title: 'Eggs',
+                        value: 'eggs',
+                        disabled: false
+                    },
+                    {
+                        title: 'Cheese',
+                        value: 'cheese',
+                        disabled: false
+                    },
+                    {
+                        title: 'Bread',
+                        value: 'bread',
+                        disabled: false
+                    },
+                ],
             },
             {
                 name: 'Username',
