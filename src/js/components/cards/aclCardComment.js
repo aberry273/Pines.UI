@@ -36,6 +36,10 @@ export default function (params) {
             if(!this.ui || !this.ui.mode) return false;
             return this.ui.mode == 'thread'
         },
+        get showline() {
+            if(!this.ui) return false;
+            return this.ui.showline
+        },
         // METHODS
         setValues(params) {
             this.id = params.id;
@@ -48,7 +52,8 @@ export default function (params) {
             this.label = params.label;
             this.menu = params.menu;
             this.ui = params.ui || {
-                mode: 'inline'
+                mode: params.mode,
+                showline: params.showline,
             };
             this.actions = params.actions;
             this.item = params;
@@ -73,9 +78,8 @@ export default function (params) {
                                 src: profile.img,
                                 class: 'rounded-md w-9 h-9'
                             })"></div>
-                            
                             <!-- Comment line -->
-                            <div x-show="modeThread" class="w-1 top-0 bottom-0 h-full flex-grow bg-gray-200"></div>
+                            <div x-show="showline" class="w-1 top-0 bottom-0 h-full flex-grow bg-gray-200"></div>
                         </div>
                         <!-- Updated -->
                         <!--

@@ -25,7 +25,13 @@ export default function (data) {
         get mxField_inputInvalidClass() { return 'invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 '},     
         get mxField_inputEmailRegex() { return '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$' },
         // METHODS
-        _mxField_onChange(field) {
+        _mxField_onChange(ev) {
+            const field = {
+                id: this.mxField_id,
+                name: this.mxField_name,
+                value: this.mxField_value
+            }
+            this.$dispatch('oninputchange', field)
         },
     }
 }

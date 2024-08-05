@@ -10,6 +10,12 @@ export default function (params) {
         cssClass: '',
         // INIT
         init() {
+            this.setValues(params);
+            this.render(); 
+        },
+        // GETTERS
+        // METHODS
+        setValues(params) {
             this.mxField_type = params.type || 'text';
             this.mxField_placeholder = params.placeholder;
             this.mxField_cssClass = params.cssClass;
@@ -26,17 +32,6 @@ export default function (params) {
             this.mxField_ariaInvalid = params.ariaInvalid;
             this.mxField_areaDescribedBy = params.areaDescribedBy;
             this.mxField_pattern = params.pattern;
-            this.render(); 
-        },
-        // GETTERS
-        // METHODS
-        onChange(ev) {
-            const field = {
-                id: this.mxField_id,
-                name: this.mxField_name,
-                value: this.mxField_value
-            }
-            this.$dispatch('oninputchange', field)
         },
         render() {
             const html =  `
@@ -62,7 +57,7 @@ export default function (params) {
                     :aria-describedBy="mxField_areaDescribedBy || mxField_id"
                     data-primary="blue-600"
                     data-rounded="rounded-lg"
-                    @change="onChange"
+                    @change="_mxField_onChange"
                 />
                 <span x-text="field.invalidText || 'Invalid input'" class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
                 </span>

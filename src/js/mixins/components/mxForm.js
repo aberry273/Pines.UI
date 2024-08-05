@@ -41,37 +41,37 @@ export default function (data) {
             }
         },
         _mxForm_GetFormData(form, flattenPayload = false) {
-			if (!form) return {};
-			const payload = {};
-			form.fields.map((x) => {
-				const name = x.name.replace(/\s/g, '');
-				payload[name] = x.value;
-			});
-			if (!form.sections) {
-				return payload;
-			}
-			// form section fields
-			// If flattenPayload is set, then set all data to the root object
-			// Else created objects per section within the payload
-			if (flattenPayload) {
-				form.sections.map((x) => {
-					x.fields.map((y) => {
-						const fieldName = y.name.replace(/\s/g, '');
-						payload[fieldName] = y.value;
-					});
-				});
-			} else {
-				form.sections.map((x) => {
-					const sectionName = x.title.replace(/\s/g, '');
-					payload[sectionName] = {};
+          if (!form) return {};
+          const payload = {};
+          form.fields.map((x) => {
+            const name = x.name.replace(/\s/g, '');
+            payload[name] = x.value;
+          });
+          if (!form.sections) {
+            return payload;
+          }
+          // form section fields
+          // If flattenPayload is set, then set all data to the root object
+          // Else created objects per section within the payload
+          if (flattenPayload) {
+            form.sections.map((x) => {
+              x.fields.map((y) => {
+                const fieldName = y.name.replace(/\s/g, '');
+                payload[fieldName] = y.value;
+              });
+            });
+          } else {
+            form.sections.map((x) => {
+              const sectionName = x.title.replace(/\s/g, '');
+              payload[sectionName] = {};
 
-					x.fields.map((y) => {
-						const fieldName = y.name.replace(/\s/g, '');
-						payload[sectionName][fieldName] = y.value;
-					});
-				});
-			}
-			return payload;
-		},
+              x.fields.map((y) => {
+                const fieldName = y.name.replace(/\s/g, '');
+                payload[sectionName][fieldName] = y.value;
+              });
+            });
+          }
+          return payload;
+        },
     }
 }

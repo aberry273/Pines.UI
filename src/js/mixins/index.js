@@ -1,5 +1,6 @@
 
 // Component mixins
+import mxExample from './components/mxExample.js'
 import mxContent from './components/mxContent.js'
 import mxNavigation from './components/mxNavigation.js'
 import mxForm from './components/mxForm.js'
@@ -23,6 +24,7 @@ import mxEvent from './global/mxEvent.js'
 import mxService from './other/mxService.js'
 
 export {
+    mxExample,
     // Components
     mxContent,
     mxNavigation,

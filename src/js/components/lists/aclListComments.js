@@ -13,6 +13,7 @@ export default function (params) {
         // redirect for navigating the user to the comment page
         // inline for opening up replies on click of replies
         mode: 'redirect',
+        showline: false,
         searchOnInit: false,
         loading: false,
         commentItems: [],
@@ -34,6 +35,7 @@ export default function (params) {
         // METHODS
         setParams(params) {
             this.mode = params.mode || 'redirect';
+            this.showline = params.showline;
             this.searchOnInit = params.searchOnInit || false;
             this.commentItems = params.commentItems;
             this.actionItems = params.actionItems;
@@ -76,7 +78,8 @@ export default function (params) {
             item.actions = this.assignActionsItemAsValue(actions, item);
             
             item.ui = {
-                mode: this.mode
+                mode: this.mode,
+                showline: item.toggle || this.showline,
             }
 
             return item;
@@ -110,7 +113,6 @@ export default function (params) {
             if(item == null || item.replies == null || !item.replies.hasReplies) return false;
             return true;
         },
-
         render() {
             const html = `
             <div class="flex flex-col w-full max-w ">
@@ -127,27 +129,30 @@ export default function (params) {
                         <div class="flex flex-col max-w rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800">
                             
                             <!--Empty column-->    
-                            <div x-show="modeThread"
+                            <div x-show="showline"
                                 class="w-14 sm:w-10 flex-shrink-0 flex items-center justify-center">
                             </div>
                           
                             <!-- Reply expander --> 
-                            <div class="w-full flex-col max-w"
-                                :class="modeThread ? '' : '' ">
+                            <div class="w-full flex-col max-w full-w">
 
                                 <!-- Reply card -->
-                                <template x-if="hasReplies(item) && !item.toggle">
-                                    <div @click="toggleReplies(item)" x-data="aclCardReplies({
-                                        ...item.replies,
-                                        active: item.toggle
-                                    })"></div>
+                                <template x-if="hasReplies(item)">
+                                    <div
+                                        x-show="!item.toggle"
+                                        @click="toggleReplies(item)" 
+                                        x-data="aclCardReplies({
+                                            ...item.replies,
+                                            text: 'Show replies',
+                                            active: true
+                                        })">
+                                    </div>
                                 </template>
-                                
                                 <!-- Close reply list -->
                                 <div x-show="item.toggle">
                                     <div @click="toggleReplies(item)" x-data="aclCardReplies({ text: 'Hide replies' })"></div>
                                 </div>
- 
+
                                 <template x-if="item.toggle">
                                     <div class="flex flex-col max-w dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800">
                                         <!-- Reply list -->
@@ -156,6 +161,7 @@ export default function (params) {
                                                 url: mxFetch_url,
                                                 params: mxFetch_params,
                                                 mode: 'thread',
+                                                showline: true,
                                                 searchOnInit: true,
                                                 commentItems: [],
                                                 menuItems: commentMenu,

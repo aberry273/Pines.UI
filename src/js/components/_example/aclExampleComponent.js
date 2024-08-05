@@ -1,8 +1,10 @@
+import { mxExample } from '/src/js/mixins/index.js';
 
 export default function (params) {
 	return {
+        ...mxExample(params),
         // PROPERTIES
-        open: false,
+        customProperty: false,
         // INIT
         init() {
             this.setValues(params || {});
@@ -11,14 +13,14 @@ export default function (params) {
         // GETTERS
         // METHODS
         close() {
-            this.open = false;
+            this.mxExample_open = false;
         },
         setValues(params) {
-            this.open = params.open;
+            this._mxExample_setValues(params || {});
         },
         render() {
             const html = `
-            <div class="dropdown" :open="open">
+            <div class="dropdown" :open="mxExample_open">
                 aclExampleComponent
             </div>
             `
