@@ -17,7 +17,7 @@ import { aclGridMedia } from './grid/index.js'
 // FORMS
 import { aclFormPostback, aclFormAjax, aclFormFieldset } from './forms/index.js'
 // FIELDS
-import { aclFieldInput, aclFieldSelect } from './fields/index.js'
+import { aclFieldInput, aclFieldSelect, aclFieldSelectCheckbox } from './fields/index.js'
 // ICONS
 import { aclIconsSvg } from './icons/index.js'
 // BUTTONS
@@ -63,6 +63,7 @@ export {
     // INPUTS
     aclFieldInput,
     aclFieldSelect,
+    aclFieldSelectCheckbox,
     // ICONS
     aclIconsSvg,
     // LINKS

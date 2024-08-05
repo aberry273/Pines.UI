@@ -57,6 +57,9 @@ export default function (params) {
                             <template x-if="field.type == 'select'">
                                 <div x-data="aclFieldSelect(field)" @oninputchange="onFieldChange"></div>
                             </template>
+                            <template x-if="field.type == 'checkbox'">
+                                <div x-data="aclFieldSelectCheckbox(field)" @oninputchange="onFieldChange"></div>
+                            </template>
                             
                             <div x-show="field.helperText != null && field.helperText.length > 0">
                                 <small x-text="field.helperText"></small>
