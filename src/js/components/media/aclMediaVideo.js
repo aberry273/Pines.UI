@@ -59,6 +59,7 @@ export default function (params) {
         // GETTERS
         // METHODS
         setValues(params) {
+            this.mxMedia_caption = params.caption;
             this.mxMedia_src = params.src;
             this.mxMedia_mp4 = params.mp4 || params.src;
             this.mxMedia_webm = params.webm;
@@ -186,7 +187,7 @@ export default function (params) {
                         <source :src="mxMedia_mp4" type="video/mp4" />
                         <source :src="mxMedia_webm" type="video/webm" />
                         <source :src="mxMedia_ogg" type="video/ogg" />
-                    </video>
+                    </video> 
                     <div x-show="videoPlayerReady" class="absolute inset-0 w-full h-full">
                         <div x-ref="videoBackground" @click="togglePlay()" class="absolute inset-0 z-30 flex items-center justify-center w-full h-full bg-black bg-opacity-0 cursor-pointer group">
                             <div

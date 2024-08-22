@@ -1,5 +1,5 @@
 import { mxIcon } from '/src/js/mixins/index.js';
-import { userCircle, user, userGroup, tag, cog, dots, adjustmentsHorizontal, adjustmentsVertical, creditCard, expand, keyboard,
+import { userCircle, user, userGroup, userPlus, tag, cog, dots, adjustmentsHorizontal, adjustmentsVertical, creditCard, expand, keyboard,
     chevronUp,
     chevronDown,
     chevronLeft,
@@ -11,7 +11,22 @@ import { userCircle, user, userGroup, tag, cog, dots, adjustmentsHorizontal, adj
     trash,
     edit,
     close,
+    closeCircle,
     filter,
+    send,
+    ellipsisHorizontal,
+    ellipsisVertical,
+    ellipsisCircle,
+    code,
+    bold,
+    quote,
+    italic,
+    mention,
+    emoji,
+    image,
+    video,
+    presentationChart,
+    documentText
 } from './heroIconsLibrary.js';
 
 
@@ -32,6 +47,7 @@ export default function (params) {
             if(icon == 'userCircle') return userCircle(mxIcon_class)
             if(icon == 'user') return user(mxIcon_class)
             if(icon == 'userGroup') return userGroup(mxIcon_class)
+            if(icon == 'userPlus') return userPlus(mxIcon_class)
             if(icon == 'tag') return tag(mxIcon_class)
             if(icon == 'adjustmentsHorizontal') return adjustmentsHorizontal(mxIcon_class)
             if(icon == 'adjustmentsVertical') return adjustmentsVertical(mxIcon_class)
@@ -51,7 +67,22 @@ export default function (params) {
             if(icon == 'link') return link(mxIcon_class)
             if(icon == 'edit') return edit(mxIcon_class)
             if(icon == 'close') return close(mxIcon_class)
+            if(icon == 'closeCircle') return closeCircle(mxIcon_class)
             if(icon == 'filter') return filter(mxIcon_class)
+            if(icon == 'send') return send(mxIcon_class)
+            if(icon == 'ellipsisHorizontal') return ellipsisHorizontal(mxIcon_class)
+            if(icon == 'ellipsisVertical') return ellipsisVertical(mxIcon_class)
+            if(icon == 'ellipsisCircle') return ellipsisCircle(mxIcon_class)
+            if(icon == 'code') return code(mxIcon_class)
+            if(icon == 'bold') return bold(mxIcon_class)
+            if(icon == 'quote') return quote(mxIcon_class)
+            if(icon == 'italic') return italic(mxIcon_class)
+            if(icon == 'mention') return mention(mxIcon_class)
+            if(icon == 'emoji') return emoji(mxIcon_class)
+            if(icon == 'image') return image(mxIcon_class)
+            if(icon == 'video') return video(mxIcon_class)
+            if(icon == 'presentationChart') return presentationChart(mxIcon_class)
+            if(icon == 'documentText') return documentText(mxIcon_class)
             return''
           },
         render() {

@@ -1,12 +1,13 @@
-import { mxContent, mxIcon, mxButton, mxList, mxFetch } from '/src/js/mixins/index.js';
+import { mxContent, mxIcon, mxButton, mxList, mxFetch, mxEvent } from '/src/js/mixins/index.js';
 
 export default function (params) {
 	return {
         ...mxContent(params),
         ...mxIcon(params),
         ...mxButton(params),
-        ...mxFetch(params),
         ...mxList(params),
+        ...mxFetch(params),
+        ...mxEvent(params),
         // PROPERTIES
         tooltipArrow: true,
         tooltipPosition: '',
@@ -23,6 +24,7 @@ export default function (params) {
         async init() {
             this.setParams(params);
             this.render();
+            this.setEvents();
             if(this.searchOnInit) await this.search();
         },
         // GETTERS 
@@ -49,6 +51,12 @@ export default function (params) {
 
             this.mxFetch_url = params.url; 
             this.mxFetch_params = params.params; 
+        },
+        async setEvents() {
+            this._mxEvent_On(this.$store.svcComments.svcComments_eventCreate, (result) => {
+                result.id += new Date().toISOString();
+                this.commentItems.push(result);
+            })
         },
         async search() {
             const self = this;
@@ -78,8 +86,9 @@ export default function (params) {
             item.actions = this.assignActionsItemAsValue(actions, item);
             
             item.ui = {
+                ...item.ui,
                 mode: this.mode,
-                showline: item.toggle || this.showline,
+                showline: this.showline,
             }
 
             return item;
@@ -110,8 +119,8 @@ export default function (params) {
             return Math.floor(Math.random() * max);
         },
         hasReplies(item) {
-            if(item == null || item.replies == null || !item.replies.hasReplies) return false;
-            return true;
+            if (item == null || !item.ui) return false;
+            return item.ui.showReplies;
         },
         render() {
             const html = `
@@ -121,7 +130,7 @@ export default function (params) {
                 <template x-for="(item, i) in commentItems" :key="item.id">
                     <div>  
                         <div 
-                            x-data="aclCardComment(getCommentWithMenuActions(item))"
+                            x-data="aclSocialCardComment(getCommentWithMenuActions(item))"
                             @on:click:replies="(ev) => { toggleReplies(item) }"
                         ></div>
 
@@ -141,7 +150,7 @@ export default function (params) {
                                     <div
                                         x-show="!item.toggle"
                                         @click="toggleReplies(item)" 
-                                        x-data="aclCardReplies({
+                                        x-data="aclSocialCardReplies({
                                             ...item.replies,
                                             text: 'Show replies',
                                             active: true
@@ -150,14 +159,14 @@ export default function (params) {
                                 </template>
                                 <!-- Close reply list -->
                                 <div x-show="item.toggle">
-                                    <div @click="toggleReplies(item)" x-data="aclCardReplies({ text: 'Hide replies' })"></div>
+                                    <div @click="toggleReplies(item)" x-data="aclSocialCardReplies({ text: 'Hide replies' })"></div>
                                 </div>
 
                                 <template x-if="item.toggle">
                                     <div class="flex flex-col max-w dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800">
                                         <!-- Reply list -->
                                         <div 
-                                            x-data="aclListComments({
+                                            x-data="aclSocialListComments({
                                                 url: mxFetch_url,
                                                 params: mxFetch_params,
                                                 mode: 'thread',

@@ -13,6 +13,7 @@ export default function (params) {
             this.mxContent_subtitle = params.subtitle;
             this.mxDropdown_groups = params.groups;
             this.mxButton_items = params.items;
+            this.mxButton_disabled = params.disabled;
             this.open = params.open;
             this.render();
         },
@@ -32,7 +33,7 @@ export default function (params) {
             const html = `
             <div class="relative">
          
-            <div x-data="aclButton({ icon: 'dots' })" @onclick="mxDropdown_open = true"></div>
+            <div x-data="aclButton({ icon: 'dots', disabled: mxButton_disabled })" @onclick="mxDropdown_open = true"></div>
                             
             <div x-show="mxDropdown_open" 
                 @click.away="mxDropdown_open=false"

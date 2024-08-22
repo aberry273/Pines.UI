@@ -20,6 +20,7 @@ import mxMedia from './components/mxMedia.js'
 import mxTheme from './global/mxTheme.js'
 import mxFetch from './global/mxFetch.js'
 import mxEvent from './global/mxEvent.js'
+import mxString from './global/mxString.js'
 // Other mixins
 import mxService from './other/mxService.js'
 
@@ -45,6 +46,7 @@ export {
     mxTheme,
     mxFetch,
     mxEvent,
+    mxString,
     // Other
     mxService,
 }

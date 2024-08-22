@@ -5,7 +5,6 @@ export default function (params) {
         ...mxContent(params),
         ...mxForm(params),
         // PROPERTIES
-        open: false,
         header: '',
         // INIT
         init() {
@@ -15,7 +14,6 @@ export default function (params) {
         // GETTERS
         // METHODS
         setValues(params) {
-            this.open = params.open;
             this.mxContent_title = params.title;
             this.mxContent_subtitle = params.subtitle;
             this.mxContent_text = params.text;

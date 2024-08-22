@@ -21,20 +21,7 @@ export default function (params) {
         init() {
             this.setValues(params);
             this.selectedItem = this.mxField_items.filter(x => x.value == this.mxField_value)[0]
-            this.render(); 
-            
-            this.$watch('selectOpen', () => {
-                if(!this.selectedItem){ 
-                    this.selectableItemActive = this.selectableItems[0];
-                } else {
-                    this.selectableItemActive = this.selectedItem;
-                }
-                setTimeout(() => {
-                    this.selectScrollToActiveItem();
-                }, 10);
-                this.selectPositionUpdate();
-                window.addEventListener('resize', (event) => { this.selectPositionUpdate(); });
-            });
+            this.render();
         },
         // GETTERS
         // METHODS
@@ -57,84 +44,30 @@ export default function (params) {
             this.mxField_areaDescribedBy = params.areaDescribedBy;
             this.mxField_pattern = params.pattern;
         },
-        selectableItemIsActive(item) {
-            return this.selectableItemActive && this.selectableItemActive.value==item.value;
-        },
-        electableItemActiveNext(){
-            let index = this.mxField_items.indexOf(this.selectableItemActive);
-            if(index < this.mxField_items.length-1){
-                this.selectableItemActive = this.mxField_items[index+1];
-                this.selectScrollToActiveItem();
-            }
-        },
-        selectableItemActivePrevious(){
-            let index = this.mxField_items.indexOf(this.selectableItemActive);
-            if(index > 0){
-                this.selectableItemActive = this.mxField_items[index-1];
-                this.selectScrollToActiveItem();
-            }
-        },
-        selectScrollToActiveItem(){
-            if(this.selectableItemActive){
-                this.activeElement = document.getElementById(this.selectableItemActive.value + '-' + this.selectId)
-                let newScrollPos = (this.activeElement.offsetTop + this.activeElement.offsetHeight) - this.$refs.selectableItemsList.offsetHeight;
-                if (newScrollPos > 0) {
-                    this.$refs.selectableItemsList.scrollTop = newScrollPos;
-                } else {
-                    this.$refs.selectableItemsList.scrollTop=0;
-                }
-            }
-        },
-        selectKeydown(event){
-            if (event.keyCode >= 65 && event.keyCode <= 90) {
-                
-                this.selectKeydownValue += event.key;
-                selectedItemBestMatch = this.selectItemsFindBestMatch();
-                if (selectedItemBestMatch) {
-                    if(this.selectOpen){
-                        this.selectableItemActive = selectedItemBestMatch;
-                        this.selectScrollToActiveItem();
-                    } else {
-                        this.selectedItem = this.selectableItemActive = selectedItemBestMatch;
-                    }
-                }
-                
-                if(this.selectKeydownValue != ''){
-                    clearTimeout(this.selectKeydownClearTimeout);
-                    this.selectKeydownClearTimeout = setTimeout(() => {
-                        this.selectKeydownValue = '';
-                    }, this.selectKeydownTimeout);
-                }
-            }
-        },
-        selectItemsFindBestMatch(){
-            let typedValue = this.selectKeydownValue.toLowerCase();
-            var bestMatch = null;
-            var bestMatchIndex = -1;
-            for (var i = 0; i < this.mxField_items.length; i++) {
-                var title = this.mxField_items[i].title.toLowerCase();
-                var index = title.indexOf(typedValue);
-                if (index > -1 && (bestMatchIndex == -1 || index < bestMatchIndex) && !this.mxField_items[i].disabled) {
-                    bestMatch = this.mxField_items[i];
-                    bestMatchIndex = index;
-                }
-            }
-            return bestMatch;
-        },
-        selectPositionUpdate(){
-            let selectDropdownBottomPos = this.$refs.selectButton.getBoundingClientRect().top + this.$refs.selectButton.offsetHeight + parseInt(window.getComputedStyle(this.$refs.selectableItemsList).maxHeight);
-            if(window.innerHeight < selectDropdownBottomPos){
-                this.selectDropdownPosition = 'top';
-            } else {
-                this.selectDropdownPosition = 'bottom';
-            }
-        },
         selectItem(item) {
-            this.selectedItem=item;
-            this.selectOpen=false;
-            this.$refs.selectButton.focus();
-            this.mxField_value = item.value;
-            this._mxField_onChange()
+            let values = this.mxField_value || [];
+            if (!Array.isArray(values)) {
+                values = [];
+            }
+            const index = values.indexOf(item.value);
+            if (index == -1) {
+                values.push(item.value)
+            } else {
+                values.splice(index, 1);
+            }
+            this.mxField_value = values;
+            this._mxField_onChange();
+        },
+        getItemLabel(item, i) {
+            return item.value+'_'+i;
+        },
+        getCheckboxClass(item, i) {
+            const label = this.getItemLabel(item, i);
+            return `cursor-pointer peer-checked:[&_svg]:scale-100 block font-medium truncate text-neutral-600 peer-checked:text-blue-600 [&_svg]:scale-0 peer-checked:[&_.${label}]:border-blue-500 peer-checked:[&_.${label}]:bg-blue-500 select-none flex items-center space-x-2`
+        },
+        itemSelected(item) {
+            const index = this.mxField_value.indexOf(item.value);
+            return index > -1;
         },
         render() {
             const html =  `
@@ -157,20 +90,29 @@ export default function (params) {
                     class="absolute w-full z-10 py-1 mt-1 overflow-auto text-sm bg-white rounded-md shadow-md max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none"
                     x-cloak>
                     
-                    <template x-for="item in mxField_items" :key="item.value">
-                        <li 
-                            @click="selectItem(item)"
+                    <template x-for="(item, i) in mxField_items" :key="item.value">
+                        <li @click="selectItem(item)"
                             :id="item.value + '-' + selectId"
                             :data-disabled="item.disabled"
-                            :class="{ 'bg-neutral-100 text-gray-900' : selectableItemIsActive(item), '' : !selectableItemIsActive(item) }"
+                            :class="{ 'bg-neutral-100 text-gray-900' : itemSelected(item), '' : !itemSelected(item) }"
                             @mousemove="selectableItemActive=item"
                             class="text-xl px-4 py-4 relative flex items-center h-full py-2 pl-8 text-gray-700 cursor-default select-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
-                           
-                            <div class="flex items-center mb-4">
-                                <input id="checkbox-id" type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-neutral-900 focus:ring-neutral-900">
-                                <label for="checkbox-id" class="ml-2 text-sm font-medium text-gray-900" x-text="item.title"></label>
+                            
+                            <div class="flex items-start mb-6">
+                                <div class="flex items-center h-5 w-full">
+                                    <input 
+                                        :name="getItemLabel(field, i)" 
+                                        :id="getItemLabel(field, i)" 
+                                        :value="itemSelected(item)" 
+                                        type="checkbox" 
+                                        class="flex items-center justify-center w-5 h-5 border-2 rounded custom-checkbox text-neutral-900"
+                                        required>
+                                    <span 
+                                        :for="getItemLabel(field, i)" 
+                                        class="pl-2" 
+                                        x-text="item.title"></span>
+                                </div>
                             </div>
-
                         </li>
                     </template>
 

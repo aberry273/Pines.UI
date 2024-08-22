@@ -10,7 +10,6 @@ export default function (params) {
         // PROPERTIES
         item: null,
         id: '',
-        condense: false,
         showMenu: false,
         label: '',
         metrics: {},
@@ -29,6 +28,7 @@ export default function (params) {
         // GETTERS
         get dropdownParams() {
             return {
+                disabled: !this.menu || this.menu.length == 0,
                 items: this.menu
             }
         },
@@ -43,15 +43,15 @@ export default function (params) {
         // METHODS
         setValues(params) {
             this.id = params.id;
-            this.condense = params.condense;
             this.profile = params.profile || this.profile;
-            this.content = params.content;
-            this.settings = params.settings;
-            this.taxonomy = params.taxonomy;
-            this.metrics = params.metrics;
+            this.content = params.content || {};
+            this.settings = params.settings || {};
+            this.taxonomy = params.taxonomy || {};
+            this.metrics = params.metrics || {};
             this.label = params.label;
             this.menu = params.menu;
             this.ui = params.ui || {
+                showReplies: true,
                 mode: params.mode,
                 showline: params.showline,
             };
@@ -74,7 +74,7 @@ export default function (params) {
                     <!--Profile image-->    
                     <div class="flex sm:w-10 w-9 flex items-center justify-center">
                         <div class="flex flex-col h-full items-center">
-                            <div x-show="!condense" x-data="aclMediaImage( {
+                            <div x-show="!ui.condense" x-data="aclMediaImage( {
                                 src: profile.img,
                                 class: 'rounded-md w-9 h-9'
                             })"></div>
@@ -83,14 +83,14 @@ export default function (params) {
                         </div>
                         <!-- Updated -->
                         <!--
-                        <time x-show="condense && showMenu" x-text="_mxDate_FormatShortString(content.date)" :datetime="content.date" class="pl-2 text-xs text-gray-300 dark:text-gray-300"></time>
+                        <time x-show="ui.condense && showMenu" x-text="_mxDate_FormatShortString(content.date)" :datetime="content.date" class="pl-2 text-xs text-gray-300 dark:text-gray-300"></time>
                         -->
                     </div>
                     
                     <!--Comment--> 
                     <div class="ml-0 pt-0 w-full">
                         <!-- Header -->
-                        <div class="font-medium flex rtl:text-right justify-between" x-show="!condense">
+                        <div class="font-medium flex rtl:text-right justify-between" x-show="!ui.condense">
                             <div @click="showMenu = !showMenu" class="cursor-pointer">
                                 <!-- User Link-->
                                 <span x-data="aclCardProfileHover(profile)"></span>
@@ -112,7 +112,13 @@ export default function (params) {
                         <!-- Content -->
                         <div class="w-full justify-items-end">
                             <!-- Text -->
-                            <div @click="showMenu = !showMenu" x-text="content.text" class="w-full align-center cursor-pointer mb-3 font-normal text-gray-700 dark:text-gray-400"></div>
+                            <template x-if="content.text">
+                                <div @click="showMenu = !showMenu" x-text="content.text" class="w-full align-center cursor-pointer mb-3 font-normal text-gray-700 dark:text-gray-400"></div>
+                            </template>
+                            <!-- Formats --> 
+                            <template x-if="content.formats != null && content.formats.length > 0">
+                                <div @click="showMenu = !showMenu"  class="full-w cursor-pointer" x-data="aclPluginEditorJsParser({ value: content.formats })"></div>
+                            </template>
                             <!-- Media --> 
                             <template x-if="content.media != null && content.media.length > 0">
                                 <div class="full-w" x-data="aclGridMedia({ items: content.media, event: 'modal:'+id })"></div>
@@ -131,7 +137,7 @@ export default function (params) {
                                     <div x-data="aclButton(btn)"></div>
                                 </template>
                                 <!-- More Button -->
-                                <span class="" x-show="condense && showMenu" x-data="aclDropdownMenuButton(dropdownParams)"></span>
+                                <span class="" x-show="ui.condense && showMenu" x-data="aclDropdownMenuButton(dropdownParams)"></span>
                             </div>
                         </div>
 

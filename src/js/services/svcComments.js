@@ -9,6 +9,10 @@ export default function (settings) {
         ...mxService(settings),
         ...mxToast(settings),
         // PROPERTIES
+        svcComments_eventCreate: 'on:comment:create',
+        svcComments_eventUpdate: 'on:comment:update',
+        svcComments_eventDelete: 'on:comment:delete',
+        svcComments_eventGet: 'on:comment:get',
         svcComments_eventCopyLink: 'on:comment:copylink',
         svcComments_eventQuote: 'on:comment:quote',
         svcComments_eventUpvote: 'on:upvote',
@@ -45,6 +49,12 @@ export default function (settings) {
         },
         // GETTERS  
         // METHODS
+        async _svcComments_create(postbackUrl, comment) {
+            await this._mxFetch_Post(
+                postbackUrl, 
+                filters
+            );
+        },
         async _svcComments_fetch(postbackUrl, filters) {
             await this._mxFetch_Post(
                 postbackUrl, 

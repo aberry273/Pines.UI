@@ -1,6 +1,8 @@
+import { mxContent } from '/src/js/mixins/index.js';
 
 export default function (params) {
 	return {
+        ...mxContent(params),
         // PROPERTIES
         open: false,
         // INIT

@@ -17,11 +17,11 @@ export default function (params) {
         },
         // GETTERS
         get disabledStyle() {
-            return 'pointer-events: none; cursor: default;';
+            return 'pointer-events: none; cursor: default';
         },
         // METHODS
         setHover() {
-            if(!this.mxButton_tooltip) return;
+            if (!this.mxButton_tooltip) return;
             this.mxButton_showTooltip = true
         },
         setLeave() {
@@ -64,6 +64,9 @@ export default function (params) {
             this.mxButton_override = params.override;
             this.mxButton_tooltip = params.tooltip; 
             this.mxButton_class = params.class || this.mxButton_class;
+            if(params.disabled) {
+                this.mxButton_class += ' text-gray-300 dark:text-gray-300'
+            }
         },
         render() {
             const html = `

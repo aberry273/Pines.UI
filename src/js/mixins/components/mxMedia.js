@@ -6,6 +6,7 @@ export default function (data) {
         mxMedia_alt: '',
         mxMedia_class: '',
         mxMedia_type: '',
+        mxMedia_caption: '',
         // IMAGE
 
         // VIDEO
