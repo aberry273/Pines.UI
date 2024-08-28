@@ -1,4 +1,4 @@
-import { mxContent, mxForm, mxEvent } from '/src/js/mixins/index.js';
+import { mxContent, mxForm, mxEvent, } from '/src/js/mixins/index.js';
 
 export default function (params) {
 	return {
@@ -10,17 +10,40 @@ export default function (params) {
         actions: [],
         form: {},
         formatActions: [],
+        settingFields: [
+            'Tags',
+            'Category',
+            'Tags2',
+            'Category2',
+            'Visibility',
+        ],
+        modalFields: [],
         // INIT
         init() {
             this.setValues(params);
             this.render();
         },
         // GETTERS
+        get settingsForm() {
+            return {
+                class: this.mxForm_formPadlessClass,
+                title: 'Manage replies',
+                label: 'Save',
+                fields: this.modalFields,
+                submit: (data) => { this.submitSettings(data) }
+            }
+        },
         // METHODS
+        submitSettings(data){
+            console.log('submitSettings');
+            console.log(data);
+            console.log(this.form.fields)
+        },
         setValues(params) {
             this.mxContent_title = params.title;
             this.actions = params.actions;
             this.form = params.form;
+            this.modalFields = this.filterFields(this.settingFields);
         },
         clearFields() {
             for(var i = 0; i < this.form.fields.length; i++) {
@@ -97,9 +120,12 @@ export default function (params) {
             this.form.fields[index].hidden = !this.form.fields[index].hidden;
         },
         toggleFieldModal(fieldName) {
-            const index = this.indexOf(fieldName); 
-            if (index == -1) return;
+            console.log(fieldName)
+            this._mxEvent_Emit(this.getFieldEvent(fieldName), quoteFormData);
             //this.form.fields[index].hidden = !this.form.fields[index].hidden;
+        },
+        getFieldEvent(fieldName) {
+            return `on:modal:${fieldName}`;
         },
         getField(fieldName) {
             const index = this.indexOf(fieldName); 
@@ -121,6 +147,17 @@ export default function (params) {
             */
             this.toggleFieldVisibility('Text')
             this.toggleFieldVisibility('Formats')
+        },
+        filterFields(fieldNames) {
+            const fields = this.form.fields
+                .filter(x => fieldNames.indexOf(x.name) > -1)
+                .map(x => { return { ...x } });
+
+            const updatedFields = fields.map(x => {
+                x.hidden = false;
+                return x;
+            })
+            return updatedFields;
         },
         render() {
             const html = `
@@ -160,7 +197,11 @@ export default function (params) {
                             </div>
                         </div>
                     </div>
-
+                </div>
+                
+                <div x-data="aclModalFormAjax({ 
+                    event: getFieldEvent('Settings'), 
+                    form: settingsForm })">
                 </div>
             `
             this.$nextTick(() => { this.$root.innerHTML = html });

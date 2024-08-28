@@ -9,7 +9,10 @@ import { aclDropdownMenuProfile, aclDropdownMenuButton } from './dropdowns/index
 // NAVIGATIONS
 import { aclNavigationBar, aclNavigationBarDropdown, aclNavigationFooter, aclNavigationFilter } from './navigations/index.js'
 // TABS
-import { aclTabs } from './tabs/index.js'
+import { 
+    aclTabs,
+    aclTabsNavigation 
+} from './tabs/index.js'
 // TOASTS
 import { aclToastNotification } from './toasts/index.js'
 // GRID
@@ -24,7 +27,8 @@ import {
     aclFieldEditorJs, 
     aclFieldSelect, 
     aclFieldSelectCheckbox,
-    aclFieldFile
+    aclFieldFile,
+    aclFieldSwitch
 } from './fields/index.js'
 // ICONS
 import { aclIconsSvg } from './icons/index.js'
@@ -43,10 +47,12 @@ import { aclCardHorizontal, aclCardVertical, aclCardProfileHover } from './cards
 
 // SOCIAL
 import {
-    aclSocialCardComment,
+    aclSocialListChatPosts,
+    aclSocialCardChatPost,
+    aclSocialListFeedPosts,
+    aclSocialCardFeedPost,
     aclSocialCardReplies,
-    aclSocialListComments,
-    aclSocialFormComment,
+    aclSocialFormPost,
 } from './social/index.js'
 
 
@@ -73,6 +79,7 @@ export {
     aclDropdownMenuButton,
     // TABS
     aclTabs,
+    aclTabsNavigation,
     // TOASTS,
     aclToastNotification,
     // GRID
@@ -89,6 +96,7 @@ export {
     aclFieldFile,
     aclFieldSelect,
     aclFieldSelectCheckbox,
+    aclFieldSwitch,
     // ICONS
     aclIconsSvg,
     // LINKS
@@ -109,10 +117,12 @@ export {
     aclCommonSpinner,
 
     // SOCIAL,
-    aclSocialCardComment,
+    aclSocialListChatPosts,
+    aclSocialCardChatPost,
+    aclSocialListFeedPosts,
+    aclSocialCardFeedPost,
     aclSocialCardReplies,
-    aclSocialListComments,
-    aclSocialFormComment,
+    aclSocialFormPost,
 
     // PLUGINS
     aclPluginEditorJs,

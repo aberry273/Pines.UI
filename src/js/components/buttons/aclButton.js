@@ -1,7 +1,7 @@
 import { mxContent, mxIcon, mxButton, mxEvent } from '/src/js/mixins/index.js';
 
 export default function (params) {
-	return {
+    return {
         ...mxContent(params),
         ...mxIcon(params),
         ...mxButton(params),
@@ -28,23 +28,23 @@ export default function (params) {
             this.mxButton_showTooltip = false;
         },
         onClick() {
-            if(this.mxButton_disabled) return;
+            if (this.mxButton_disabled) return;
             // Override any events or href and run the dispatch
             if (this.mxButton_override) {
                 this.$dispatch('onclick', this.mxButton_name);
                 return
             }
             // Otherwise if href is passed redirect will occur
-            if(this.mxButton_href) {
+            if (this.mxButton_href) {
                 return;
             }
             // Otherwise if the event is passed emit the event
-            if(this.mxButton_event) {
+            if (this.mxButton_event) {
                 this._mxEvent_Emit(this.mxButton_event, this.mxButton_value);
                 return;
             }
             // Fallback to dispatch
-            if(!!this.mxButton_name) {
+            if (!!this.mxButton_name) {
                 const dispatchEv = `click.${this.mxButton_name}`;
                 this.$dispatch(dispatchEv);
                 return;
@@ -60,18 +60,20 @@ export default function (params) {
             this.mxButton_disabled = params.disabled;
             this.mxButton_href = params.href;
             this.mxButton_event = params.event;
+            this.mxButton_color = params.color;
+            this.mxButton_type = params.type || 'button';
             this.mxButton_value = params.value;
             this.mxButton_override = params.override;
-            this.mxButton_tooltip = params.tooltip; 
+            this.mxButton_tooltip = params.tooltip;
             this.mxButton_class = params.class || this.mxButton_class;
-            if(params.disabled) {
+            if (params.disabled) {
                 this.mxButton_class += ' text-gray-300 dark:text-gray-300'
             }
         },
         render() {
             const html = `
             <a x-ref="btn" 
-                type="button" 
+                :type="mxButton_type"
                 @mouseenter.debounce.750ms="setHover" 
                 @mouseleave="setLeave" 
                 @mouseover.away="setLeave" 
@@ -79,12 +81,18 @@ export default function (params) {
                 :disabled="mxButton_disabled"
                 :href="mxButton_href"
                 :class="mxButton_class"
-                :style="mxButton_disabled ? disabledStyle : '' ">
+                :value="mxButton_value"
+                x-model="mxButton_value"
+                :style="mxButton_disabled ? disabledStyle : 'background-color: ' + mxButton_color">
          
-                <svg :class="'w-5 h-5'" x-data="aclIconsSvg({mxIcon_name})"></svg>
+                <template x-if="mxIcon_name">
+                    <svg :class="'w-5 h-5'" x-data="aclIconsSvg({mxIcon_name})"></svg>
+                </template>
                 <span class="ml-2" x-show="mxButton_text" x-text="mxButton_text"></span>
-                <span :class="mxButton_labelClass" x-show="mxButton_label" x-text="mxButton_label"></span>
-                
+                <template x-if="mxButton_label">
+                    <span :class="mxButton_labelClass" x-show="mxButton_label" x-text="mxButton_label"></span>
+                </template>
+
                 <!--tooltip-->
                 <template x-if="!!mxButton_tooltip">
                     <div x-ref="tooltip" x-show="mxButton_showTooltip" :class="{ 'top-0 left-1/2 -translate-x-1/2 -mt-0.5 -translate-y-full' : tooltipPosition == 'top', 'top-1/2 -translate-y-1/2 -ml-0.5 left-0 -translate-x-full' : tooltipPosition == 'left', 'bottom-0 left-1/2 -translate-x-1/2 -mb-0.5 translate-y-full' : tooltipPosition == 'bottom', 'top-1/2 -translate-y-1/2 -mr-0.5 right-0 translate-x-full' : tooltipPosition == 'right' }" class="absolute w-auto text-sm" x-cloak>
@@ -99,6 +107,6 @@ export default function (params) {
             </a>
             `
             this.$nextTick(() => { this.$root.innerHTML = html });
-      }
+        }
     }
 }

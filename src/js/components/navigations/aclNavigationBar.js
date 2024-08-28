@@ -29,14 +29,14 @@ export default function (params) {
                         </a>
                         <nav :class="mxNavigation_getItemsClass">
                             <template x-for="item in mxNavigation_primaryItems">
-                                <a :href="item.href" x-text="item.label" :class="item.class || mxNavigation_headerLinkClass"></a>
+                                <a :href="item.href" x-text="item.text" :class="item.class || mxNavigation_headerLinkClass"></a>
                             </template>
                         </nav>
                     </div>
             
                     <div :class="mxNavigation_getContainerRightClass">
                         <template x-for="item in mxNavigation_secondaryItems">
-                            <a :href="item.href" x-text="item.label" :class="item.class || mxNavigation_headerButtonClass"></a>
+                            <a :href="item.href" x-text="item.text" :class="item.class || mxNavigation_headerButtonClass"></a>
                         </template>
                     </div>
                 </div>

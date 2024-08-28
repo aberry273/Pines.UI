@@ -26,7 +26,10 @@ import { userCircle, user, userGroup, userPlus, tag, cog, dots, adjustmentsHoriz
     image,
     video,
     presentationChart,
-    documentText
+    documentText,
+    facebook,
+    google,
+    microsoft
 } from './heroIconsLibrary.js';
 
 
@@ -83,6 +86,9 @@ export default function (params) {
             if(icon == 'video') return video(mxIcon_class)
             if(icon == 'presentationChart') return presentationChart(mxIcon_class)
             if(icon == 'documentText') return documentText(mxIcon_class)
+            if(icon == 'facebook') return facebook(mxIcon_class)
+            if(icon == 'google') return google(mxIcon_class)
+            if(icon == 'microsoft') return microsoft(mxIcon_class)
             return''
           },
         render() {

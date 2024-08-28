@@ -9,23 +9,25 @@ export default function (params) {
         placeholder: '',
         cssClass: '',
         selectOpen: false,
-        selectedItem: '',
+        selectedItem: null,
         selectableItemActive: null,
-        selectId: this.$id('select'),
+        selectId: 'aclFieldSelect',
         selectKeydownValue: '',
         selectKeydownTimeout: 1000,
         selectKeydownClearTimeout: null,
         selectDropdownPosition: 'bottom',
-        
+        isObjectItems: true,
+
         // INIT
         init() {
             this.setValues(params);
-            this.selectedItem = this.mxField_items.filter(x => x.value == this.mxField_value)[0]
+            const item = this.mxField_items.filter(x => x.value == this.mxField_value)[0]
+            this.selectedItem = item; 
             this.render(); 
             
             this.$watch('selectOpen', () => {
                 if(!this.selectedItem){ 
-                    this.selectableItemActive = this.selectableItems[0];
+                    //this.selectableItemActive = this.mxField_items[0];
                 } else {
                     this.selectableItemActive = this.selectedItem;
                 }
@@ -37,14 +39,13 @@ export default function (params) {
             });
         },
         // GETTERS
-        // METHODS
+        // METHODS 
         setValues(params) {
             this.mxField_type = params.type || 'text';
             this.mxField_placeholder = params.placeholder;
             this.mxField_cssClass = params.cssClass;
             this.mxField_id = params.id;
             this.mxField_name = params.name;
-            this.mxField_items = params.items;
             this.mxField_min = params.min;
             this.mxField_max = params.max;
             this.mxField_disabled = params.disabled;
@@ -56,6 +57,16 @@ export default function (params) {
             this.mxField_ariaInvalid = params.ariaInvalid;
             this.mxField_areaDescribedBy = params.areaDescribedBy;
             this.mxField_pattern = params.pattern;
+            
+            this.isObjectItems = params.isObjectItems;
+            
+            if (this.isObjectItems === false) {
+                params.items = params.items.map(x => {
+                    return this._mxField_ConvertItemStringToObject(x)
+                });
+            }
+            this.mxField_items = params.items;
+            this.selectId = this.$id('select');
         },
         selectableItemIsActive(item) {
             return this.selectableItemActive && this.selectableItemActive.value==item.value;
@@ -136,8 +147,30 @@ export default function (params) {
             this.mxField_value = item.value;
             this._mxField_onChange()
         },
+        itemSelected(item) {
+            if(this.isObjectItems) {
+                return this.selectedItem.value==item.value
+            }
+            else {
+                return this.selectedItem == item;
+            }
+        },
         render() {
             const html =  `
+                <input   
+                    class="peer"  
+                    :id="mxField_id"
+                    :name="mxField_name" 
+                    :disabled="true"
+                    :hidden="true"
+                    :value="mxField_value"
+                    x-model="mxField_value"  
+                    :required="mxField_required" 
+                    :aria-invalid="mxField_ariaInvalid"
+                    :class="mxField_class" 
+                    :aria-describedBy="mxField_areaDescribedBy || mxField_id" 
+                />
+
                 <button type="button" x-ref="selectButton" @click="selectOpen=!selectOpen"
                     :class="{ 'focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400' : !selectOpen }"
                     class="relative text-xl px-4 py-4 mt-2 min-h-[38px] flex items-center justify-between w-full py-2 pl-3 pr-10 text-left placeholder-gray-400 bg-gray-200 border rounded-md shadow-sm cursor-default border-neutral-200/70 focus:outline-none text-sm">
@@ -165,7 +198,7 @@ export default function (params) {
                             :class="{ 'bg-neutral-100 text-gray-900' : selectableItemIsActive(item), '' : !selectableItemIsActive(item) }"
                             @mousemove="selectableItemActive=item"
                             class="text-xl px-4 py-4 relative flex items-center h-full py-2 pl-8 text-gray-700 cursor-default select-none data-[disabled]:opacity-50 data-[disabled]:pointer-events-none">
-                            <svg x-show="selectedItem.value==item.value" class="absolute left-0 w-4 h-4 ml-2 stroke-current text-neutral-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <svg x-show="itemSelected(item)" class="absolute left-0 w-4 h-4 ml-2 stroke-current text-neutral-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                             <span class="block font-medium truncate" x-text="item.title"></span>
                         </li>
                     </template>

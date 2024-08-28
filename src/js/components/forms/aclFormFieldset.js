@@ -1,4 +1,14 @@
 import { mxContent, mxForm } from '/src/js/mixins/index.js';
+import { 
+    aclFieldInput,
+    aclFieldTextarea,
+    aclFieldContentEditable, 
+    aclFieldEditorJs, 
+    aclFieldSelect, 
+    aclFieldSelectCheckbox,
+    aclFieldFile,
+    aclFieldSwitch
+} from '/src/js/components/fields/index.js'
 
 export default function (params) {
 	return {
@@ -9,10 +19,6 @@ export default function (params) {
         init() {
             this.setValues(params);
             this.render();
-            this.$watch('mxForm_fields', (newVal, oldVal) => {
-                console.log(newVal);
-                //this.render();
-            })
         },
         // GETTERS
         // METHODS
@@ -26,14 +32,24 @@ export default function (params) {
             const fieldType = field.component || field.type;
             switch(fieldType)
             {
+                case 'aclFieldInput':
+                    return aclFieldInput(field);
+                case 'aclFieldTextarea':
+                    return aclFieldTextarea(field);
                 case 'aclFieldSelect':
-                    return 'aclFieldSelect'
+                    return aclFieldSelect(field);
                 case 'aclFieldSelectCheckbox':
-                    return 'aclFieldSelectCheckbox'
+                    return aclFieldSelectCheckbox(field);
                 case 'aclFieldContentEditable':
-                    return 'aclFieldContentEditable'
+                    return aclFieldContentEditable(field);
+                case 'aclFieldEditorJs':
+                    return aclFieldEditorJs(field);
                 case 'aclFieldFile':
-                    return 'aclFieldFile'
+                    return aclFieldFile(field);
+                case 'aclFieldSwitch':
+                    return aclFieldSwitch(field);
+                default:
+                    return aclFieldInput(field);
             }
         },
         // redundant
@@ -50,30 +66,8 @@ export default function (params) {
                 <template x-for="(field, i) in mxForm_fields" :key="getFieldKey(field)">
                     <div >
                         <label x-cloak :for="field.id || field.name" class="relative" x-show="!field.hidden">
-                            <span x-show="field.label" class="font-medium text-gray-900" x-text="field.label"></span>
-                            
-                            <template x-if="field.component == 'aclFieldInput'">
-                                <div x-data="aclFieldInput(field)" @oninputchange="(ev) => { onFieldChange(ev.detail) }"></div>
-                            </template>
-                            <template x-if="field.component == 'aclFieldTextarea'">
-                                <div x-data="aclFieldTextarea(field)" @oninputchange="(ev) => { onFieldChange(ev.detail) }"></div>
-                            </template>
-                            <template x-if="field.component == 'aclFieldSelect'">
-                                <div x-data="aclFieldSelect(field)" @oninputchange="(ev) => { onFieldChange(ev.detail) }"></div>
-                            </template>
-                            <template x-if="field.component == 'aclFieldSelectCheckbox'">
-                                <div x-data="aclFieldSelectCheckbox(field)" @oninputchange="(ev) => { onFieldChange(ev.detail) }"></div>
-                            </template>
-                            <template x-if="field.component == 'aclFieldContentEditable'">
-                                <div x-data="aclFieldContentEditable(field)" @oninputchange="(ev) => { onFieldChange(ev.detail) }"></div>
-                            </template>
-                            <template x-if="field.component == 'aclFieldEditorJs'">
-                                <div x-data="aclFieldEditorJs(field)" @oninputchange="(ev) => { onFieldChange(ev.detail) }"></div>
-                            </template>
-                            <template x-if="field.component == 'aclFieldFile'">
-                                <div x-data="aclFieldFile(field)" @oninputchange="(ev) => { onFieldChange(ev.detail) }"></div>
-                            </template>
-                            
+                            <span x-show="field.label && field.component != 'aclFieldSwitch'" class="font-medium text-gray-900" x-text="field.label"></span>
+                            <div x-data="getFieldComponent(field)" @oninputchange="(ev) => { onFieldChange(ev.detail) }"></div>
                             <div x-show="field.helperText != null && field.helperText.length > 0">
                                 <small x-text="field.helperText"></small>
                             </div>

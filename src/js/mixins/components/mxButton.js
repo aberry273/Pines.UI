@@ -7,6 +7,8 @@ export default function (data) {
         mxButton_href: null,
         mxButton_value: null,
         mxButton_tooltip: '',
+        mxButton_type: 'button',
+        mxButton_color: '',
         mxButton_name: '',
         mxButton_showTooltip: false,
         mxButton_override: false,

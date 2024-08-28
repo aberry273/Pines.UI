@@ -16,6 +16,7 @@ import mxList from './components/mxList.js'
 import mxToast from './components/mxToast.js'
 import mxGrid from './components/mxGrid.js'
 import mxMedia from './components/mxMedia.js'
+import mxTab from './components/mxTab.js'
 // Global mixins
 import mxTheme from './global/mxTheme.js'
 import mxFetch from './global/mxFetch.js'
@@ -42,6 +43,7 @@ export {
     mxToast,
     mxGrid,
     mxMedia,
+    mxTab,
     // Global
     mxTheme,
     mxFetch,

@@ -130,7 +130,7 @@ export default function (params) {
                 <template x-for="(item, i) in commentItems" :key="item.id">
                     <div>  
                         <div 
-                            x-data="aclSocialCardComment(getCommentWithMenuActions(item))"
+                            x-data="aclSocialCardChatPost(getCommentWithMenuActions(item))"
                             @on:click:replies="(ev) => { toggleReplies(item) }"
                         ></div>
 
@@ -166,7 +166,7 @@ export default function (params) {
                                     <div class="flex flex-col max-w dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800">
                                         <!-- Reply list -->
                                         <div 
-                                            x-data="aclSocialListComments({
+                                            x-data="aclSocialListChatPosts({
                                                 url: mxFetch_url,
                                                 params: mxFetch_params,
                                                 mode: 'thread',

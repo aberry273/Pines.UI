@@ -8,6 +8,7 @@ export default function (params) {
         ...mxModal(params),
         ...mxEvent(params),
         // PROPERTIES
+        component: 'aclFormAjax',
         form: {},
         // INIT
         init() {
@@ -63,7 +64,7 @@ export default function (params) {
                                     </button>
                                 </div>
                                 
-                                <div x-data="aclFormAjax(form)"></div>
+                                <div x-data="${this.component}(form)"></div>
                         </div>
                     </div>
                 </template>

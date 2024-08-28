@@ -10,7 +10,7 @@ export default function (params) {
         // PROPERTIES
         item: null,
         id: '',
-        showMenu: false,
+        showMenu: true,
         label: '',
         metrics: {},
         settings: {},
@@ -69,7 +69,7 @@ export default function (params) {
         },
         render() {
             const html = `
-                <div class="flex max-w h-full rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                <div class="flex  cursor-pointer  max-w h-full my-2 mx-8 px-2 py-2 border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
                                         
                     <!--Profile image-->    
                     <div class="flex sm:w-10 w-9 flex items-center justify-center">
@@ -88,10 +88,10 @@ export default function (params) {
                     </div>
                     
                     <!--Comment--> 
-                    <div class="ml-0 pt-0 w-full">
+                    <div class="ml-0 pt-0 pl-2 w-full">
                         <!-- Header -->
                         <div class="font-medium flex rtl:text-right justify-between" x-show="!ui.condense">
-                            <div @click="showMenu = !showMenu" class="cursor-pointer">
+                            <div>
                                 <!-- User Link-->
                                 <span x-data="aclCardProfileHover(profile)"></span>
                                 <!-- Updated -->
@@ -113,11 +113,11 @@ export default function (params) {
                         <div class="w-full justify-items-end">
                             <!-- Text -->
                             <template x-if="content.text">
-                                <div @click="showMenu = !showMenu" x-text="content.text" class="w-full align-center cursor-pointer mb-3 font-normal text-gray-700 dark:text-gray-400"></div>
+                                <div  x-text="content.text" class="w-full align-center cursor-pointer mb-3 font-normal text-gray-700 dark:text-gray-400"></div>
                             </template>
                             <!-- Formats --> 
                             <template x-if="content.formats != null && content.formats.length > 0">
-                                <div @click="showMenu = !showMenu"  class="full-w cursor-pointer" x-data="aclPluginEditorJsParser({ value: content.formats })"></div>
+                                <div   class="full-w cursor-pointer" x-data="aclPluginEditorJsParser({ value: content.formats })"></div>
                             </template>
                             <!-- Media --> 
                             <template x-if="content.media != null && content.media.length > 0">
@@ -127,10 +127,7 @@ export default function (params) {
 
                         <!-- Commands -->
                         <div class="flex justify-between mb-2" x-show="showMenu">
-                            <!-- Taxonomy -->
-                            <div x-show="taxonomy">
-                                <span x-show="taxonomy.category" x-text="taxonomy.category" class="cursor-pointer relative rounded-md bg-gray-50 px-3 pt-1 font-medium text-gray-600 hover:bg-gray-100"></span>
-                            </div>
+                             
                             <!-- Actions -->
                             <div class="flex mr-2">
                                 <template x-for="btn in actions">

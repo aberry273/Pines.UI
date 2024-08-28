@@ -1,11 +1,15 @@
-import aclSocialCardComment from './aclSocialCardComment.js'
+import aclSocialCardChatPost from './aclSocialCardChatPost.js'
+import aclSocialCardFeedPost from './aclSocialCardFeedPost.js'
 import aclSocialCardReplies from './aclSocialCardReplies.js'
-import aclSocialListComments from './aclSocialListComments.js'
-import aclSocialFormComment from './aclSocialFormComment.js'
+import aclSocialListChatPosts from './aclSocialListChatPosts.js'
+import aclSocialListFeedPosts from './aclSocialListFeedPosts.js'
+import aclSocialFormPost from './aclSocialFormPost.js'
 
 export {
-    aclSocialCardComment,
+    aclSocialListChatPosts,
+    aclSocialCardChatPost,
+    aclSocialListFeedPosts,
+    aclSocialCardFeedPost,
     aclSocialCardReplies,
-    aclSocialListComments,
-    aclSocialFormComment,
+    aclSocialFormPost,
 }
