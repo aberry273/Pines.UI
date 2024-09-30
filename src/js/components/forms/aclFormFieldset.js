@@ -1,15 +1,19 @@
 import { mxContent, mxForm } from '/src/js/mixins/index.js';
+
 import { 
     aclFieldInput,
-    aclFieldTextarea,
-    aclFieldContentEditable, 
-    aclFieldEditorJs, 
-    aclFieldSelect, 
-    aclFieldSelectCheckbox,
-    aclFieldFile,
-    aclFieldSwitch
 } from '/src/js/components/fields/index.js'
 
+import * as fields from '/src/js/components/fields/index.js'
+/*
+Object.keys(fields).forEach(svc => {
+    let settings = wssSettings.filter(x => x.serviceName == svc)[0]
+    if (settings != null) {
+        let data = fields[svc](settings);
+        alpinejs.store(svc, data);
+    }
+});
+*/
 export default function (params) {
 	return {
         ...mxContent(params),
@@ -30,36 +34,12 @@ export default function (params) {
         },
         getFieldComponent(field) {
             const fieldType = field.component || field.type;
-            switch(fieldType)
-            {
-                case 'aclFieldInput':
-                    return aclFieldInput(field);
-                case 'aclFieldTextarea':
-                    return aclFieldTextarea(field);
-                case 'aclFieldSelect':
-                    return aclFieldSelect(field);
-                case 'aclFieldSelectCheckbox':
-                    return aclFieldSelectCheckbox(field);
-                case 'aclFieldContentEditable':
-                    return aclFieldContentEditable(field);
-                case 'aclFieldEditorJs':
-                    return aclFieldEditorJs(field);
-                case 'aclFieldFile':
-                    return aclFieldFile(field);
-                case 'aclFieldSwitch':
-                    return aclFieldSwitch(field);
-                default:
-                    return aclFieldInput(field);
-            }
+            const fieldComponent = fields[fieldType];
+            return fieldComponent != null ? fieldComponent(field) : aclFieldInput(field)
         },
-        // redundant
-        renderField(field) {
-            const component = field.component || 'aclFieldInput'
-            return `${component}(field)`
-        },
-        getFieldKey(field) {
+        getFieldKey(field, i) {
             const key = field.id || field.name;
-            return `${key}:${field.updated}`;
+            return `${key}:${i}${field.updated}`;
         },
         render() {
             const html = `

@@ -129,10 +129,10 @@ export default function (params) {
         render() {
             const html =  `
                 <div 
-                :class="cssClass"
-                class="w-full px-0 py-0"
-                :id="id" 
-                :name="name">
+                  :class="cssClass"
+                  class="w-full px-0 py-0"
+                  :id="id" 
+                  :name="name">
                 </div>
 
                 <style>

@@ -27,7 +27,7 @@ export default function (params) {
         setLeave() {
             this.mxButton_showTooltip = false;
         },
-        onClick() {
+        onClick(e) {
             if (this.mxButton_disabled) return;
             // Override any events or href and run the dispatch
             if (this.mxButton_override) {
@@ -38,6 +38,7 @@ export default function (params) {
             if (this.mxButton_href) {
                 return;
             }
+            e.preventDefault();
             // Otherwise if the event is passed emit the event
             if (this.mxButton_event) {
                 this._mxEvent_Emit(this.mxButton_event, this.mxButton_value);
@@ -55,6 +56,7 @@ export default function (params) {
             this.mxIcon_name = params.icon;
             this.mxIcon_class = params.iconClass || this.mxIcon_classMedium || 'w-5 h-5';
             this.mxButton_name = params.name;
+            this.mxButton_textClass = params.textClass || 'ml-2';
             this.mxButton_text = params.text;
             this.mxButton_label = params.label;
             this.mxButton_disabled = params.disabled;
@@ -63,6 +65,7 @@ export default function (params) {
             this.mxButton_color = params.color;
             this.mxButton_type = params.type || 'button';
             this.mxButton_value = params.value;
+            this.mxButton_id = params.id;
             this.mxButton_override = params.override;
             this.mxButton_tooltip = params.tooltip;
             this.mxButton_class = params.class || this.mxButton_class;
@@ -72,7 +75,8 @@ export default function (params) {
         },
         render() {
             const html = `
-            <a x-ref="btn" 
+            <a x-ref="btn"
+                :id="mxButton_id"
                 :type="mxButton_type"
                 @mouseenter.debounce.750ms="setHover" 
                 @mouseleave="setLeave" 
@@ -86,9 +90,11 @@ export default function (params) {
                 :style="mxButton_disabled ? disabledStyle : 'background-color: ' + mxButton_color">
          
                 <template x-if="mxIcon_name">
-                    <svg :class="'w-5 h-5'" x-data="aclIconsSvg({mxIcon_name})"></svg>
+                    <div :class="mxIcon_class">
+                       <svg class="w-5 h-5" x-data="aclIconsSvg({mxIcon_name})"></svg>
+                    </div>
                 </template>
-                <span class="ml-2" x-show="mxButton_text" x-text="mxButton_text"></span>
+                <div :class="mxButton_textClass" x-show="mxButton_text" x-text="mxButton_text"></div>
                 <template x-if="mxButton_label">
                     <span :class="mxButton_labelClass" x-show="mxButton_label" x-text="mxButton_label"></span>
                 </template>

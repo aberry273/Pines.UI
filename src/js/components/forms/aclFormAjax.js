@@ -6,6 +6,7 @@ export default function (params) {
         ...mxForm(params),
         // PROPERTIES
         header: '',
+
         // INIT
         init() {
             this._mxForm_SetValues(params);
@@ -24,7 +25,7 @@ export default function (params) {
         },
         async submit() {
             // else
-            this.loading = true;
+            this.mxForm_loading = true;
             try {
                 const payload = this.getPayload();
                 // if overwriting the submit function
@@ -36,23 +37,29 @@ export default function (params) {
                     !this.mxForm_isFile
                         ? await this._mxForm_SubmitAjaxRequest(this.mxForm_method, this.mxForm_action, payload)
                         : await this._mxForm_SubmitAjaxRequest(this.mxForm_method, this.mxForm_action, payload, this.mxForm_FileFormHeaders, false)
+
                 if (result.status == 200) {
                     this.mxForm_responseClass = this.mxForm_successResponseClass;
+                    this.mxForm_response = result.message || 'Update successful';
                 }
-                this.mxForm_response = result.message;
+                else {
+                    this.mxForm_response = result.message || 'Update failed';
+                }
                 
-                if (this.event) {
-                    this.$dispatch(this.event, result)
+                if (this.mxForm_event) {
+                    this.$dispatch(this.mxForm_event, result)
                 }
                 this.$dispatch(this.localEvent, result)
 
             } catch (e) {
                 console.log(e);
             }
-            this.loading = false;
+            this.mxForm_loading = false;
         },
         render() {
             const html = `
+                <div x-show="mxForm_loading" x-data="aclCommonProgress({})"></div>
+
                 <div :class="mxForm_class">
                     <template x-if="mxContent_title">
                         <h4 :class="mxContent_titleClass" x-text="mxContent_title"></h4>

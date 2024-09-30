@@ -31,8 +31,6 @@ export default function (params) {
             this._mxForm_SetFieldValue(this.mxForm_fields, field);
         },
         onChange(field) {
-            console.log('change')
-            console.log(field);
         },
         render() {
             const html = `

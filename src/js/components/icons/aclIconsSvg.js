@@ -4,6 +4,7 @@ import { userCircle, user, userGroup, userPlus, tag, cog, dots, adjustmentsHoriz
     chevronDown,
     chevronLeft,
     chevronRight,
+    chevronUpDown,
     chatBubble,
     chatBubbles,
     calendar,
@@ -17,6 +18,7 @@ import { userCircle, user, userGroup, userPlus, tag, cog, dots, adjustmentsHoriz
     ellipsisHorizontal,
     ellipsisVertical,
     ellipsisCircle,
+    menu,
     code,
     bold,
     quote,
@@ -29,7 +31,12 @@ import { userCircle, user, userGroup, userPlus, tag, cog, dots, adjustmentsHoriz
     documentText,
     facebook,
     google,
-    microsoft
+    microsoft,
+    openSide,
+    openNew,
+    queueList,
+    funnel,
+    magnifyingGlass,
 } from './heroIconsLibrary.js';
 
 
@@ -58,17 +65,21 @@ export default function (params) {
             if(icon == 'expand') return expand(mxIcon_class)
             if(icon == 'keyboard') return keyboard(mxIcon_class)
             if(icon == 'cog') return cog(mxIcon_class)
+            if(icon == 'funnel') return funnel(mxIcon_class)
+            if(icon == 'queueList') return queueList(mxIcon_class)
             if(icon == 'dots') return dots(mxIcon_class)
             if(icon == 'chevronUp') return chevronUp(mxIcon_class)
             if(icon == 'chevronDown') return chevronDown(mxIcon_class)
             if(icon == 'chevronLeft') return chevronLeft(mxIcon_class)
             if(icon == 'chevronRight') return chevronRight(mxIcon_class)
+            if(icon == 'chevronUpDown') return chevronUpDown(mxIcon_class)
             if(icon == 'chatBubble') return chatBubble(mxIcon_class)
             if(icon == 'chatBubbles') return chatBubbles(mxIcon_class)
             if(icon == 'calendar') return calendar(mxIcon_class)
             if(icon == 'trash') return trash(mxIcon_class)
             if(icon == 'link') return link(mxIcon_class)
             if(icon == 'edit') return edit(mxIcon_class)
+            if(icon == 'menu') return menu(mxIcon_class)
             if(icon == 'close') return close(mxIcon_class)
             if(icon == 'closeCircle') return closeCircle(mxIcon_class)
             if(icon == 'filter') return filter(mxIcon_class)
@@ -89,6 +100,9 @@ export default function (params) {
             if(icon == 'facebook') return facebook(mxIcon_class)
             if(icon == 'google') return google(mxIcon_class)
             if(icon == 'microsoft') return microsoft(mxIcon_class)
+            if (icon == 'openSide') return openSide(mxIcon_class)
+            if (icon == 'openNew') return openNew(mxIcon_class)
+            if (icon == 'magnifyingGlass') return magnifyingGlass(mxIcon_class)
             return''
           },
         render() {

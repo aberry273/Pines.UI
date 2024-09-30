@@ -7,7 +7,16 @@ import { aclMediaImage, aclMediaVideo, aclMedia } from './media/index.js'
 // DROPDOWNS
 import { aclDropdownMenuProfile, aclDropdownMenuButton } from './dropdowns/index.js'
 // NAVIGATIONS
-import { aclNavigationBar, aclNavigationBarDropdown, aclNavigationFooter, aclNavigationFilter } from './navigations/index.js'
+import { 
+    aclNavigationBar, 
+    aclNavigationSidebar, 
+    aclNavigationBarAction, 
+    aclNavigationSidebarFixed, 
+    aclNavigationBarDropdown, 
+    aclNavigationFooter, 
+    aclNavigationFilter,
+    aclNavigationSidebarSlide 
+} from './navigations/index.js'
 // TABS
 import { 
     aclTabs,
@@ -15,6 +24,8 @@ import {
 } from './tabs/index.js'
 // TOASTS
 import { aclToastNotification } from './toasts/index.js'
+// TABLES
+import { aclTableSimple } from './tables/index.js'
 // GRID
 import { aclGridMedia } from './grid/index.js'
 // FORMS
@@ -28,18 +39,19 @@ import {
     aclFieldSelect, 
     aclFieldSelectCheckbox,
     aclFieldFile,
-    aclFieldSwitch
+    aclFieldSwitch,
+    aclFieldCodeEditor
 } from './fields/index.js'
 // ICONS
 import { aclIconsSvg } from './icons/index.js'
 // BUTTONS
 import { aclButton } from './buttons/index.js'
 // COMMON
-import { aclCommonSpinner } from './common/index.js'
+import { aclCommonSpinner, aclCommonProgress } from './common/index.js'
 // LINKS
 import { aclLinkAhref } from './links/index.js'
 // MODALS
-import { aclModal, aclModalFullscreen, aclModalFormAjax, aclModalMedia } from './modals/index.js'
+import { aclModal, aclModalFullscreen, aclModalFormAjax, aclModalMedia, aclModalSide  } from './modals/index.js'
 // LISTS
 //import { } from './lists/index.js'
 // CARDS
@@ -71,15 +83,21 @@ export {
     aclMedia,
     // NAVIGATIONS
     aclNavigationBar,
+    aclNavigationSidebar,
+    aclNavigationSidebarFixed,
     aclNavigationBarDropdown,
+    aclNavigationBarAction,
     aclNavigationFooter,
     aclNavigationFilter,
+    aclNavigationSidebarSlide,
     // DROPDOWNS
     aclDropdownMenuProfile,
     aclDropdownMenuButton,
     // TABS
     aclTabs,
     aclTabsNavigation,
+    // TABLES
+    aclTableSimple,
     // TOASTS,
     aclToastNotification,
     // GRID
@@ -97,6 +115,7 @@ export {
     aclFieldSelect,
     aclFieldSelectCheckbox,
     aclFieldSwitch,
+    aclFieldCodeEditor,
     // ICONS
     aclIconsSvg,
     // LINKS
@@ -106,6 +125,7 @@ export {
     aclModalFormAjax,
     aclModalFullscreen,
     aclModalMedia,
+    aclModalSide,
     // LISTS
     // CARDS
     aclCardHorizontal,
@@ -115,6 +135,7 @@ export {
     aclButton,
     // COMMON
     aclCommonSpinner,
+    aclCommonProgress,
 
     // SOCIAL,
     aclSocialListChatPosts,

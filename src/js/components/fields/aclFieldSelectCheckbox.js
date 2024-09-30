@@ -128,7 +128,7 @@ export default function (params) {
                                     <span 
                                         :for="getItemLabel(field, i)" 
                                         class="pl-2" 
-                                        x-text="item.title"></span>
+                                        x-text="item.key"></span>
                                 </div>
                             </div>
                         </li>
