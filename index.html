@@ -22,10 +22,14 @@
         <!--Sidebar2-->
         <div x-data="aclNavigationSidebar(sideNavigationData)"></div>
         <!--Sidepanel-->
-        <div x-data="aclModalSide({event: 'on:side' })"></div>
+        <div x-data="aclModalSide({event: 'on:modal:side' })"></div>
 
         <!--Content-->
         <div class="flex flex-col flex-1 h-full w-full overflow-hidden">
+
+            <div class="container mx-auto">
+                <div x-data="aclCommonIFrame({})"></div>
+            </div>
             <div class="container mx-auto">
                 <div x-data="aclTableSimple(tableData)"></div>
             </div>
@@ -59,6 +63,10 @@
                 selected: new URLSearchParams(window.location.search).get('t'),        
             })"></div>
         
+            <button @click="$events.Emit('on:modal:side')">
+                <span class="w-5 h-5 duration-200 ease-in-out bg-white rounded-full shadow-md">side modal iframe</span>
+            </button>
+
             <button @click="$events.Emit('on:side')">
                 <span class="w-5 h-5 duration-200 ease-in-out bg-white rounded-full shadow-md">side modal</span>
             </button>

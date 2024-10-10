@@ -13,6 +13,7 @@ export default function (data) {
 
         mxNavigation_selected: null,
         mxNavigation_items: [],
+        mxNavigation_groups: [],
         mxNavigation_primaryItems: [],
         mxNavigation_secondaryItems: [],
         init() {
@@ -27,9 +28,10 @@ export default function (data) {
         get mxNavigation_getTitleClass() { return 'mx-auto my-auto text-xl font-black leading-none text-gray-900 dark:text-white select-none' },
         get mxNavigation_getItemsClass() { return 'flex flex-wrap items-center mx-auto my-auto text-base md:mb-0 md:pl-8 md:ml-8 sm:ml-2 xs:ml-2 md:border-l md:border-gray-200' },
 
-        // METHODS\
+        // METHODS
         _mxNavigation_SetParams(params) {
             this.mxContent_title = params.title;
+            this.mxNavigation_groups = params.groups;
             this.mxNavigation_items = params.items;
             this.mxNavigation_event = params.event;
             this.mxNavigation_selected = params.selected;

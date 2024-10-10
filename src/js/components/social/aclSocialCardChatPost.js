@@ -1,7 +1,7 @@
 import { mxContent, mxNavigation, mxLink, mxIcon, mxDate, } from '/src/js/mixins/index.js';
 
 export default function (params) {
-	return {
+    return {
         ...mxNavigation(params),
         ...mxContent(params),
         ...mxLink(params),
@@ -12,6 +12,8 @@ export default function (params) {
         id: '',
         showMenu: false,
         label: '',
+        channel: null,
+        link: null,
         metrics: {},
         settings: {},
         taxonomy: {},
@@ -33,17 +35,19 @@ export default function (params) {
             }
         },
         get modeThread() {
-            if(!this.ui || !this.ui.mode) return false;
+            if (!this.ui || !this.ui.mode) return false;
             return this.ui.mode == 'thread'
         },
         get showline() {
-            if(!this.ui) return false;
+            if (!this.ui) return false;
             return this.ui.showline
         },
         // METHODS
         setValues(params) {
             this.item = params;
             this.id = params.id;
+            this.link = params.link;
+            this.channel = params.channel;
             this.profile = params.profile || this.profile;
             this.content = params.content || {};
             this.settings = params.settings || {};
@@ -127,6 +131,18 @@ export default function (params) {
                             </template>
                         </div>
 
+                        <!-- Link card -->
+                        <template x-if="link != null">
+                            <div class="flex flex-col w-full bg-white items-center border border-gray-200 rounded-lg shadow md:flex-row  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                                <img class="object-cover w-full h-96 md:h-auto md:w-48" :src="link.image" alt="">
+                                <div class="grid justify-between p-2 leading-normal">
+                                    <h5 class="mb-0 font-bold tracking-tight text-gray-900 dark:text-white" x-text="link.title"></h5>
+                                    <p class="mb-0 font-normal text-gray-700 dark:text-gray-400" x-text="link.description"></p>
+                                    <a :href="link.url" class="underline font-semibold truncate ..." x-text="link.url"></a>
+                                </div>
+                            </div>
+                        </template>
+
                         <!-- Hidden Content -->
                         <div class="flex justify-between mb-0" x-show="showMenu">
                             <!-- Taxonomy -->
@@ -172,6 +188,6 @@ export default function (params) {
                 </div>
             `
             this.$nextTick(() => { this.$root.innerHTML = html });
-      }
+        }
     }
 }
