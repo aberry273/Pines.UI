@@ -7,36 +7,38 @@ import { aclMediaImage, aclMediaVideo, aclMedia } from './media/index.js'
 // DROPDOWNS
 import { aclDropdownMenuProfile, aclDropdownMenuButton } from './dropdowns/index.js'
 // NAVIGATIONS
-import { 
-    aclNavigationBar, 
-    aclNavigationSidebar, 
-    aclNavigationBarAction, 
-    aclNavigationSidebarFixed, 
-    aclNavigationBarDropdown, 
-    aclNavigationFooter, 
+import {
+    aclNavigationBar,
+    aclNavigationBottomBar,
+    aclNavigationSidebar,
+    aclNavigationBarAction,
+    aclNavigationSidebarFixed,
+    aclNavigationBarDropdown,
+    aclNavigationFooter,
     aclNavigationFilter,
-    aclNavigationSidebarSlide 
+    aclNavigationSidebarSlide,
+    aclNavigationBreadcrumbs
 } from './navigations/index.js'
 // TABS
-import { 
+import {
     aclTabs,
-    aclTabsNavigation 
+    aclTabsNavigation
 } from './tabs/index.js'
 // TOASTS
 import { aclToastNotification } from './toasts/index.js'
 // TABLES
 import { aclTableSimple } from './tables/index.js'
 // GRID
-import { aclGridMedia } from './grid/index.js'
+import { aclGridMedia, aclGridCard } from './grid/index.js'
 // FORMS
 import { aclFormPostback, aclFormAjax, aclFormFieldset } from './forms/index.js'
 // FIELDS
-import { 
+import {
     aclFieldInput,
     aclFieldTextarea,
-    aclFieldContentEditable, 
-    aclFieldEditorJs, 
-    aclFieldSelect, 
+    aclFieldContentEditable,
+    aclFieldEditorJs,
+    aclFieldSelect,
     aclFieldSelectCheckbox,
     aclFieldFile,
     aclFieldSwitch,
@@ -51,7 +53,7 @@ import { aclCommonSpinner, aclCommonProgress } from './common/index.js'
 // LINKS
 import { aclLinkAhref } from './links/index.js'
 // MODALS
-import { aclModal, aclModalFullscreen, aclModalFormAjax, aclModalMedia, aclModalSide  } from './modals/index.js'
+import { aclModal, aclModalFullscreen, aclModalFormAjax, aclModalMedia, aclModalSide } from './modals/index.js'
 // LISTS
 //import { } from './lists/index.js'
 // CARDS
@@ -65,6 +67,8 @@ import {
     aclSocialCardFeedPost,
     aclSocialCardReplies,
     aclSocialFormPost,
+    aclSocialModalFormPost,
+    aclSocialModalListChatPosts,
 } from './social/index.js'
 
 
@@ -83,6 +87,7 @@ export {
     aclMedia,
     // NAVIGATIONS
     aclNavigationBar,
+    aclNavigationBottomBar,
     aclNavigationSidebar,
     aclNavigationSidebarFixed,
     aclNavigationBarDropdown,
@@ -90,6 +95,7 @@ export {
     aclNavigationFooter,
     aclNavigationFilter,
     aclNavigationSidebarSlide,
+    aclNavigationBreadcrumbs,
     // DROPDOWNS
     aclDropdownMenuProfile,
     aclDropdownMenuButton,
@@ -102,6 +108,7 @@ export {
     aclToastNotification,
     // GRID
     aclGridMedia,
+    aclGridCard,
     // FORMS,
     aclFormPostback,
     aclFormAjax,
@@ -144,6 +151,8 @@ export {
     aclSocialCardFeedPost,
     aclSocialCardReplies,
     aclSocialFormPost,
+    aclSocialModalFormPost,
+    aclSocialModalListChatPosts,
 
     // PLUGINS
     aclPluginEditorJs,

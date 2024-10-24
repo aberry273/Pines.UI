@@ -36,23 +36,32 @@ export default function (data) {
 
         async _mxSocial_WssPushItem() {
             this._mxEvent_On(this.$store.wssSvcPosts.getMessageEvent(), (result) => {
-                console.log(result)
                 const data = result.data.data;
                 this.mxSocial_postItems.push(data);
             })
         },
         async _mxSocial_WssUnshiftItem() {
             this._mxEvent_On(this.$store.wssSvcPosts.getMessageEvent(), (result) => {
-                console.log(result)
                 const data = result.data.data;
                 this.mxSocial_postItems.unshift(data);
             })
+        },
+        async _mxSocial_Fetch(url, id) {
+            const self = this;
+            self.loading = true;
+            const existingPost = this.mxSocial_postItems.filter(x => x.id == id)[0];
+            if (!!existingPost) return existingPost;
+            if (url) {
+                let result = await self._mxFetch_Post(url, self.mxSocial_params);
+                return result.posts;
+                self.loading = false;
+            } 
         },
         async _mxSocial_Search() {
             const self = this;
             self.loading = true;
             var delayInMilliseconds = 400;
-            setTimeout(async function () {
+            //setTimeout(async function () {
                 if (self.mxSocial_url) {
                     let result = await self._mxFetch_Post(self.mxSocial_url, self.mxSocial_params);
                     self.mxSocial_postItems = result.status == 200
@@ -60,7 +69,7 @@ export default function (data) {
                         : [];
                     self.loading = false;
                 }
-            }, delayInMilliseconds);
+            //}, delayInMilliseconds);
         },
         _mxSocial_TogglePostReplies(post) {
             post.toggle = !post.toggle;
@@ -88,7 +97,7 @@ export default function (data) {
         _mxSocial_AssignActionsItemAsValue(actions, item) {
             return actions.map(x => {
                 if (x.href && item.ui.href) x.href = item.ui.href;
-                x.value = item.id;
+                x.value = { ...item };
                 return x;
             });
         },

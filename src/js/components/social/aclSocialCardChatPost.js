@@ -103,8 +103,8 @@ export default function (params) {
                                 <span x-text="metrics.rating" class="text-sm px-1 pt-1 font-medium text-gray-300 dark:text-gray-300">
                                 </span>
                                 <!-- Updated -->
-                                <time x-text="_mxDate_FormatString(content.date)" datetime="content.date" class="pl-2 text-sm text-gray-300 dark:text-gray-300"></time>
-                                
+                                <time x-text="content.date" datetime="content.date" class="mt-1 pl-2 text-sm text-gray-300 dark:text-gray-300"></time>
+
                             </div>
                             <div class="mr-2 flex">
 
@@ -138,25 +138,30 @@ export default function (params) {
                                 <div class="grid justify-between p-2 leading-normal">
                                     <h5 class="mb-0 font-bold tracking-tight text-gray-900 dark:text-white" x-text="link.title"></h5>
                                     <p class="mb-0 font-normal text-gray-700 dark:text-gray-400" x-text="link.description"></p>
-                                    <a :href="link.url" class="underline font-semibold truncate ..." x-text="link.url"></a>
+                                    <a target="_blank" :href="link.url" class="underline font-semibold truncate ..." x-text="link.url"></a>
                                 </div>
                             </div>
                         </template>
 
                         <!-- Hidden Content -->
                         <div class="flex justify-between mb-0" x-show="showMenu">
-                            <!-- Taxonomy -->
-                            <div>
-                                <span x-show="taxonomy.category" x-text="taxonomy.category" class="relative rounded-md bg-gray-50 px-3 pt-1 font-medium text-gray-600 hover:bg-gray-100"></span>
+                             <!-- Taxonomy -->
+                            <div class="px-3">
+                                <div class="px-3 font-medium text-sm text-gray-900">Category</div>
+                                <span x-show="taxonomy.category" style="background-color: #f1f5f9; color: #475569;" x-text="taxonomy.category" class="relative rounded-md bg-gray-50 px-3 pt-1 font-medium text-gray-600 hover:bg-gray-100"></span>
                             </div>
-                            <div x-show="taxonomy.tags">
+                            <div x-show="taxonomy.tags" class="gap-2">
+                                <div class="px-3 font-medium text-sm text-gray-900">Tags</div>
+                                <div class="flex-row">
                                 <template x-for="tag in taxonomy.tags">
-                                     <span x-text="tag" class="relative rounded-md bg-gray-50 px-3 pt-1 font-medium text-gray-600 hover:bg-gray-100"></span>
+                                    <span x-text="tag" style="background-color: #f1f5f9; color: #475569;"
+                                    class="rounded-md  py-0.5 px-2.5 border border-transparent text-sm text-white transition-all shadow-sm relative rounded-md px-3 mr-1 mt-1 pt-1"></span>
                                 </template>
+                                </div>
                             </div>
                             <div x-show="taxonomy.labels">
                                 <template x-for="label in taxonomy.labels">
-                                     <span x-text="label" class="relative rounded-md bg-gray-50 px-3 pt-1 font-medium text-gray-600 hover:bg-gray-100"></span>
+                                    <span x-text="label" class="relative rounded-md px-3 pt-1 font-small text-gray-600 hover:bg-gray-100"></span>
                                 </template>
                             </div>
                             <!-- Actions -->
