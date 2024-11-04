@@ -73,7 +73,7 @@ export default function (params) {
             const html = `
                 <div class="w-full h-full select-none">
                     <div class="max-w-6xl mx-auto duration-1000 delay-300 opacity-0 select-none ease animate-fade-in-view" style="translate: none; rotate: none; scale: none; opacity: 1; transform: translate(0px, 0px);">
-                        <ul x-ref="gallery" id="gallery" class="grid grid-cols-2 gap-2 xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-1">
+                        <ul x-ref="gallery" id="gallery" class="grid grid-cols-2 gap-2 sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                             <template x-for="(item, index) in mxGrid_items">
                                 <li> 
                                     <div x-data="aclCardVertical(item)"></div>

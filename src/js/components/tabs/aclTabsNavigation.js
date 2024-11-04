@@ -26,7 +26,7 @@ export default function (params) {
                     <template x-for="tab in mxTab_items">
                          <a :id="$id(tab.text)"
                             role="button"
-                            class="relative inline-flex items-center justify-center h-8 px-3 text-sm font-medium transition-all rounded-md cursor-pointer whitespace-nowrap"
+                            class="relative grid items-center items-center justify-center h-8 px-3 text-sm font-medium transition-all rounded-md cursor-pointer whitespace-nowrap"
                             :href="tab.href">
                             <svg class="w-5 h-5" x-data="aclIconsSvg({mxIcon_name: tab.icon})"></svg>
                             <span class="ml-2" x-text="tab.text">

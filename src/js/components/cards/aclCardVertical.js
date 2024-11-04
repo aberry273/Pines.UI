@@ -12,7 +12,6 @@ export default function (params) {
         // GETTERS
         // METHODS
         setValues(params) {
-            this.mxCard_href = params.href;
             this.mxCard_img = params.img;
             this.mxCard_label = params.label;
             this.mxCard_title = params.title;

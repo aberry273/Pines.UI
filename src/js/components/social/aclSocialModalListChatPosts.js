@@ -84,13 +84,13 @@ export default function (params) {
             form.fields[index].value = id;
         },
         onSubmit() {
-            this.mxModal_open = false;
+
         },
         render() {
             const html = `
                 <div x-show="mxModal_open" class="h-screen shadow-lg bottom-0 flex flex-col justify-end">
                     <!--Frame-->
-                    <div class="flex w-full min-w-full overflow-hidden justify-start items-center flex-col h-full py-5 bg-white border-l shadow-lg border-neutral-100/70">
+                    <div class="flex w-full min-w-full overflow-hidden justify-start items-center flex-col h-full bottom-0 py-5 bg-white border-l shadow-lg border-neutral-100/70">
                         <div class="container">
                             <div class="px-4 sm:px-5">
                                 <div class="flex items-start justify-between pb-1">
@@ -103,46 +103,49 @@ export default function (params) {
                                     </div>
                                 </div>
                             </div>
+
                             <div class="relative flex-1 mt-4">
                                 <div class="relative h-full overflow-none flex-col px-4">
-                                                        
+
                                     <template x-if="!!item">
                                         <div x-data="aclSocialCardChatPost(_mxSocial_GetCommentWithMenuActions(item))"></div>
                                     </template>
-                                                            
+
+                                    <!--Feed-->
+                                    <template x-if="!!item">
+                                        <div class="xl:pa-8 lg:pa-6 md:pa-4 sm:pa-2 overflow-y-scroll"
+                                            x-data="aclSocialListChatPosts( {
+                                                url: apiUrl,
+                                                params: {
+                                                    filters: [
+                                                        {
+                                                            name: 'related.parentId',
+                                                            value: item.id,
+                                                        }
+                                                    ],
+                                                    itemsPerPage: 1,
+                                                    page: 0,
+                                                    query: null,
+                                                    userId: userId
+                                                },
+                                                userId: userId,
+                                                mode: 'inline',
+                                                key: 'children',
+                                                websockets: true,
+                                                showline: true,
+                                                showReplies: true,
+                                                searchOnInit: true,
+                                                menuItems: commentMenu,
+                                                actionItems: commentActions,
+                                            })">
+                                        </div>
+                                    </template>
+
                                     <template x-if="formLoaded">
                                         <div style="margin-bottom: 8px;" x-data="aclSocialFormPost(formParams)" @submit="onSubmit"></div>
-                                    </template>      
+                                    </template>
                                 </div>
                             </div>
-
-                            <!--Feed-->
-                            <template x-if="!!item">
-                                <div x-data="aclSocialListChatPosts( {
-                                        url: apiUrl,
-                                        params: {
-                                            filters: [
-                                                {
-                                                    name: 'related.parentId',
-                                                    value: item.id,
-                                                }
-                                            ],
-                                            itemsPerPage: 1,
-                                            page: 0,
-                                            query: null,
-                                            userId: userId
-                                        },
-                                        userId: userId,
-                                        mode: 'inline',
-                                        key: 'children',
-                                        websockets: true,
-                                        showReplies: true,
-                                        searchOnInit: true,
-                                        menuItems: commentMenu,
-                                        actionItems: commentActions,
-                                    })">
-                                </div>
-                            </template>
                     </div>
                     <!--End Frame-->
                  

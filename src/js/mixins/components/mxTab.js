@@ -1,7 +1,7 @@
 export default function (params) {
     return {
         // PROPERTIES  
-        mxTab_items: [], 
+        mxTab_items: [],
         mxTab_tabButtons: null,
         mxTab_selected: null,
         _mxTab_init() {
@@ -16,7 +16,7 @@ export default function (params) {
             this.mxTab_items = params.items;
             this.mxTab_selected = params.selected;
         },
-        _mxTab_setMarkerStyle(tab){
+        _mxTab_setMarkerStyle(tab) {
             if (!tab) return;
             this.$refs.tabMarker.style.width = tab.offsetWidth + 'px';
             this.$refs.tabMarker.style.height = tab.offsetHeight + 'px';
@@ -30,11 +30,11 @@ export default function (params) {
             if (!tab) return;
             const tabName = tab.text || tab;
             this.mxTab_selected = tabName;
- //           const id = this.$id(tabName);
+            //           const id = this.$id(tabName);
             const id = `${tabName}-1`;
-            for(var i = 0; i < this.mxTab_tabButtons.children.length; i++) {
+            for (var i = 0; i < this.mxTab_tabButtons.children.length; i++) {
                 const el = this.mxTab_tabButtons.children[i];
-                if(el.id == id) {
+                if (el.id == id) {
                     this._mxTab_setMarkerStyle(el)
                 }
             }

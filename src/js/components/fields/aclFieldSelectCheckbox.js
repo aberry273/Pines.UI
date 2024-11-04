@@ -29,7 +29,7 @@ export default function (params) {
         get selectedItemText() {
             if(this.mxField_value == null || this.mxField_value.length == 0) return null;
             if(this.isObjectItems) {
-                this.mxField_value.map(x => x.title).join(', ');
+                this.mxField_value.map(x => x.key).join(', ');
                 return;
             }
             return this.mxField_value.join(', ');
@@ -59,7 +59,7 @@ export default function (params) {
                 values.splice(index, 1);
             }
             this.mxField_value = values;
-            this._mxField_onChange();
+            this._mxField_onChange(this.mxField_value)
         },
         getItemLabel(item, i) {
             return item.value+'_'+i;
@@ -78,8 +78,8 @@ export default function (params) {
             <input   
                 class="peer"  
                 :id="mxField_id"
-                :name="mxField_name" 
-                :disabled="true"
+                :name="mxField_name"
+                :disabled="false"
                 :hidden="true"
                 :value="mxField_value"
                 x-model="mxField_value"  

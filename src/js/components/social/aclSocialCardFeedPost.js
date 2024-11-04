@@ -106,7 +106,7 @@ export default function (params) {
                     </a>
                 </template>
 
-                <a :href="ui.href" class="hover:border hover:rounded-t-lg hover:bg-gray-100">
+                <a  class="hover:border hover:rounded-t-lg hover:bg-gray-100">
                     <!-- Card -->
                     <div :class="parent != null ? 'mb-2 rounded-b-lg ' : 'my-2 rounded-lg'"
                         class="flex cursor-pointer max-w h-full px-1 py-2 border hover:bg-gray-100 dark:hover:bg-gray-800">
@@ -172,7 +172,7 @@ export default function (params) {
                             </div> 
 
                             <!-- Content -->
-                            <div class="w-full justify-items-end">
+                            <a :href="ui.href" class="w-full justify-items-end">
                                 <!-- Text -->
                                 <template x-if="content.text">
                                     <div x-text="content.text" class="w-full align-center cursor-pointer mb-3 font-normal text-gray-700 dark:text-gray-400"></div>
@@ -185,7 +185,7 @@ export default function (params) {
                                 <template x-if="content.media != null && content.media.length > 0">
                                     <div class="full-w" x-data="aclGridMedia({ items: content.media, event: 'modal:'+id })"></div>
                                 </template>
-                            </div>
+                            </a>
 
                             <!-- Link card -->
                             <template x-if="link != null">

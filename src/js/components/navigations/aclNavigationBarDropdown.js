@@ -1,14 +1,19 @@
 import { mxContent, mxNavigation } from '/src/js/mixins/index.js';
 
 export default function (params) {
-    return {
+	return {
         ...mxContent(params),
         ...mxNavigation(params),
         // PROPERTIES
-
+        heightClass: '',
         // INIT
         init() {
-            this._mxNavigation_SetParams(params);
+            this.mxContent_img = params.logo;
+            this.mxContent_title = params.title;
+            this.mxNavigation_primaryItems = params.primaryItems;
+            this.mxNavigation_secondaryItems = params.secondaryItems;
+            this.mxNavigation_dropdown = params.dropdown;
+            //this.heightClass = ' h-'+this.mxNavigation_barHeight;
             this.render();
         },
         // GETTERS
@@ -19,27 +24,30 @@ export default function (params) {
         // RENDER
         render() {
             const html = `
-            <section class="z-40" :class="mxNavigation_getSectionClass" >
-                <div class="flex flex-row" :class="mxNavigation_getContainerClass">
+            <section class="z-40 bg-white" :class="mxNavigation_getSectionClass" {!! $attributes ?? '' !!}>
+                <div :class="mxNavigation_getContainerClass + heightClass">
                     <div :class="mxNavigation_getContainerLeftClass">
-                        <span :class="mxNavigation_getTitleClass" x-text="mxContent_title"></span>
-                        
-                        <div
-                            :class="mxNavigation_getItemsClass"
-                            class="lg:block md:block sm:block xs:block" >
-                            <template x-for="item in mxNavigation_items">
-                                <button x-show="mxNavigation_open || !mxNavigation_canMinimize" x-data="aclButton({
-                                    ...item,
-                                    textClass: 'ml-0',
-                                    class: _mxNavigation_selectedButtonClass(item),
-                                })"></button>
+                        <a href="#_" :class="mxNavigation_getLinkClass">
+                            <img x-show="mxContent_img" :src="mxContent_img" :alt="mxContent_title" class="h-8 pr-2" />
+                            <span :class="mxNavigation_getTitleClass" x-text="mxContent_title"></span>
+                        </a>
+                        <!--Desktop-->
+                        <nav class="lg:block md:hidden sm:hidden xs:hidden" :class="mxNavigation_getItemsClass">
+                            <template x-for="item in mxNavigation_primaryItems">
+                                <a :href="item.href" x-text="item.text" :class="item.class || mxNavigation_headerLinkClass"></a>
                             </template>
-                        </div>
+                        </nav>
+                        <!--Mobile-->
+                        <div x-show="mxNavigation_primaryItems.length > 0" class="mt-1 ml-2 lg:hidden md:flex sm:flex xs:flex" x-data="aclDropdownMenuButton({ items: mxNavigation_primaryItems })"></div>
+                    </div>
+            
+                    <div :class="mxNavigation_getContainerRightClass">
+                    <div x-data="aclDropdownMenuProfile( mxNavigation_dropdown )"></div>
                     </div>
                 </div>
             </section>
         `
-            this.$nextTick(() => { this.$root.innerHTML = html });
-        },
+        this.$nextTick(() => { this.$root.innerHTML = html });
+      },
     }
 }

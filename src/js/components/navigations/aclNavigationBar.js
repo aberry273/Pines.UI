@@ -1,13 +1,14 @@
 import { mxContent, mxNavigation } from '/src/js/mixins/index.js';
 
 export default function (params) {
-	return {
+    return {
         ...mxContent(params),
         ...mxNavigation(params),
         // PROPERTIES
-        
+
         // INIT
         init() {
+            this.mxContent_img = params.logo;
             this.mxContent_title = params.title;
             this.mxNavigation_primaryItems = params.primaryItems;
             this.mxNavigation_secondaryItems = params.secondaryItems;
@@ -25,6 +26,8 @@ export default function (params) {
                 <div class="flex flex-row" :class="mxNavigation_getContainerClass">
                     <div :class="mxNavigation_getContainerLeftClass">
                         <a href="#_" :class="mxNavigation_getLinkClass">
+                            <img x-show="mxContent_img" :src="mxContent_img" :alt="mxContent_title" class="h-8 pr-2" />
+
                             <span :class="mxNavigation_getTitleClass" x-text="mxContent_title"></span>
                         </a>
                         <nav :class="mxNavigation_getItemsClass">
@@ -44,7 +47,7 @@ export default function (params) {
                 </div>
             </section>
         `
-        this.$nextTick(() => { this.$root.innerHTML = html });
-      },
+            this.$nextTick(() => { this.$root.innerHTML = html });
+        },
     }
 }

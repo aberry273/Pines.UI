@@ -12,7 +12,7 @@ export default function (data) {
         mxSocial_websockets: true,
         mxSocial_toggleChat: false,
         mxSocial_mode: '',
-        mxSocial_showline: '',
+        mxSocial_showline: false,
         mxSocial_url: '',
         mxSocial_userId: '',
         mxSocial_params: {},
@@ -32,7 +32,7 @@ export default function (data) {
             this.mxSocial_userId = params.userId;
             this.mxSocial_url = params.url;
             this.mxSocial_params = params.params;
-        },
+        }, 
 
         async _mxSocial_WssPushItem() {
             this._mxEvent_On(this.$store.wssSvcPosts.getMessageEvent(), (result) => {
@@ -78,9 +78,11 @@ export default function (data) {
             // assign the menu actions to only what is available in the items menu array
             const menu = this._mxSocial_FilterAvailableActions(this.mxSocial_menuItems, item.menu);
             item.menu = this._mxSocial_AssignActionsItemAsValue(menu, item);
-
+        
             const actions = this._mxSocial_FilterAvailableActions(this.mxSocial_actionItems, item.actions);
+
             const itemActions = this._mxSocial_AssignActionsItemAsValue(actions, item);
+            
             item.actions = JSON.parse(JSON.stringify(itemActions));
             item.ui = {
                 ...item.ui,
@@ -102,6 +104,9 @@ export default function (data) {
             });
         },
         _mxSocial_HasReplies(post) {
+            //const children = this.mxSocial_postItems.filter(x => x.id == post.related.parentId);
+         
+            //return this.mxSocial_showReplies && children.length;
             return this.mxSocial_showReplies
                 && post.replies != null
                 && post.replies.profiles != null

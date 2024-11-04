@@ -18,9 +18,6 @@ export default function (params) {
         setValues(params) {
 
         },
-        onChange(ev) {
-            this._mxField_onChange(this.mxField_value)
-        },
         render() {
             const html =  `
                 <textarea

@@ -5,8 +5,8 @@ export default () => ({
     buttonsTarget: "a[data-theme-switcher]",
     buttonAttribute: "data-theme-switcher",
     rootAttribute: "data-theme",
-    localStorageKey: "app_theme",
-    theme: 'dark',
+    localStorageKey: "portal_app_theme",
+    theme: 'light',
 
     /*
     init() {

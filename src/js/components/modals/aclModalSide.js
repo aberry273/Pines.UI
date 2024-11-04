@@ -12,12 +12,6 @@ export default function (params) {
         left: true,
         right: false,
         data: {},
-        isPlaying: false,
-        embed_url: "https://www.youtube.com/embed/NcZEyv3sdBM",
-        iframe_param: "?autoplay=1&mute=1",
-        iframe_url() {
-          return this.embed_url + this.iframe_param;
-        },
         // INIT
         init() {
             this.setValues(params);
@@ -83,7 +77,7 @@ export default function (params) {
                                             <div class="relative flex-1 px-4 mt-5 sm:px-5">
                                                 <div class="absolute inset-0 px-4 sm:px-5">
                                                     <div class="relative h-full overflow-hidden border border-dashed rounded-md border-neutral-300">
-                                                        <iframe x-ref="iframeElement" src="" class="object-cover u-ratio__item" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                                        qdwdqw
                                                     </div>
                                                 </div>
                                             </div>

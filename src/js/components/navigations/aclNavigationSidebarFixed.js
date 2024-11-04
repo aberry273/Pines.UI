@@ -1,7 +1,7 @@
 import { mxButton, mxContent, mxEvent, mxNavigation } from '/src/js/mixins/index.js';
 
 export default function (params) {
-	return {
+    return {
         ...mxButton(params),
         ...mxEvent(params),
         ...mxContent(params),
@@ -62,7 +62,7 @@ export default function (params) {
                 </div>
             </aside>
         `
-        this.$nextTick(() => { this.$root.innerHTML = html });
-      },
+            this.$nextTick(() => { this.$root.innerHTML = html });
+        },
     }
 }

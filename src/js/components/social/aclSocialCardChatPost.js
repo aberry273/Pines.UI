@@ -107,7 +107,6 @@ export default function (params) {
 
                             </div>
                             <div class="mr-2 flex">
-
                                 <template x-for="btn in actions.filter(x => x.overlay)">
                                     <div x-data="aclButton(btn)"></div>
                                 </template>

@@ -1,7 +1,7 @@
 import { mxContent } from '/src/js/mixins/index.js';
 
 export default function (params) {
-	return {
+    return {
         ...mxContent(params),
         // PROPERTIES
         open: false,
@@ -39,6 +39,6 @@ export default function (params) {
             </div>
             `
             this.$nextTick(() => { this.$root.innerHTML = html });
-      }
+        }
     }
 }
