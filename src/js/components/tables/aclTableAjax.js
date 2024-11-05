@@ -8,16 +8,20 @@ export default function (params) {
         // PROPERTIES
         expanded: false,
         // INIT
-        init() {
-            console.log(params);
+        async init() {
             this._mxTable_setValues(params);
+            this.setValues(params);
             this.render();
+            await this.query();
         },
         // GETTERS
         headerKeys() {
             // return this.mxTable_headers.map((x) => x.text);
         },
         // METHODS
+        setValues(params ) {
+            this.mxFetch_url = params ? params.url : '';
+        },
         setEvents() {
             const self = this;
         },
@@ -37,7 +41,7 @@ export default function (params) {
                 case this.mxTable_headerTypeText:
                     return keyValue.key;
                 case this.mxTable_headerTypeLink:
-                    return `<a href="${keyValue.key}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">${keyValue.value}</a>`;
+                    return `<a href="${keyValue.value}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">${keyValue.key}</a>`;
                 case this.mxTable_headerTypeNumber:
                     return keyValue.key;
                 case this.mxTable_headerTypeDate:
@@ -67,34 +71,32 @@ export default function (params) {
             // else
             this.mxFetch_loading = true;
             try {
-                const payload = this.getPayload();
-                // if overwriting the submit function
-                if (this.mxForm_submit) {
-                    this.mxForm_submit(payload);
-                    return;
+                /*
+                 this.mxTable_page = params.page || 0;
+            this.mxTable_pageSize = params.pageSize || 10;
+            this.mxTable_pages = params.pages || 0;
+            */
+                const payload = {
+                    page: this.mxTable_page || 0,
+                    pageSize: this.mxTable_pageSize || 10,
+                    pages: this.mxTable_pages || 0,
+                    query: {
+                        Name: ''
+                    }
                 }
-                const result =
-                    !this.mxForm_isFile
-                        ? await this._mxForm_SubmitAjaxRequest(this.mxForm_method, this.mxForm_action, payload)
-                        : await this._mxForm_SubmitAjaxRequest(this.mxForm_method, this.mxForm_action, payload, this.mxForm_FileFormHeaders, false)
+                const result = await this.$fetch.POST(this.mxFetch_url, payload);
 
                 if (result.status == 200) {
-                    this.mxForm_responseClass = this.mxForm_successResponseClass;
-                    this.mxForm_response = result.message || 'Update successful';
+
+                    console.log('dwqdwq');
                 }
                 else {
-                    this.mxForm_response = result.message || 'Update failed';
+                    console.log('daaadda');
                 }
-
-                if (this.mxForm_event) {
-                    this.$dispatch(this.mxForm_event, result)
-                }
-                this.$dispatch(this.localEvent, result)
-
             } catch (e) {
                 console.log(e);
             }
-            this.mxForm_loading = false;
+            this.mxFetch_loading = false;
         },
         render() {
             const html = `
@@ -209,25 +211,25 @@ export default function (params) {
                         </div>
                         <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
                             <li>
-                                <a href="#" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+                                <a @click="await query" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
                             </li>
                             <li>
-                                <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
+                                <a @click="await query" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
                             </li>
                             <li>
-                                <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
+                                <a @click="await query" href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
                             </li>
                             <li>
-                                <a href="#" aria-current="page" class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
+                                <a @click="await query"  href="#" aria-current="page" class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
                             </li>
                             <li>
-                                <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
+                                <a @click="await query" href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
                             </li>
                             <li>
-                                <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
+                                <a @click="await query" href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
                             </li>
                             <li>
-                                <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+                                <a @click="await query" href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
                             </li>
                         </ul>
                     </nav>
