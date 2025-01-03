@@ -1,8 +1,10 @@
-import { mxField } from '/src/js/mixins/index.js';
+import { mxField, mxFetch, mxTable } from '/src/js/mixins/index.js';
 
 export default function (params) {
     return {
         ...mxField(params),
+        ...mxFetch(params),
+        ...mxTable(params),
         // PROPERTIES
         type: '',
         value: null,
@@ -17,6 +19,7 @@ export default function (params) {
         selectKeydownClearTimeout: null,
         selectDropdownPosition: 'bottom',
         areItemsObject: true,
+        queryText: '',
 
         // INIT
         init() {
@@ -50,12 +53,13 @@ export default function (params) {
                 });
             }
             this.mxField_items = params.items;
+            this.mxFetch_url = params.settings;
             if (!this.mxField_placeholder) this.mxField_placeholder = 'Select item';
             this.selectId = this.$id('select');
         },
         selectableItemIsActive(item) {
             return this.selectableItemActive && this.selectableItemActive.value == item.value;
-        }, 
+        },
         selectScrollToActiveItem() {
             if (this.selectableItemActive) {
                 this.activeElement = document.getElementById(this.selectableItemActive.value + '-' + this.selectId)
@@ -96,6 +100,39 @@ export default function (params) {
             }
         },
 
+        async openMenu() {
+            if (this.mxField_items.length == 0) await this.submit();
+
+            await this.selectOpen();
+        },
+
+        async submit() {
+            // else
+            this.mxFetch_loading = true;
+            try {
+                this.selectOpen = true;
+                const payload = {
+                    page: this.mxTable_page || 0,
+                    pageSize: this.mxTable_pageSize || 10,
+                    pages: this.mxTable_pages || 0,
+                    query: {
+                        Name: this.queryText || ''
+                    }
+                }
+                const result = await this.$fetch.POST(this.mxFetch_url, payload);
+
+                if (result != null && result.status == 200) {
+                    this.mxField_items = result.data;
+                    this._mxTable_setPaginationValues(result)
+                }
+                else {
+
+                }
+            } catch (e) {
+                console.log(e);
+            }
+            this.mxFetch_loading = false;
+        },
         defaultClass() {
             let cssClass = 'relative text-xl px-4 py-4 mt-2 min-h-[38px] flex items-center justify-between w-full py-2 pl-3 pr-10 text-left placeholder-gray-400 bg-gray-200 border rounded-md shadow-sm cursor-default border-neutral-200/70 focus:outline-none text-sm focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400';
 
@@ -108,6 +145,17 @@ export default function (params) {
                 return this.mxField_class;
             }
             return this.defaultClass();
+        },
+        inputClass() {
+            let cssClass = this.mxField_class || this.mxField_inputClass;
+            if (!!this.mxField_icon) return `${cssClass} ps-10 p-2.5`;
+            return cssClass;
+        },
+
+        cancelItem() {
+            this.selectedItem = null;
+            this.selectOpen = false;
+            this.mxField_items = [];
         },
         render() {
             const html = `
@@ -126,18 +174,48 @@ export default function (params) {
                     :aria-invalid="mxField_ariaInvalid"
                     :aria-describedBy="mxField_areaDescribedBy || mxField_id" 
                 />
-                    
+                    <div class="relative">
+                        <div x-show="mxField_icon" class="absolute ml-2 pl-1 inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" x-data="aclIconsSvg({icon: 'email' })"></svg>
+                        </div>
+
+                         <input
+                            :placeholder="mxField_placeholder"
+                            :class="inputClass"
+                            :required="mxField_required" 
+                            :disabled="mxField_disabled"
+                            x-show="!selectedItem"
+                            :value="queryText"
+                            x-model="queryText"
+                            :aria-invalid="mxField_ariaInvalid"
+                            :pattern="mxField_pattern || null"
+                            :aria-describedBy="mxField_areaDescribedBy || mxField_id"
+                            data-primary="blue-600"
+                            data-rounded="rounded-lg"
+                            x-on:input.change.debounce.350ms="await submit"
+                        />
+                    </div>
+
                 <button type="button" x-ref="selectButton"
                     :disabled="mxField_disabled"
-                    @click="selectOpen=!selectOpen"
+                    x-show="selectedItem"
+                    @click="openMenu"
                     :class="inputButtonClass">
                     <div x-show="mxField_icon" class="absolute ml-2 pl-1 inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                         <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" x-data="aclIconsSvg({icon: mxField_icon })"></svg>
                     </div>
-                    <span x-text="selectedItem ? selectedItem.key : mxField_placeholder" class="truncate">Select Item</span>
+
+                    <div x-show="!mxField_disabled" class="pl-12 right-8 truncate">
+                        <span x-text="selectedItem ? selectedItem.key : mxField_placeholder" ></span>
+                        <div x-show="!!selectedItem" @click="cancelItem"
+                        x-data="aclButton({icon: 'close' })"
+                        class="absolute inset-y-0 right-0 flex items-center pr-2" ></svg>
+                    </span>
+
                     <span x-show="!mxField_disabled" class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" class="w-5 h-5 text-gray-400"><path fill-rule="evenodd" d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z" clip-rule="evenodd"></path></svg>
                     </span>
+
                 </button>
                 
                 <ul x-show="selectOpen"

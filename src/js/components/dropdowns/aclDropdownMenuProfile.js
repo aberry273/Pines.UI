@@ -28,6 +28,15 @@ export default function (params) {
             // Fallback to dispatch
             this.$dispatch('onselect', btn);
         },
+        hasImage() {
+            try {
+                new URL(this.mxDropdown_imageSrc)
+            }
+            catch (e) {
+                return false;
+            }
+            returntrue;
+        },
         avatarLetters() {
             if (this.mxContent_title == null || this.mxContent_title.length == 0)
                 return '??'
@@ -40,21 +49,18 @@ export default function (params) {
         
             <button @click="mxDropdown_open=true" :class="mxDropdown_buttonClass">
                 <img 
-                    x-show="mxDropdown_imageSrc"
+                    x-show="hasImage()"
                     :src="mxDropdown_imageSrc" 
                     :class="mxDropdown_imageClass">
                 <!-- No image-->
-                <div 
-                    x-show="!mxDropdown_imageSrc" class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-                    <span 
-                        class="font-medium text-gray-600 dark:text-gray-300"
-                        x-text="avatarLetters"></span>
+                <div x-show="!hasImage()" class="relative w-8 h-8 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                    <svg class="absolute w-9 h-9 text-gray-400 -left-1 pr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
                 </div>
 
-                <span :class="mxDropdown_buttonTextContainerClass">
-                    <span x-text="mxContent_title"></span>
-                    <span :class="mxDropdown_buttonSubtitleClass" x-text="mxContent_subtitle"></span>
-                </span>
+                <div class="lg:block md:block sm:hidden xs:hidden text-left" :class="mxDropdown_buttonTextContainerClass">
+                    <div x-text="mxContent_title"></div>
+                    <div :class="mxDropdown_buttonSubtitleClass" x-text="mxContent_subtitle"></div>
+                </div>
                 <svg 
                     :class="mxIcon_buttonRightSvg" 
                     x-data="aclIconsSvg({ mxIcon_name: 'expand' })"></svg>   

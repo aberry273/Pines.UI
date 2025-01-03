@@ -10,6 +10,13 @@ export default function (data) {
         },
         // GETTERS
         // METHODS
+        _mxFetch_setValues(params) {
+            params = params || {};
+            this.mxFetch_url = params.url;
+            this.mxFetch_params = params.mxFetch_params || {};
+            this.mxFetch_loading = params.mxFetch_loading || false;
+            this.mxFetch_type = params.type || 'POST';
+        },
         async _mxFetch_Get(url, data) {
             const urlParams = new URLSearchParams(data);
             return await fetch(url + '?' + urlParams)

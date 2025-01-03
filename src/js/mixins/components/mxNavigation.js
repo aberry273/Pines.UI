@@ -16,9 +16,11 @@ export default function (data) {
         mxNavigation_groups: [],
         mxNavigation_primaryItems: [],
         mxNavigation_secondaryItems: [],
+        mxNavigation_containerClass: 'flex flex-row items-center justify-between md:flex-row full-w',
+        mxNavigation_titleClass: 'x-auto my-auto text-lg lg:text-xl xl:text-xl md:text-md sm:text-sm font-black leading-none text-gray-900 dark:text-white select-none',
         init() {
         },
-        // GETTERS
+        // GETTERS - Move these to properties instead of getters
         get mxNavigation_getSectionClass() { return 'z-50 w-full lg:px-8 md:px-4 sm:px-2 xs:px-2 py-2 text-gray-700 ' },
         get mxNavigation_getContainerClass() { return 'flex flex-row items-center justify-between md:flex-row full-w' },
         get mxNavigation_getContainerLeftClass() { return 'relative flex md:flex-row' },
@@ -30,15 +32,21 @@ export default function (data) {
 
         // METHODS
         _mxNavigation_SetParams(params) {
+            params = params || {};
             this.mxContent_title = params.title;
             this.mxNavigation_groups = params.groups;
             this.mxNavigation_items = params.items;
+            this.mxNavigation_primaryItems = params.primaryItems;
+            this.mxNavigation_secondaryItems = params.secondaryItems;
             this.mxNavigation_event = params.event;
             this.mxNavigation_selected = params.selected;
             this.mxNavigation_hideWhenClosed = params.hideWhenClosed;
             this.mxNavigation_canMinimize = params.canMinimize;
             this.mxNavigation_event = params.event;
             this.mxNavigation_open = params.open;
+
+            this.mxNavigation_containerClass = params.containerClass || this.mxNavigation_getContainerClass;
+            this.mxNavigation_titleClass = params.titleClass || this.mxNavigation_getTitleClass;
         },
         _mxNavigation_selectedButtonClass(item) {
             let btnClass = item.class || this.mxButton_class

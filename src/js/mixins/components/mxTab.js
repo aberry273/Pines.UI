@@ -32,6 +32,8 @@ export default function (params) {
             this.mxTab_selected = tabName;
             //           const id = this.$id(tabName);
             const id = `${tabName}-1`;
+            if (!!this.mxTab_tabButtons == 0) return;
+
             for (var i = 0; i < this.mxTab_tabButtons.children.length; i++) {
                 const el = this.mxTab_tabButtons.children[i];
                 if (el.id == id) {

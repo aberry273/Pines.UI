@@ -84,6 +84,7 @@ export default function (params) {
                     :placeholder="mxField_placeholder"
                     :disabled="mxField_disabled"
                     :min="mxField_min"
+                    :required="mxField_required"
                     :max="mxField_max"
                     data-primary="blue-600"
                     data-rounded="rounded-lg"
@@ -96,7 +97,7 @@ export default function (params) {
                     >
                 <span x-text="limitText" class="mt-2  text-sm  peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
                 </span>
-                <span x-text="field.invalidText || 'Invalid input'" class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                <span x-text="mxField_invalidText || 'Invalid input'" class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
                 </span>
                 <!--Grid-->
                 <div 

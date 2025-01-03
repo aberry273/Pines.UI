@@ -78,9 +78,7 @@ export default function (params) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="relative flex-1 px-4 mt-5 sm:px-5">
-                                                    <div class="absolute inset-0 px-4 sm:px-5">
-                                                    <div class="h-full px-3 overflow-y-auto  dark:bg-gray-800">
+                                                 <div class="h-full px-3 overflow-y-auto  dark:bg-gray-800">
                                                     <!--Title-->
                                                     <div class="" x-show="mxNavigation_canMinimize">
                                                         <div :class="mxNavigation_getContainerClass">
@@ -88,36 +86,25 @@ export default function (params) {
                                                             <button x-show="!mxNavigation_open" @click="toggle" x-data="aclButton({ icon: 'chevronRight'})"></button>
                                                         </div>
                                                     </div>
-                            
-                                                    <!-- Primary Items-->
-                                                    <ul class="space-y-2 items-center justify-between mx-auto border-b border-gray-200 font-medium">
-                                                        <template x-for="item in mxNavigation_items">
-                                                            <li class="grid items-left">
-                                                                <button x-show="!mxNavigation_open && mxNavigation_canMinimize" x-data="aclButton({icon: item.icon, href: item.href})"></button> 
-                                                                <button x-show="mxNavigation_open || !mxNavigation_canMinimize" x-data="aclButton({
-                                                                    ...item,
-                                                                    textClass: 'ml-0 text-left',
-                                                                    class: _mxNavigation_selectedButtonClass(item),
-                                                                })"></button> 
+
+                                                    <!-- Items-->
+                                                    <template x-for="group in mxNavigation_groups">
+                                                        <ul class="space-y-2 items-center mb-2 justify-between mx-auto border-b border-gray-200 font-medium">
+                                                            <li class="grid items-center text-center" x-show="mxNavigation_open">
+                                                                <div class="select-none text-sm font-light" x-show="group.title" x-text="group.title"></div>
                                                             </li>
-                                                        </template>
-                                                    </ul>
-                                                    <!--Secondary items-->
-                                                    <template x-if="mxNavigation_secondaryItems">
-                                                        <ul class="space-y-2 items-center justify-between mx-auto border-b border-gray-200 font-medium">
-                                                            <template x-for="item in mxNavigation_secondaryItems">
-                                                                <li class="grid items-left">
-                                                                    <button x-show="!mxNavigation_open && mxNavigation_canMinimize" x-data="aclButton({icon: item.icon, href: item.href})"></button> 
+                                                            <template x-for="item in group.items">
+                                                                <li class="grid items-center">
+                                                                    <button x-show="!mxNavigation_open && mxNavigation_canMinimize" x-data="aclButton({icon: item.icon, href: item.href})"></button>
                                                                     <button x-show="mxNavigation_open || !mxNavigation_canMinimize" x-data="aclButton({
                                                                         ...item,
-                                                                        textClass: 'ml-0 text-left',
+                                                                        textClass: 'ml-0',
                                                                         class: _mxNavigation_selectedButtonClass(item),
-                                                                    })"></button> 
+                                                                    })"></button>
                                                                 </li>
                                                             </template>
                                                         </ul>
                                                     </template>
-                                                </div>
                                                 </div>
                                             </div>
                                         </div>

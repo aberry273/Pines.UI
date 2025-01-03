@@ -31,23 +31,39 @@ export default function (params) {
             <aside 
                 class="z-10 inset-y-0 flex flex-col flex-shrink-0 max-h-screen overflow-hidden transition-all transform border-r">
                 <div class="h-full px-3 overflow-y-auto dark:bg-gray-800">
-                    <!-- Primary Items -->
-                    <ul class="space-y-2 items-center justify-between mx-auto font-medium border-b border-gray-200">
-                        <template x-for="item in mxNavigation_items || mxNavigation_primaryItems">
-                            <li class="grid items-center">
-                                <button x-data="aclButton({
-                                    ...item,
-                                    class: selectedButtonClass(item),
-                                    iconClass: 'flex flex-row mx-auto',
-                                    textClass: ' ',
-                                })"></button>
-                            </li>
-                        </template>
-                    </ul>
+                    <template x-if="mxNavigation_items">
+                        <ul class="space-y-2 items-center justify-between mx-auto font-medium border-b border-gray-200">
+                            <template x-for="item in mxNavigation_items">
+                                <li class="grid items-center">
+                                    <button x-data="aclButton({
+                                        ...item,
+                                        class: selectedButtonClass(item),
+                                        iconClass: 'flex flex-row mx-auto',
+                                        textClass: ' ',
+                                    })"></button>
+                                </li>
+                            </template>
+                        </ul>
+                    </template>
+                    <!-- Primary Items --> 
+                    <template x-if="mxNavigation_primaryItems">
+                        <ul class="space-y-2 items-center justify-between mx-auto font-medium border-b border-gray-200">
+                            <template x-for="item in mxNavigation_primaryItems.items">
+                                <li class="grid items-center">
+                                    <button x-data="aclButton({
+                                        ...item,
+                                        class: selectedButtonClass(item),
+                                        iconClass: 'flex flex-row mx-auto',
+                                        textClass: ' ',
+                                    })"></button>
+                                </li>
+                            </template>
+                        </ul>
+                    </template>
                     <!--Secondary items-->
                     <template x-if="mxNavigation_secondaryItems">
                         <ul class="space-y-2 items-center justify-between mx-auto font-medium">
-                            <template x-for="item in mxNavigation_secondaryItems">
+                            <template x-for="item in mxNavigation_secondaryItems.items">
                                 <li class="grid items-center">
                                     <button x-data="aclButton({
                                         ...item,

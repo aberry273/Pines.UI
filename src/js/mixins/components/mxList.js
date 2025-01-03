@@ -3,10 +3,13 @@ export default function (params) {
         // PROPERTIES
         mxList_items: [],
         init() {
-            this.mxList_items = params.mxList_items;
         },
         // GETTERS  
         get mxList_itemClass() { return '' },
         // METHODS
+        _mxList_setValues(params) {
+            params = params || {};
+            this.mxList_items = params.items;
+        }
     }
 }

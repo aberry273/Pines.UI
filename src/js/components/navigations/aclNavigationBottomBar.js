@@ -19,7 +19,7 @@ export default function (params) {
         },
         // GETTERS
         get gridClass() {
-            const max = this.mxNavigation_items.length;
+            const max = this.mxNavigation_items != null ? this.mxNavigation_items.length : 0;
             return `grid-cols-${max}`
         },
         // METHODS
@@ -42,7 +42,7 @@ export default function (params) {
                                 class="inline-flex py-1 flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
                                 :href="tab.href">
                                 <svg class="w-5 h-5" x-data="aclIconsSvg({mxIcon_name: tab.icon})"></svg>
-                                <span class="" x-text="tab.text">
+                                <span class="text-sm" x-text="tab.text">
                             </a>
                         </template>
                     </div>

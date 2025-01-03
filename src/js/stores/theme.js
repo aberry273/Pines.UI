@@ -1,6 +1,6 @@
 export default () => ({
     // PROPERTIES
-    _scheme: "auto",
+    _scheme: "light",
     menuTarget: "details.dropdown",
     buttonsTarget: "a[data-theme-switcher]",
     buttonAttribute: "data-theme-switcher",

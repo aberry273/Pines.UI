@@ -30,7 +30,6 @@ export default function (params) {
             this.$dispatch('onselect', btn);
         },
         hasItems() {
-            console.log(this.mxDropdown_groups)
             return (!!this.mxButton_items && this.mxButton_items.length > 0)
                 || (!!this.mxDropdown_groups && this.mxDropdown_groups.length > 0);
         },

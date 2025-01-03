@@ -24,11 +24,14 @@ export default function (params) {
         // RENDER
         render() {
             const html = `
-            <section class="z-40 bg-white" :class="mxNavigation_getSectionClass" {!! $attributes ?? '' !!}>
+            <section class="z-40 bg-white" :class="mxNavigation_getSectionClass">
                 <div :class="mxNavigation_getContainerClass + heightClass">
                     <div :class="mxNavigation_getContainerLeftClass">
                         <a href="#_" :class="mxNavigation_getLinkClass">
-                            <img x-show="mxContent_img" :src="mxContent_img" :alt="mxContent_title" class="h-8 pr-2" />
+                            <img x-show="!!mxContent_img" :src="mxContent_img" :alt="mxContent_title" class="h-8 pr-2" />
+                            <div x-show="!mxContent_img" class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                                <span class="font-medium text-gray-600 dark:text-gray-300" x-text="'?'">ss</span>
+                            </div>
                             <span :class="mxNavigation_getTitleClass" x-text="mxContent_title"></span>
                         </a>
                         <!--Desktop-->

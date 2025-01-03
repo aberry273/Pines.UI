@@ -9,18 +9,21 @@ export default function (data) {
         mxField_name: null,
         mxField_min: null,
         mxField_max: null,
+        mxField_helper: null,
         mxField_multiple: null,
         mxField_accept: '',
         mxField_items: [],
         mxField_rows: 1,
         mxField_class: null,
         mxField_disabled: null,
+        mxField_icon: null,
         mxField_value: null,
         mxField_data: null,
         mxField_required: null,
         mxField_readOnly: null,
         mxField_autocomplete: null,
         mxField_ariaInvalid: null,
+        mxField_invalidText: null,
         mxField_areaDescribedBy: null,
         mxField_pattern: null,
         init() {
@@ -33,13 +36,19 @@ export default function (data) {
         get mxField_inputEmailRegex() { return '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$' },
         get mxField_inputJsonRegex() { return '!(/[^,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t]/$' },
         // METHODS
-        _mxField_onChange(data) {
+        _mxField_change(id, name, data) {
             const field = {
-                id: this.mxField_id,
-                name: this.mxField_name,
-                value: data || this.mxField_value
+                id: id,
+                name: name,
+                value: data
             }
             this.$dispatch('oninputchange', field)
+        },
+        _mxField_onChange(data) {
+            this._mxField_change(
+                this.mxField_id,
+                this.mxField_name,
+                data || this.mxField_value)
         },
         _mxField_setValues(params) {
             this.mxField_type = params.type || 'text';
@@ -49,6 +58,8 @@ export default function (data) {
             this.mxField_name = params.name;
             this.mxField_min = params.min;
             this.mxField_max = params.max;
+            this.mxField_icon = params.icon;
+            this.mxField_invalidText = params.invalidText;
             this.mxField_multiple = params.multiple;
             this.mxField_accept = params.accept;
             this.mxField_disabled = params.disabled;

@@ -1,4 +1,4 @@
-import { mxIcon, mxContent, mxLink, mxModal, mxEvent } from '/src/js/mixins/index.js';
+import { mxIcon, mxContent, mxLink, mxModal, mxForm, mxEvent } from '/src/js/mixins/index.js';
 
 export default function (params) {
 	return {
@@ -6,9 +6,13 @@ export default function (params) {
         ...mxContent(params),
         ...mxIcon(params),
         ...mxModal(params),
+        ...mxForm(params),
         ...mxEvent(params),
         // PROPERTIES
         component: 'aclFormAjax',
+        // Which key to use to try and retrieve from the config to update Form Action/postback property
+        // Only update if the form config (key/value pairs) are sent through on the modal event
+        formActionKey: "_Action",
         form: {},
         // INIT
         init() {
@@ -28,9 +32,31 @@ export default function (params) {
         setEvents() {
             if (!this.mxEvent_event) return;
             const self = this;
-            this._mxEvent_On(this.mxEvent_event, (val) => {
+            this._mxEvent_On(this.mxEvent_event, (keyValues) => {
+                if (!keyValues) {
+                    self.mxModal_open = true;
+                    return;
+                }
+                self.updateFormFields(keyValues);
+                self.updateFormAction(keyValues);
                 self.mxModal_open = true;
             })
+        },
+        updateFormFields(keyValues) {
+            let formFields = this.form.fields;
+            for (var i = 0; i < keyValues.length; i++) {
+                const field = {
+                    name: keyValues[i].key,
+                    value: keyValues[i].value
+                }
+                this._mxForm_SetFieldValue(formFields, field);
+            }
+            this.form.fields = formFields;
+        },
+        updateFormAction(keyValues) {
+            const actionIndex = keyValues.map(x => x.key).indexOf(this.formActionKey);
+            if (actionIndex == -1) return;
+            this.form.action = keyValues[actionIndex].value;
         },
         render() {
             const html = `
@@ -64,8 +90,9 @@ export default function (params) {
                                         <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>  
                                     </button>
                                 </div>
-                                
-                                <div x-data="${this.mxModal_component}(form)"></div>
+                                <template x-if="mxModal_open">
+                                    <div x-data="${this.mxModal_component}(form)"></div>
+                                </template>
                         </div>
                     </div>
                 </template>

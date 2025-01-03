@@ -27,7 +27,14 @@ export default function (params) {
         // GETTERS
         // METHODS
         setValues(params) {
-            this.mxForm_fields = params.fields || [];
+            params = params || {}
+            let fields = params.fields || [];
+            for (var i = 0; i < fields.length; i++) {
+                fields[i].disabled = true;
+                fields[i].placeholder = null;
+                fields[i].class = "text-left text-gray-500 dark:text-gray-400 w-full px-0 bg-white py-1 rounded-lg";
+            }
+            this.mxForm_fields = fields;
         },
         onFieldChange(field) {
             this.$dispatch('onfieldchange', field)
@@ -44,7 +51,7 @@ export default function (params) {
         render() {
             const html = `
                 <template x-for="(field, i) in mxForm_fields" :key="getFieldKey(field, i)">
-                    <div class="mt-2">
+                    <div class="mt-0">
                         <label x-cloak :for="field.id || field.name" class="relative" x-show="!field.hidden">
                             <span x-show="field.label && field.component != 'aclFieldSwitch'" class="font-medium text-gray-900" x-text="field.label"></span>
                             <div x-data="getFieldComponent(field)" @oninputchange="(ev) => { onFieldChange(ev.detail) }"></div>

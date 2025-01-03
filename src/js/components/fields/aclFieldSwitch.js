@@ -32,6 +32,7 @@ export default function (params) {
                         :disabled="false"
                         :hidden="true"
                         :value="mxField_value"
+                        :required="mxField_required"
                         x-model="mxField_value"  
                         :required="mxField_required" 
                         :aria-invalid="mxField_ariaInvalid"
@@ -61,7 +62,7 @@ export default function (params) {
                     </label>
                 </div>
                 
-                <span x-text="field.invalidText || 'Invalid input'" class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                <span x-text="mxField_invalidText || 'Invalid input'" class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
                 </span>
             `
             this.$nextTick(() => { this.$root.innerHTML = html });

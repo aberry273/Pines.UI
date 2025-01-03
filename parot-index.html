@@ -19,12 +19,47 @@
     <div class="flex h-screen overflow-y-hidden">
         <!--Sidebar-->
         <div x-data="aclNavigationSidebarFixed(sideNavigationFixedData)"></div>
+        <!--Sidebar2-->
+        <div x-data="aclNavigationSidebar(sideNavigationData)"></div>
         <!--Sidepanel-->
         <div x-data="aclModalSide({event: 'on:modal:side' })"></div>
 
         <!--Content-->
         <div class="flex flex-col flex-1 h-full w-full overflow-hidden">
 
+            <!--Peerpay-->
+            <div class="flex flex-row">
+                <div class="container mx-auto">
+
+                    <h2>peerpay</h2>
+
+                    <div x-data="aclPeerpayPaymentForm({
+                        form: paymentFormData,
+                        actions: formActions,
+                        formatActions: formatActions
+                    })"></div>
+
+                </div>
+            </div>
+            
+            <div class="container mx-auto">
+                <div x-data="aclCommonIFrame({})"></div>
+            </div>
+            <div class="container mx-auto">
+                <div x-data="aclTableSimple(tableData)"></div>
+            </div>
+            <div class="container mx-auto">
+                <div x-data="aclSocialFormPost({
+                    form: contentFormData,
+                    actions: formActions,
+                    formatActions: formatActions
+                })"></div>
+            </div>
+            <!--
+            <div x-data="aclTabs({
+                items: [ 'tab1', 'tab2', 'tab3']
+            })"></div>
+            -->
             <div x-data="aclTabsNavigation({
                 items: [
                     {
@@ -43,22 +78,118 @@
                 selected: new URLSearchParams(window.location.search).get('t'),        
             })"></div>
         
+            <button @click="$events.Emit('on:modal:side')">
+                <span class="w-5 h-5 duration-200 ease-in-out bg-white rounded-full shadow-md">side modal iframe</span>
+            </button>
 
-            <!--Peerpay-->
-            <div class="flex flex-row">
+            <button @click="$events.Emit('on:side')">
+                <span class="w-5 h-5 duration-200 ease-in-out bg-white rounded-full shadow-md">side modal</span>
+            </button>
+
+            <div class=" justify-center items-center mx-auto">
+                <div class="font-bold">Feed</div>
+                <div x-data="aclSocialListFeedPosts({
+                    url: 'https://localhost:7220/api/contentsearch/posts/replies',
+                    mode: 'inline',
+                    postItems: parentItems,
+                    menuItems: [],
+                    actionItems: [],
+                })"></div> 
+                <hr />
+                        
+                
+                <div class="font-bold">Parents</div>
+                <div x-data="aclSocialListChatPosts({
+                    url: 'https://localhost:7220/api/contentsearch/posts/replies',
+                    mode: 'inline',
+                    showline: true,
+                    postItems: parentItems,
+                    menuItems: [],
+                    actionItems: [],
+                })"></div> 
+                <hr />
+
+                <div class="font-bold">Chat</div>
+                <div x-data="aclSocialListChatPosts({
+                    url: 'https://localhost:7220/api/contentsearch/posts/replies',
+                    params: fetchCommentParams,
+                    mode: 'inline',
+                    postItems: commentItems,
+                    menuItems: commentMenu,
+                    actionItems: commentActions,
+                })"></div> 
+                <hr />
+
+                <div class="font-bold">Forms</div>
                 <div class="container mx-auto">
-
-                    <h2>peerpay</h2>
-
-                    <div x-data="aclPeerpayPaymentForm({
-                        form: paymentFormData,
+                    <div x-data="aclSocialFormPost({
+                        form: contentFormData,
                         actions: formActions,
                         formatActions: formatActions
                     })"></div>
-
                 </div>
             </div>
             
+                <div x-data="aclModalFormAjax({event: 'on:quote', form: quoteFormData })"></div>
+                
+                <div x-data="aclCardVertical({})"></div>
+                <div x-data="aclCardHorizontal({})"></div>
+
+                <div x-data="{ switchOn: false }" class="flex items-center justify-center space-x-2">
+                    <input id="thisId" type="checkbox" name="switch" class="hidden" :checked="switchOn">
+                
+                    <button 
+                        x-ref="switchButton"
+                        type="button" 
+                        @click="switchOn = ! switchOn; $store.theme.toggle();"
+                        :class="switchOn ? 'bg-blue-600' : 'bg-neutral-200'" 
+                        class="relative inline-flex h-6 py-0.5 ml-4 focus:outline-none rounded-full w-10"
+                        x-cloak>
+                        <span :class="switchOn ? 'translate-x-[18px]' : 'translate-x-0.5'" class="w-5 h-5 duration-200 ease-in-out bg-white rounded-full shadow-md"></span>
+                    </button>
+                
+                    <label @click="$refs.switchButton.click(); $refs.switchButton.focus()" :id="$id('switch')" 
+                        :class="{ 'text-blue-600': switchOn, 'text-gray-400': ! switchOn }"
+                        class="text-sm select-none"
+                        x-cloak>
+                        Dark mode
+                    </label>
+                </div>
+
+                    
+                <div class="container mx-auto">
+                    <div x-data="aclNavigationFilter({
+                    title: 'Filters'
+                    })"></div>
+                    <div class="mx-auto max-w-7xl">
+                    <div class="flex flex-col lg:flex-row">
+                        <div class="relative w-full bg-cover lg:w-6/12 xl:w-7/12 bg-gradient-to-r from-white via-white to-gray-100">
+                            <div x-data="aclContentSection(loginFormData)"></div>
+                        </div>
+                        <div class="w-full bg-white dark:bg-gray-800 lg:w-6/12 xl:w-5/12">
+                            <div x-data="aclFormPostback(loginFormData)"></div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="mx-auto max-w-7xl">
+                    <div class="flex flex-col lg:flex-row">
+                        <div class="w-full bg-white dark:bg-gray-800 lg:w-6/12 xl:w-5/12">
+                            <div x-data="aclFormAjax(registerFormData)"></div>
+                        </div>
+                        <div class="relative w-full bg-cover lg:w-6/12 xl:w-7/12 bg-gradient-to-r from-white via-white to-gray-100">
+                            <div x-data="aclContentSection(loginFormData)"></div>
+                        </div>
+                    </div>
+                </div> 
+        
+
+                <div class="h-max-[360px] max-w-[640px]" x-data="aclMediaVideo({
+                    mp4: 'https://cdn.devdojo.com/pines/videos/coast.mp4',
+                    webm: 'https://cdn.devdojo.com/pines/videos/coast.webm',
+                    ogg: 'https://cdn.devdojo.com/pines/videos/coast.ogg'
+                })"></div>
+            </div>
         </div>
     </div>
     <!-- Footer Here -->
@@ -1051,6 +1182,149 @@
             }
         ];
         
+    var contentFormData = {
+        title: 'Login',
+        text: 'or, if you have an account you can sign in here',
+        method: 'POST',
+        action: '/postback/login',
+        fields: [
+            {
+                name: 'Id',
+                id: 'Id',
+                type: 'input',
+                hidden: true,
+                disabled: true,
+                value: Math.floor(Math.random() * 99999999)
+            },
+            {
+                name: 'Mentions',
+                id: 'Mentions',
+                required: true,
+                hidden: true,
+                placeholder: 'Enter your Text',
+                component: 'aclFieldInput',
+                type: 'text',
+                value: '',
+            },
+            {
+                name: 'Text',
+                id: 'Text',
+                cssClass: 'block w-full px-4 py-4 mt-2 pl-8 w-95 text-xl placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50;',
+                required: true,
+                hidden: true,
+                placeholder: 'Enter your Text',
+                component: 'aclFieldTextarea',
+                type: 'text',
+                value: '',
+            },
+            {
+                name: 'Code',
+                id: 'Code',
+                required: false,
+                hidden: false,
+                readOnly: false,
+                placeholder: 'Enter your Code',
+                component: 'aclFieldCodeEditor',
+                type: 'text',
+                value: 'default',
+                /*
+                value: `{
+  "data": {
+    "x": "1",
+    "y": "1",
+    "url": "http://url.com"
+  },
+  "event": "start",
+  "show": 1,
+  "id": 50
+}`,*/
+            },
+            {
+                name: 'Formats',
+                id: 'Formats',
+                required: false,
+                hidden: false,
+                readOnly: false,
+                placeholder: 'Enter your Text',
+                component: 'aclFieldEditorJs',
+                type: 'text',
+                value: 'default',
+            },
+            {
+                name: 'Images',
+                id: 'Images',
+                hidden: true,
+                placeholder: 'Enter your Text',
+                component: 'aclFieldFile',
+                multiple: true,
+                accept: '.png,.jpg,.jpeg',
+                type: 'Image',
+            },
+            {
+                name: 'Videos',
+                id: 'Videos',
+                hidden: true,
+                placeholder: 'Enter your Text',
+                component: 'aclFieldFile',
+                multiple: true,
+                accept: '.mov,.mp4',
+                type: 'Video',
+            },
+            {
+                name: 'Settings',
+                id: 'Settings',
+                hidden: true,
+                placeholder: 'Enter your Text',
+                component: 'aclFieldInput',
+                type: 'text',
+                value: 'default',
+            },
+            {
+                name: 'Showcase',
+                id: 'Showcase',
+                hidden: true,
+                placeholder: 'Enter your Text',
+                component: 'aclFieldInput',
+                type: 'text',
+                value: 'default',
+            },
+            {
+                name: 'Tags',
+                id: 'Tags',
+                required: false,
+                hidden: true,
+                placeholder: 'Enter your Tags',
+                component: 'aclFieldSelectCheckbox',
+                type: 'text',
+                items: ['ta', 'da', 'wqweqwe', 'dwq'],
+                isObjectItems: false,
+                value: ['ta'],
+            },
+            {
+                name: 'Category',
+                id: 'Category',
+                required: false,
+                hidden: true,
+                placeholder: 'Enter your Category',
+                component: 'aclFieldSelect',
+                type: 'text',
+                items: ['ta', 'dwq'],
+                isObjectItems: false,
+                value: 'ta',
+            },
+            {
+                name: 'Visibility',
+                id: 'Visibility',
+                hidden: true,
+                required: false,
+                placeholder: 'Enter your Text',
+                label: 'Visible',
+                component: 'aclFieldSwitch', 
+                value: null,
+            }
+        ]
+    }
+
     var paymentFormData = {
         title: 'Pay',
         text: '',
@@ -1069,68 +1343,13 @@
                 name: 'Currency',
                 id: 'Currency',
                 required: false,
-                hidden: false,
+                hidden: true,
                 placeholder: 'Enter your Currency',
                 component: 'aclFieldSelect',
                 type: 'text',
-                items: [ 
-                    { key: 'USD', value: 'USD' }, 
-                    { key: 'AUD', value: 'AUD' }, 
-                    { key: 'ETH', value: 'ETH' }, 
-                    { key: 'XDT', value: 'XDT' }, 
-                ],
+                items: ['USD', 'AUD'],
                 isObjectItems: false,
-                col: 1,
-                value: 'USD',
-            },
-            {
-                name: 'Amount',
-                id: 'Amount',
-                icon: 'currencyDollar',
-                required: false,
-                hidden: false,
-                pattern: '^[0-9.]+$',
-                placeholder: '$20.00',
-                component: 'aclFieldInput',
-                type: 'text',
-                col: 2,
-                value: '',
-            },
-            {
-                name: 'FundingSource',
-                id: 'CurFundingSourcerency',
-                required: false,
-                hidden: false,
-                placeholder: 'Account',
-                component: 'aclFieldSelect',
-                type: 'text',
-                items: [ 
-                    { key: '[FIAT] CBA Bank', value: '1234-1234' }, 
-                    { key: '[Crypto] Walletx', value: 'Crypto: Wallet' }, 
-                    { key: '[Crypto] ETH', value: 'Crypto: ETH' }, 
-                    { key: '[Crypto] XDT', value: 'Crypto: XDT' }, 
-                ],
-                isObjectItems: false,
-                col: 1,
-                value: 'USD',
-            },
-            {
-                name: 'DestinationAccount',
-                id: 'DestinationAccount',
-                required: false,
-                hidden: false,
-                placeholder: 'Account',
-                component: 'aclFieldSelect',
-                type: 'text',
-                items: [ 
-                    { key: '[FIAT] CBA Bank', value: '1234-1234' }, 
-                    { key: '[Crypto] Walletx', value: 'Crypto: Wallet' }, 
-                    { key: '[Crypto] ETH', value: 'Crypto: ETH' }, 
-                    { key: '[Crypto] XDT', value: 'Crypto: XDT' }, 
-                ],
-                isObjectItems: false,
-                col: 2,
-                value: 'USD',
+                value: 'ta',
             },
         ]
     }

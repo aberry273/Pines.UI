@@ -1,9 +1,13 @@
 import { mxField } from '/src/js/mixins/index.js';
- 
+
+/**
+ * Each Tool is a Plugin. Pass them via 'class' option with necessary settings {@link docs/tools.md}
+*/
+/**
+ * Or pass class directly without any configuration
+ */
+/*
 const tools = {
-    /**
-     * Each Tool is a Plugin. Pass them via 'class' option with necessary settings {@link docs/tools.md}
-     */
     header: {
       class: Header,
       inlineToolbar: ['link'],
@@ -12,9 +16,6 @@ const tools = {
       },
       shortcut: 'CMD+SHIFT+H'
     },
-    /**
-     * Or pass class directly without any configuration
-     */
     image: {
       class: SimpleImage,
       inlineToolbar: ['link'],
@@ -58,16 +59,8 @@ const tools = {
       inlineToolbar: true,
       shortcut: 'CMD+ALT+T'
     },
-    /*
-    mention: {
-      class: MentionTool,
-      config: {
-        endpoint: 'http://localhost:3000/',
-        queryParam: 'search'
-      }
-    }
-    */
   };
+  */
 
 const renderers = {
     h1: ({ children }) => `<h1 class="mb-4 text-4xl text-gray-900 md:text-5xl lg:text-6xl  ${sharedClasses}">${children}</h1>`,

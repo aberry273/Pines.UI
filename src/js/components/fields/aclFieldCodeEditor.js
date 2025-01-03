@@ -84,7 +84,7 @@ export default function (params) {
                         @keyup="($event) => onChange($event)"
                     </pre> 
                 </div>
-                <span x-text="'Invalid JSON'" class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                <span x-text="mxField_invalidText || 'Invalid JSON'" class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
                 </span>
 
                 <style>

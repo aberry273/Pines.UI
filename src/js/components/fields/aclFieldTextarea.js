@@ -29,6 +29,7 @@ export default function (params) {
                     :name="mxField_name"
                     :min="mxField_min"
                     :max="mxField_max"
+                    :required="mxField_required"
                     :rows="mxField_rows || 1"
                     :disabled="mxField_disabled"
                     :value="mxField_value"
@@ -45,7 +46,7 @@ export default function (params) {
                     data-rounded="rounded-lg"
                     @change="_mxField_onChange"
                 />
-                <span x-text="field.invalidText || 'Invalid input'" class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                <span x-text="mxField_invalidText || 'Invalid input'" class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
                 </span>
             `
             this.$nextTick(() => { this.$root.innerHTML = html });

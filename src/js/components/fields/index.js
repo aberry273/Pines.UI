@@ -3,6 +3,7 @@ import aclFieldInput from './aclFieldInput.js'
 import aclFieldTextarea from './aclFieldTextarea.js'
 import aclFieldContentEditable from './aclFieldContentEditable.js'
 import aclFieldEditorJs from './aclFieldEditorJs.js'
+import aclFieldSelectAjax from './aclFieldSelectAjax.js'
 import aclFieldSelect from './aclFieldSelect.js'
 import aclFieldSwitch from './aclFieldSwitch.js'
 import aclFieldFile from './aclFieldFile.js'
@@ -16,6 +17,7 @@ export {
     aclFieldContentEditable,
     aclFieldEditorJs,
     aclFieldSelect,
+    aclFieldSelectAjax,
     aclFieldSwitch,
     aclFieldFile,
     aclFieldCodeEditor,

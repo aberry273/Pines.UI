@@ -22,7 +22,7 @@ export default function (params) {
         // RENDER
         render() {
             const html = `
-            <section class="z-40 bg-white" :class="mxNavigation_getSectionClass" :style {!! $attributes ?? '' !!}>
+            <section  :class="mxNavigation_getSectionClass" class="z-40 bg-white py-4">
                 <div class="flex flex-row" :class="mxNavigation_getContainerClass">
                     <div :class="mxNavigation_getContainerLeftClass">
                         <a href="#_" :class="mxNavigation_getLinkClass">

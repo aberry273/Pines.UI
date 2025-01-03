@@ -1,6 +1,8 @@
 export default function (data) {
     return {
         // PROPERTIES
+        mxContent_item: {},
+        mxContent_items: [],
         mxContent_img: '',
         mxContent_title: '',
         mxContent_subtitle: '',
@@ -13,7 +15,14 @@ export default function (data) {
         get mxContent_subtitleClass() { return 'w-full text-2xl text-gray-500'},
         get mxContent_textClass() { return 'text-lg text-gray-500'},
         // METHODS
-        _mxContent_Example() {
+        _mxContent_setValues(params) {
+            if (!params) return;
+            this.mxContent_items = params.items;
+            this.mxContent_img = params.img;
+            this.mxContent_title = params.title;
+            this.mxContent_subtitle = params.subtitle;
+            this.mxContent_text = params.text;
+            this.mxContent_subtext = params.subtext;
         },
     }
 }

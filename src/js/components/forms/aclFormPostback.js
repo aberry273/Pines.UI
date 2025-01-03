@@ -41,7 +41,7 @@ export default function (params) {
                     <template x-if="mxContent_text">
                         <p :class="mxForm_textClass" x-text="mxContent_text"></p>
                     </template>
-                    <form novalidate :method="mxForm_method" :action="mxForm_action" class="group relative w-full space-y-8">
+                    <form novalidate :method="mxForm_method" :action="mxForm_action" method="post" class="group relative w-full space-y-8">
                         <!--Fields-->
                         <div x-data="aclFormFieldset({ fields: mxForm_fields })" @onfieldchange="updateField"></div>
                         <!--Response message-->

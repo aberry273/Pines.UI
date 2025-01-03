@@ -43,7 +43,18 @@ export default function (params) {
                     this.mxForm_response = result.message || 'Update successful';
                 }
                 else {
-                    this.mxForm_response = result.message || 'Update failed';
+                    let message = result.message;
+                    if (result.errors) {
+                        let joinedMessage = "";
+                        var keys = Object.keys(result.errors);
+                        for (let i = 0; i < keys.length; i++) {
+                            joinedMessage += `${result.errors[keys[i]].propertyMessage}\n`;
+                        }
+                        this.mxForm_response = joinedMessage;
+                    }
+                    else {
+                        this.mxForm_response = result.message || 'Update failed';
+                    }
                 }
 
                 if (this.mxForm_event) {
@@ -56,6 +67,10 @@ export default function (params) {
             }
             this.mxForm_loading = false;
         },
+        overrideSubmit(e) {
+            e.preventDefault();
+            return;
+        },
         render() {
             const html = `
                 <div x-show="mxForm_loading" x-data="aclCommonProgress({})"></div>
@@ -67,22 +82,24 @@ export default function (params) {
                     <template x-if="mxContent_text">
                         <p :class="mxForm_textClass" x-text="mxContent_text"></p>
                     </template>
-                    <div novalidate class="group relative w-full space-y-8">
+                    <form novalidate class="group relative w-full space-y-8" x-on:submit.prevent x-on:submit="overrideSubmit">
                         <!--Fields-->
                         <div x-data="aclFormFieldset({ fields: mxForm_fields })" @onfieldchange="updateField"></div>
                         <!--Response message-->
                         <template x-if="mxForm_response">
-                            <p :class="mxForm_responseClass" x-text="mxForm_response"></p>
+                            <p :class="mxForm_responseClass" x-html="mxForm_response"></p>
                         </template>
                         <!--Submit-->
                         <div class="relative">
-                            <button 
+                            <button
+                                type="link"
                                 @click="await submit()"
                                 x-text="mxForm_label" 
                                 :class="mxForm_submitClass"
+                                class="group-invalid:pointer-events-none group-invalid:opacity-30"
                             />
                         </div>
-                    </div>
+                    </form>
                 </div>
             `
             this.$nextTick(() => { this.$root.innerHTML = html });
