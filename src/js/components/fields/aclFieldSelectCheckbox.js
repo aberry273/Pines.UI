@@ -91,7 +91,7 @@ export default function (params) {
             />
                 <button type="button" x-ref="selectButton" @click="selectOpen=!selectOpen"
                     :class="{ 'focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400' : !selectOpen }"
-                    class="relative text-xl px-4 py-4 mt-2 min-h-[38px] flex items-center justify-between w-full py-2 pl-3 pr-10 text-left placeholder-gray-400 bg-gray-200 border rounded-md shadow-sm cursor-default border-neutral-200/70 focus:outline-none text-sm">
+                    class="relative text-xl px-4 py-4 min-h-[38px] flex items-center justify-between w-full py-2 pl-3 pr-10 text-left placeholder-gray-400 bg-gray-200 border rounded-md shadow-sm cursor-default border-neutral-200/70 focus:outline-none text-sm">
                     <span 
                         x-text="selectedItemText ? selectedItemText : 'Select Item'" 
                             class="truncate">Select Item</span>
@@ -136,7 +136,7 @@ export default function (params) {
                     </template>
 
                 </ul>
-                <span x-text="mxField_invalidText || 'Invalid input'" class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                <span x-text="mxField_invalidText || 'Invalid input'" class="absolute -my-1 right-0 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
 
             `
             this.$nextTick(() => { this.$root.innerHTML = html });

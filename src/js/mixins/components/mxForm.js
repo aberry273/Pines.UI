@@ -21,8 +21,8 @@ export default function (data) {
         get mxForm_textClass() { return 'mb-5 text-sm font-medium text-gray-500 dark:text-gray-300' },
         get mxForm_submitClass() { return 'inline-block w-full px-5 py-4 text-lg font-medium text-center bg-blue-600 text-white dark:text-white transition duration-200  rounded-lg hover:bg-blue-700 ease' },
         get mxForm_submitInvalidClass() { return 'group-invalid:pointer-events-none group-invalid:opacity-30' },
-        get mxForm_formClass() { return 'flex flex-col items-start justify-start w-full h-full p-10 lg:p-16 xl:p-24' },
-        get mxForm_formPadlessClass() { return 'flex flex-col items-start justify-start w-full h-full p-4' },
+        get mxForm_formClass() { return 'flex flex-col items-start justify-start w-full h-full max-w-md mx-auto  p-10 lg:p-16 xl:p-24' },
+        get mxForm_formPadlessClass() { return 'flex flex-col items-start justify-start w-full h-full max-w-md mx-auto  p-4' },
         get mxForm_errorResponseClass() { return 'text-red-500' },
         get mxForm_successResponseClass() { return 'text-lg font-bold text-green-500' },
         get mxForm_FileFormHeaders() {

@@ -52,7 +52,7 @@ export default function (params) {
                         data-rounded="rounded-lg"
                         @change="onChange"
                     />
-                    <span x-text="mxField_invalidText || 'Invalid field'" class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                    <span x-text="mxField_invalidText || 'Invalid field'" class="absolute -my-1 right-0 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
                     </span>
                 </div>
             `

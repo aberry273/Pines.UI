@@ -95,9 +95,9 @@ export default function (params) {
                     :multiple="mxField_multiple"
                     class="block w-full py-0 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" 
                     >
-                <span x-text="limitText" class="mt-2  text-sm  peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                <span x-text="limitText" class="absolute -my-1 right-0 text-sm peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
                 </span>
-                <span x-text="mxField_invalidText || 'Invalid input'" class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                <span x-text="mxField_invalidText || 'Invalid input'" class="absolute -my-1 right-0 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
                 </span>
                 <!--Grid-->
                 <div 

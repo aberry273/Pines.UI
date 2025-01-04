@@ -46,7 +46,7 @@ export default function (params) {
                     data-rounded="rounded-lg"
                     @change="_mxField_onChange"
                 />
-                <span x-text="mxField_invalidText || 'Invalid input'" class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                <span x-text="mxField_invalidText || 'Invalid input'" class="absolute -my-1 right-0 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
                 </span>
             `
             this.$nextTick(() => { this.$root.innerHTML = html });

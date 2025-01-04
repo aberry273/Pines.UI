@@ -44,7 +44,7 @@ export default function (params) {
         },
         // GETTERS
         // METHODS 
-        setValues(params) { 
+        setValues(params) {
             this.areItemsObject = params.areItemsObject;
 
             if (this.areItemsObject === false && !typeof params.items[0] === 'object') {
@@ -134,7 +134,7 @@ export default function (params) {
             this.mxFetch_loading = false;
         },
         defaultClass() {
-            let cssClass = 'relative text-xl px-4 py-4 mt-2 min-h-[38px] flex items-center justify-between w-full py-2 pl-3 pr-10 text-left placeholder-gray-400 bg-gray-200 border rounded-md shadow-sm cursor-default border-neutral-200/70 focus:outline-none text-sm focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400';
+            let cssClass = 'relative text-xl px-4 py-4 min-h-[38px] flex items-center justify-between w-full py-2 pl-3 pr-10 text-left placeholder-gray-400 bg-gray-200 border rounded-md shadow-sm cursor-default border-neutral-200/70 focus:outline-none text-sm focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400';
 
             if (!!this.mxField_icon) cssClass = `ps-10 p-2.5 ${cssClass}`;
             return cssClass;
@@ -194,6 +194,9 @@ export default function (params) {
                             data-rounded="rounded-lg"
                             x-on:input.change.debounce.350ms="await submit"
                         />
+                        <span x-show="!mxField_disabled && !selectedItem" class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                            <svg class="w-5 h-5 mr-2 text-gray-500 dark:text-gray-400" x-data="aclIconsSvg({icon: 'magnifyingGlass' })"></svg>
+                        </span>
                     </div>
 
                 <button type="button" x-ref="selectButton"
@@ -210,10 +213,6 @@ export default function (params) {
                         <div x-show="!!selectedItem" @click="cancelItem"
                         x-data="aclButton({icon: 'close' })"
                         class="absolute inset-y-0 right-0 flex items-center pr-2" ></svg>
-                    </span>
-
-                    <span x-show="!mxField_disabled" class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" class="w-5 h-5 text-gray-400"><path fill-rule="evenodd" d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z" clip-rule="evenodd"></path></svg>
                     </span>
 
                 </button>
@@ -242,7 +241,7 @@ export default function (params) {
                     </template>
 
                 </ul>
-                <span x-text="mxField_invalidText || 'Invalid input'" class="mt-2 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                <span x-text="mxField_invalidText || 'Invalid input'" class="absolute -my-1 right-0 hidden text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
             </div>
             `
             this.$nextTick(() => { this.$root.innerHTML = html });
